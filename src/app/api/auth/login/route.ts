@@ -10,6 +10,15 @@ export async function POST(request: Request) {
   const ipAddress = headersList.get('x-forwarded-for')?.split(',')[0].trim() || '127.0.0.1';
   const userAgent = headersList.get('user-agent') || 'Unknown';
 
+  // Safe logging helper to prevent crashes on read-only or locked databases
+  const logActivitySafely = async (data: any) => {
+    try {
+      await prisma.loginActivityLog.create({ data });
+    } catch (e) {
+      console.error('Failed to log login activity safely:', e);
+    }
+  };
+
   try {
     const body = await request.json();
     username = body.username || '';
@@ -24,23 +33,27 @@ export async function POST(request: Request) {
 
     // 1. Check Brute-Force Rate Limiting (5 failures in 15 mins)
     const blockTimeLimit = new Date(Date.now() - 15 * 60 * 1000); // 15 minutes ago
-    const failedAttemptsCount = await prisma.loginActivityLog.count({
-      where: {
-        username,
-        status: 'failed_bad_password',
-        createdAt: { gte: blockTimeLimit },
-      },
-    });
+    let failedAttemptsCount = 0;
+    
+    try {
+      failedAttemptsCount = await prisma.loginActivityLog.count({
+        where: {
+          username,
+          status: 'failed_bad_password',
+          createdAt: { gte: blockTimeLimit },
+        },
+      });
+    } catch (e) {
+      console.error('Failed to query login activity count safely:', e);
+    }
 
     if (failedAttemptsCount >= 5) {
       // Log locked out state
-      await prisma.loginActivityLog.create({
-        data: {
-          username,
-          ipAddress,
-          userAgent,
-          status: 'locked_out',
-        },
+      await logActivitySafely({
+        username,
+        ipAddress,
+        userAgent,
+        status: 'locked_out',
       });
 
       return NextResponse.json(
@@ -55,14 +68,12 @@ export async function POST(request: Request) {
     });
 
     if (!user) {
-      // Log fake username failure to prevent email/username enumeration timing attacks
-      await prisma.loginActivityLog.create({
-        data: {
-          username,
-          ipAddress,
-          userAgent,
-          status: 'failed_bad_password',
-        },
+      // Log fake username failure
+      await logActivitySafely({
+        username,
+        ipAddress,
+        userAgent,
+        status: 'failed_bad_password',
       });
 
       return NextResponse.json(
@@ -76,14 +87,12 @@ export async function POST(request: Request) {
     
     if (!isValid) {
       // Log password failure
-      await prisma.loginActivityLog.create({
-        data: {
-          userId: user.id,
-          username,
-          ipAddress,
-          userAgent,
-          status: 'failed_bad_password',
-        },
+      await logActivitySafely({
+        userId: user.id,
+        username,
+        ipAddress,
+        userAgent,
+        status: 'failed_bad_password',
       });
 
       return NextResponse.json(
@@ -93,14 +102,12 @@ export async function POST(request: Request) {
     }
 
     // 4. Log Successful Login
-    await prisma.loginActivityLog.create({
-      data: {
-        userId: user.id,
-        username,
-        ipAddress,
-        userAgent,
-        status: 'success',
-      },
+    await logActivitySafely({
+      userId: user.id,
+      username,
+      ipAddress,
+      userAgent,
+      status: 'success',
     });
 
     // 5. Generate Session Tokens

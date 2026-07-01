@@ -53,8 +53,44 @@ export default function AdminLoginPage() {
   return (
     <div className={styles.loginContainer}>
       <div className={`${styles.loginCard} glass`}>
-        <h1 className={`${styles.loginTitle} text-gold`}>CRYSTAL CLUB</h1>
-        <p className={styles.loginSubtitle}>Yönetici Giriş Paneli</p>
+        <div style={{ maxWidth: '240px', margin: '0 auto 16px auto' }}>
+          <svg viewBox="0 0 300 110" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">
+            <style>{`
+              .brand-dior-login {
+                font-family: 'Playfair Display', 'Cormorant Garamond', 'Times New Roman', serif;
+                font-size: 54px;
+                fill: #1D1D1D;
+                letter-spacing: 5px;
+              }
+              .brand-sub-login {
+                font-family: 'Inter', 'Manrope', sans-serif;
+                font-size: 11px;
+                fill: #6D6D6D;
+                letter-spacing: 5px;
+                font-weight: 500;
+              }
+              .wave-line-login {
+                stroke: #1D1D1D;
+                stroke-width: 1.8;
+                fill: none;
+                stroke-linecap: round;
+              }
+            `}</style>
+            <g transform="translate(150, 50)" textAnchor="middle">
+              <text x="-48" y="5" className="brand-dior-login" textAnchor="middle">DI</text>
+              <g transform="translate(0, -12)">
+                <circle cx="0" cy="0" r="23" stroke="#1D1D1D" strokeWidth="4.5" fill="none" />
+                <path d="M-15,4 Q-7,0 0,4 T15,4" className="wave-line-login" />
+                <path d="M-13,-2 Q-6.5,-5 0,-2 T13,-2" className="wave-line-login" />
+              </g>
+              <text x="48" y="5" className="brand-dior-login" textAnchor="middle">R</text>
+              <text x="0" y="38" className="brand-sub-login" textAnchor="middle">BEACH CLUB</text>
+              <line x1="-105" y1="34" x2="-62" y2="34" stroke="#6D6D6D" strokeWidth="0.8" />
+              <line x1="62" y1="34" x2="105" y2="34" stroke="#6D6D6D" strokeWidth="0.8" />
+            </g>
+          </svg>
+        </div>
+        <p className={styles.loginSubtitle} style={{ marginTop: '0' }}>Yönetici Giriş Paneli</p>
         
         {error && <div className={styles.loginError}>{error}</div>}
 
