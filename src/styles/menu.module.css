@@ -26,8 +26,31 @@
 
 .brandHeader {
   background: #FFFFFF;
-  border-bottom: 1px solid #ECECEC;
+  border-bottom: var(--border-gold);
   padding: 8px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.logoContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 280px;
+  margin: 16px auto 16px auto;
+  position: relative;
+  z-index: 1;
+}
+
+.palmShadow {
+  position: absolute;
+  right: -30px;
+  top: -30px;
+  width: 250px;
+  height: 250px;
+  pointer-events: none;
+  z-index: 0;
 }
 
 .stickyHeader {
@@ -331,20 +354,20 @@
 .productCard {
   display: flex;
   background: #FFFFFF;
-  border: 1px solid #E8E3D9;
-  border-radius: 18px;
+  border: var(--border-gold);
+  border-radius: 20px;
   overflow: hidden;
   transition: all 0.2s ease;
   cursor: pointer;
   min-height: 125px;
   position: relative;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
+  box-shadow: 0 4px 20px rgba(200, 169, 119, 0.05);
 }
 
 .productCard:hover {
   transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
-  border-color: var(--gold-light);
+  box-shadow: 0 8px 30px rgba(200, 169, 119, 0.08);
+  border-color: var(--gold-primary);
 }
 
 .productImageWrapper {

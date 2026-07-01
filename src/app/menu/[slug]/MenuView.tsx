@@ -175,14 +175,14 @@ const THEMES: Record<string, {
     borderGold: '1px solid rgba(189, 0, 255, 0.25)',
   },
   'white-premium': {
-    bg: '#FAFAF8',
-    bgSecondary: '#FAFAF8',
+    bg: '#FAF7F2',
+    bgSecondary: '#FAF7F2',
     card: '#FFFFFF',
-    primary: '#B08D57',
-    accent: '#D6B97A',
-    text: '#1B1B1B',
-    textSecondary: '#6B7280',
-    borderGold: '1px solid #E8E3D9',
+    primary: '#C8A977',
+    accent: '#6D6D6D',
+    text: '#1D1D1D',
+    textSecondary: '#6D6D6D',
+    borderGold: '1px solid #E8DED0',
   }
 };
 
@@ -201,7 +201,7 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
   const { language, setLanguage, t, isRtl } = useLanguage();
   
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<'menu' | 'campaigns' | 'events'>('menu');
+  const [activeTab, setActiveTab] = useState<'menu' | 'cocktails' | 'food' | 'wine' | 'champagne' | 'events'>('menu');
   const [activeCategory, setActiveCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
   
@@ -251,7 +251,7 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
     .flatMap((c) => c.products)
     .find((p) => p.id === business.highlightProductId);
 
-  // Filter products by search query
+  // Filter products by search query and activeTab
   const getFilteredCategories = () => {
     return business.categories.map((category) => {
       const filteredProducts = category.products.filter((prod) => {
@@ -265,7 +265,27 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
         ...category,
         products: filteredProducts,
       };
-    }).filter((category) => category.products.length > 0);
+    }).filter((category) => {
+      if (category.products.length === 0) return false;
+      
+      const catNameEn = (category.name_en || '').toLowerCase();
+      const catNameTr = (category.name_tr || '').toLowerCase();
+      
+      if (activeTab === 'cocktails') {
+        return catNameEn.includes('cocktail') || catNameTr.includes('kokteyl') || catNameEn.includes('drink') || catNameTr.includes('içecek');
+      }
+      if (activeTab === 'food') {
+        return catNameEn.includes('food') || catNameTr.includes('yemek') || catNameEn.includes('snack') || catNameTr.includes('atıştırmalık') || catNameTr.includes('mutfak');
+      }
+      if (activeTab === 'wine') {
+        return catNameEn.includes('wine') || catNameTr.includes('şarap');
+      }
+      if (activeTab === 'champagne') {
+        return catNameEn.includes('champagne') || catNameTr.includes('şampanya');
+      }
+      
+      return true;
+    });
   };
 
   const filteredCategories = getFilteredCategories();
@@ -295,7 +315,7 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
 
   // Observe category scrolling to auto-highlight category tab
   useEffect(() => {
-    if (activeTab !== 'menu' || searchQuery !== '') return;
+    if (activeTab === 'events' || searchQuery !== '') return;
 
     const handleScroll = () => {
       const offset = tableNo ? 230 : 180;
@@ -433,16 +453,80 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
 
       {/* Brand Branding Header (non-sticky, scrolls away) */}
       <div className={styles.brandHeader}>
-        <div className={styles.headerTop}>
-          <div className={styles.clubTitleGroup}>
-            <h1>{business.name}</h1>
-            <p className={styles.clubSubtitle}>
-              {resolveStr(business, 'description')}
-            </p>
+        {/* Palm Branch Shadow Overlay */}
+        <svg className={styles.palmShadow} viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g opacity="0.045" filter="url(#blur-palm)">
+            <path d="M500,0 C420,100 350,150 150,300 C120,320 80,360 0,500" stroke="#000" strokeWidth="8" strokeLinecap="round"/>
+            <path d="M420,100 C390,50 350,10 320,0" stroke="#000" strokeWidth="4" strokeLinecap="round"/>
+            <path d="M380,120 C330,80 290,40 260,30" stroke="#000" strokeWidth="4" strokeLinecap="round"/>
+            <path d="M350,140 C290,100 240,60 210,50" stroke="#000" strokeWidth="4" strokeLinecap="round"/>
+            <path d="M310,165 C250,125 190,85 160,75" stroke="#000" strokeWidth="4" strokeLinecap="round"/>
+            <path d="M280,185 C210,145 150,105 120,95" stroke="#000" strokeWidth="4" strokeLinecap="round"/>
+            <path d="M240,210 C170,170 110,130 80,120" stroke="#000" strokeWidth="4" strokeLinecap="round"/>
+            <path d="M200,235 C130,195 70,155 40,145" stroke="#000" strokeWidth="4" strokeLinecap="round"/>
+            <path d="M160,260 C90,220 30,180 0,170" stroke="#000" strokeWidth="4" strokeLinecap="round"/>
+            <path d="M420,100 C450,150 490,190 500,200" stroke="#000" strokeWidth="4" strokeLinecap="round"/>
+            <path d="M380,120 C420,180 450,210 470,230" stroke="#000" strokeWidth="4" strokeLinecap="round"/>
+            <path d="M350,140 C380,200 410,235 430,250" stroke="#000" strokeWidth="4" strokeLinecap="round"/>
+            <path d="M310,165 C340,225 370,260 390,275" stroke="#000" strokeWidth="4" strokeLinecap="round"/>
+            <path d="M280,185 C310,245 335,280 350,295" stroke="#000" strokeWidth="4" strokeLinecap="round"/>
+            <path d="M240,210 C270,270 295,305 310,320" stroke="#000" strokeWidth="4" strokeLinecap="round"/>
+            <path d="M200,235 C230,295 255,330 270,345" stroke="#000" strokeWidth="4" strokeLinecap="round"/>
+            <path d="M160,260 C190,320 215,355 230,370" stroke="#000" strokeWidth="4" strokeLinecap="round"/>
+          </g>
+          <defs>
+            <filter id="blur-palm" x="-50" y="-50" width="600" height="600" filterUnits="userSpaceOnUse">
+              <feGaussianBlur stdDeviation="12" />
+            </filter>
+          </defs>
+        </svg>
+
+        <div className={styles.headerTop} style={{ flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
+          {/* Custom SVG Dior Beach Club Logo */}
+          <div className={styles.logoContainer}>
+            <svg viewBox="0 0 300 110" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">
+              <style>{`
+                .brand-dior {
+                  font-family: 'Playfair Display', 'Cormorant Garamond', 'Times New Roman', serif;
+                  font-size: 54px;
+                  fill: #1D1D1D;
+                  letter-spacing: 5px;
+                }
+                .brand-sub {
+                  font-family: 'Inter', 'Manrope', sans-serif;
+                  font-size: 11px;
+                  fill: #6D6D6D;
+                  letter-spacing: 5px;
+                  font-weight: 500;
+                }
+                .wave-line {
+                  stroke: #1D1D1D;
+                  stroke-width: 1.8;
+                  fill: none;
+                  stroke-linecap: round;
+                }
+              `}</style>
+              <g transform="translate(150, 50)" textAnchor="middle">
+                <text x="-48" y="5" className="brand-dior" textAnchor="middle">DI</text>
+                <g transform="translate(0, -12)">
+                  <circle cx="0" cy="0" r="23" stroke="#1D1D1D" strokeWidth="4.5" fill="none" />
+                  <path d="M-15,4 Q-7,0 0,4 T15,4" className="wave-line" />
+                  <path d="M-13,-2 Q-6.5,-5 0,-2 T13,-2" className="wave-line" />
+                </g>
+                <text x="48" y="5" className="brand-dior" textAnchor="middle">R</text>
+                <text x="0" y="38" className="brand-sub" textAnchor="middle">BEACH CLUB</text>
+                <line x1="-105" y1="34" x2="-62" y2="34" stroke="#6D6D6D" strokeWidth="0.8" />
+                <line x1="62" y1="34" x2="105" y2="34" stroke="#6D6D6D" strokeWidth="0.8" />
+              </g>
+            </svg>
           </div>
-          
+
+          <p className={styles.clubSubtitle} style={{ textAlign: 'center', maxWidth: '380px', margin: '0 auto', fontSize: '0.85rem' }}>
+            {resolveStr(business, 'description')}
+          </p>
+
           {/* Multi Language Select Dropdown */}
-          <div className={styles.langSelectorContainer}>
+          <div className={styles.langSelectorContainer} style={{ marginTop: '8px' }}>
             <select
               value={language}
               onChange={(e) => setLanguage(e.target.value as Language)}
@@ -459,21 +543,29 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
         </div>
 
         {/* Quick Contact rows (Hours, Maps, Instagram) */}
-        <div className={styles.headerContactInfo}>
-          {business.openingHours && (
-            <span className={styles.contactItem}>
-              <Clock3 size={11} /> {business.openingHours}
-            </span>
+        <div className={styles.headerContactInfo} style={{ justifyContent: 'center', flexWrap: 'wrap', gap: '12px 18px', marginTop: '16px' }}>
+          <span className={styles.contactItem} style={{ fontStyle: 'normal' }}>
+            📍 Didim / Altınkum
+          </span>
+          {business.instagramUsername && (
+            <a href={`https://instagram.com/${business.instagramUsername}`} target="_blank" rel="noopener noreferrer" className={styles.contactItem}>
+              📷 Instagram
+            </a>
           )}
           {business.googleMapsUrl && (
             <a href={business.googleMapsUrl} target="_blank" rel="noopener noreferrer" className={styles.contactItem}>
-              <MapPin size={11} /> {t('location')}
+              🗺 {language === 'tr' ? 'Yol Tarifi' : 'Directions'}
             </a>
           )}
-          {business.instagramUsername && (
-            <a href={`https://instagram.com/${business.instagramUsername}`} target="_blank" rel="noopener noreferrer" className={styles.contactItem}>
-              <InstagramIcon size={11} /> @{business.instagramUsername}
+          {business.whatsappNumber && (
+            <a href={`tel:${business.whatsappNumber}`} className={styles.contactItem}>
+              📞 {language === 'tr' ? 'Telefon' : 'Phone'}
             </a>
+          )}
+          {business.openingHours && (
+            <span className={styles.contactItem}>
+              🕒 {business.openingHours}
+            </span>
           )}
         </div>
       </div>
@@ -496,29 +588,53 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
         )}
 
         {/* Navigation Tabs */}
-        <div className={styles.navTabs}>
+        <div className={styles.navTabs} style={{ overflowX: 'auto', whiteSpace: 'nowrap', scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}>
           <button 
             className={`${styles.tabBtn} ${activeTab === 'menu' ? styles.tabBtnActive : ''}`}
-            onClick={() => setActiveTab('menu')}
+            onClick={() => { setActiveTab('menu'); setActiveCategory('all'); }}
+            style={{ paddingLeft: '16px', paddingRight: '16px', flex: 'none' }}
           >
             {language === 'tr' ? 'MENÜ' : 'MENU'}
           </button>
           <button 
-            className={`${styles.tabBtn} ${activeTab === 'campaigns' ? styles.tabBtnActive : ''}`}
-            onClick={() => setActiveTab('campaigns')}
+            className={`${styles.tabBtn} ${activeTab === 'cocktails' ? styles.tabBtnActive : ''}`}
+            onClick={() => { setActiveTab('cocktails'); setActiveCategory('all'); }}
+            style={{ paddingLeft: '16px', paddingRight: '16px', flex: 'none' }}
           >
-            {t('campaignsHeading')}
+            {language === 'tr' ? 'KOKTEYLLER' : 'COCKTAILS'}
+          </button>
+          <button 
+            className={`${styles.tabBtn} ${activeTab === 'food' ? styles.tabBtnActive : ''}`}
+            onClick={() => { setActiveTab('food'); setActiveCategory('all'); }}
+            style={{ paddingLeft: '16px', paddingRight: '16px', flex: 'none' }}
+          >
+            {language === 'tr' ? 'YEMEK' : 'FOOD'}
+          </button>
+          <button 
+            className={`${styles.tabBtn} ${activeTab === 'wine' ? styles.tabBtnActive : ''}`}
+            onClick={() => { setActiveTab('wine'); setActiveCategory('all'); }}
+            style={{ paddingLeft: '16px', paddingRight: '16px', flex: 'none' }}
+          >
+            {language === 'tr' ? 'ŞARAP' : 'WINE'}
+          </button>
+          <button 
+            className={`${styles.tabBtn} ${activeTab === 'champagne' ? styles.tabBtnActive : ''}`}
+            onClick={() => { setActiveTab('champagne'); setActiveCategory('all'); }}
+            style={{ paddingLeft: '16px', paddingRight: '16px', flex: 'none' }}
+          >
+            {language === 'tr' ? 'ŞAMPANYA' : 'CHAMPAGNE'}
           </button>
           <button 
             className={`${styles.tabBtn} ${activeTab === 'events' ? styles.tabBtnActive : ''}`}
-            onClick={() => setActiveTab('events')}
+            onClick={() => { setActiveTab('events'); setActiveCategory('all'); }}
+            style={{ paddingLeft: '16px', paddingRight: '16px', flex: 'none' }}
           >
             {language === 'tr' ? 'ETKİNLİKLER' : 'EVENTS'}
           </button>
         </div>
 
         {/* Search & Categories Bar */}
-        {activeTab === 'menu' && (
+        {activeTab !== 'events' && (
           <div className={styles.subHeader}>
             <div className={styles.searchContainer}>
               <span className={styles.searchIcon}>🔍</span>
@@ -544,7 +660,7 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
                 >
                   {t('all')}
                 </button>
-                {business.categories.map((cat) => (
+                {filteredCategories.map((cat) => (
                   <button
                     key={cat.id}
                     id={`tab-${cat.id}`}
@@ -564,7 +680,7 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
       <main className={styles.content}>
         
         {/* TAB 1: MENU */}
-        {activeTab === 'menu' && (
+        {activeTab !== 'events' && (
           <div className={styles.menuTabContent}>
             {loading ? (
               // Shimmer skeletons placeholders during mount latency
@@ -683,33 +799,7 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
           </div>
         )}
 
-        {/* TAB 2: CAMPAIGNS */}
-        {activeTab === 'campaigns' && (
-          <div className={styles.campaignsTabContent}>
-            <h2 className={styles.sectionHeading}>{t('campaignsHeading')}</h2>
-            {business.campaigns.length === 0 ? (
-              <div className={styles.emptyState}>
-                <p>{language === 'tr' ? 'Şu an aktif kampanya bulunmamaktadır.' : 'No active campaigns at the moment.'}</p>
-              </div>
-            ) : (
-              business.campaigns.map((camp) => (
-                <div key={camp.id} className={`${styles.campaignCard}`}>
-                  {camp.imageUrl && (
-                    <img 
-                      src={camp.imageUrl} 
-                      alt={resolveStr(camp, 'title')}
-                      className={styles.campaignImage}
-                    />
-                  )}
-                  <div className={styles.campaignInfo}>
-                    <h3 className="text-gold">{resolveStr(camp, 'title')}</h3>
-                    <p>{resolveStr(camp, 'description')}</p>
-                  </div>
-                </div>
-              ))
-            )}
-          </div>
-        )}
+
 
         {/* TAB 3: EVENTS */}
         {activeTab === 'events' && (
