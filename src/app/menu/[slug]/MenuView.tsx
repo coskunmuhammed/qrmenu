@@ -1173,7 +1173,7 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
           <div className={styles.bizDetailRows}>
             <div className={styles.bizDetailRow}>
               <Clock className={styles.bizDetailIcon} size={14} />
-              <span>🕒 09:00 - 02:00</span>
+              <span>09:00 - 02:00</span>
             </div>
             <div className={styles.bizDetailRow}>
               <Phone className={styles.bizDetailIcon} size={14} />

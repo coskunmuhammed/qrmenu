@@ -1911,9 +1911,9 @@
 .bizDetailRows {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 12px;
   width: 100%;
-  text-align: left;
   padding: 12px 0;
   border-top: var(--border-gold);
   border-bottom: var(--border-gold);
@@ -1922,6 +1922,7 @@
 .bizDetailRow {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
   font-family: var(--font-body);
   font-size: 0.78rem;
