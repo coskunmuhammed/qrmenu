@@ -1147,7 +1147,7 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
               className={styles.vipReserveBtn}
               onClick={getWhatsappUrl ? () => window.open(getWhatsappUrl(), '_blank') : undefined}
             >
-              {language === 'tr' ? 'Şimdi Rezervasyon Yap' : 'Reserve Now'} <Sparkles size={12} style={{ marginLeft: '4px' }} />
+              {language === 'tr' ? 'Şimdi Rezervasyon Yap' : 'Reserve Now'}
             </button>
           </div>
         )}
