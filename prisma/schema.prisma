@@ -1,0 +1,224 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id                String             @id @default(uuid())
+  username          String             @unique
+  passwordHash      String
+  role              String             @default("viewer") // admin, viewer, super_admin
+  businessId        String?            // Null if super_admin
+  business          Business?          @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  loginActivities   LoginActivityLog[]
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+}
+
+model Business {
+  id                String             @id @default(uuid())
+  slug              String             @unique
+  name              String
+  description_tr    String?
+  description_en    String?
+  description_ru    String?
+  description_de    String?
+  description_ar    String?
+  logoUrl           String?
+  coverUrl          String?
+  whatsappNumber    String?
+  instagramUsername String?
+  googleMapsUrl     String?
+  defaultCurrency   String             @default("TRY")
+  vipMinSpendInfo   String?
+  openingHours      String?
+  themeName         String             @default("luxury-gold") // luxury-gold, neon-blue, dark-club, white-premium
+  customColors      String?            // JSON string with primary, secondary, accent, bg overrides
+  showHighlightPopup Boolean            @default(false)
+  highlightTitle     String?
+  highlightProductId String?
+  highlightDiscountText String?
+  highlightValidUntil String?
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  
+  users             User[]
+  categories        Category[]
+  campaigns         Campaign[]
+  events            Event[]
+  reservations      Reservation[]
+  tables            Table[]
+  analyticsLogs     AnalyticsLog[]
+}
+
+model Category {
+  id         String    @id @default(uuid())
+  businessId String
+  business   Business  @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  name_tr    String
+  name_en    String
+  name_ru    String?
+  name_de    String?
+  name_ar    String?
+  order      Int       @default(0)
+  isActive   Boolean   @default(true)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  products   Product[]
+}
+
+model Product {
+  id             String             @id @default(uuid())
+  categoryId     String
+  category       Category           @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  name_tr        String
+  name_en        String
+  name_ru        String?
+  name_de        String?
+  name_ar        String?
+  description_tr String?
+  description_en String?
+  description_ru String?
+  description_de String?
+  description_ar String?
+  price          Float              // Base price
+  discountPrice  Float?             // Promotional price
+  currency       String             @default("TRY")
+  imageUrl       String?
+  isPopular      Boolean            @default(false)
+  isNew          Boolean            @default(false)
+  isRecommended  Boolean            @default(false)
+  isAvailable    Boolean            @default(true)
+  isActive       Boolean            @default(true)
+  alcoholRatio   Float?             // e.g. 40.0 for 40%
+  ingredients    String?            // List of ingredients
+  volume         String?            // e.g. "70cl", "50ml"
+  order          Int                @default(0)
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
+  variations     ProductVariation[]
+}
+
+model ProductVariation {
+  id        String   @id @default(uuid())
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  name_tr   String   // e.g. "35 cl"
+  name_en   String
+  name_ru   String?
+  name_de   String?
+  name_ar   String?
+  price     Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Table {
+  id         String        @id @default(uuid())
+  businessId String
+  business   Business      @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  tableNo    String        // e.g. "12", "VIP-1"
+  status     String        @default("available") // available, occupied, needs_service, bill_requested
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+  requests   TableRequest[]
+}
+
+model TableRequest {
+  id        String   @id @default(uuid())
+  tableId   String
+  table     Table    @relation(fields: [tableId], references: [id], onDelete: Cascade)
+  type      String   // waiter_call, bill_request, reservation
+  details   String?  // e.g., VIP lodge calculations, tip percentage, cash/card bill
+  status    String   @default("pending") // pending, completed
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Campaign {
+  id             String    @id @default(uuid())
+  businessId     String
+  business       Business  @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  title_tr       String
+  title_en       String
+  title_ru       String?
+  title_de       String?
+  title_ar       String?
+  description_tr String?
+  description_en String?
+  description_ru String?
+  description_de String?
+  description_ar String?
+  imageUrl       String?
+  isActive       Boolean   @default(true)
+  order          Int       @default(0)
+  startDate      DateTime? // Automated activation control
+  endDate        DateTime? // Automated deactivation control
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+
+model Event {
+  id             String    @id @default(uuid())
+  businessId     String
+  business       Business  @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  title_tr       String
+  title_en       String
+  title_ru       String?
+  title_de       String?
+  title_ar       String?
+  djName         String?
+  date           DateTime
+  description_tr String?
+  description_en String?
+  description_ru String?
+  description_de String?
+  description_ar String?
+  imageUrl       String?
+  isActive       Boolean   @default(true)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+
+model Reservation {
+  id         String   @id @default(uuid())
+  businessId String
+  business   Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  name       String
+  phone      String
+  email      String?
+  date       DateTime
+  guestCount Int
+  tableType  String?
+  status     String   @default("pending")
+  note       String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model AnalyticsLog {
+  id         String   @id @default(uuid())
+  businessId String
+  business   Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  eventType  String   // 'page_view', 'qr_scan', 'product_click', 'search', 'waiter_call'
+  details    String?  // JSON query, item info, etc.
+  deviceType String?  // 'mobile', 'desktop', 'tablet'
+  language   String?  // 'tr', 'en', 'ru', 'de', 'ar'
+  tableNo    String?
+  createdAt  DateTime @default(now())
+}
+
+model LoginActivityLog {
+  id         String   @id @default(uuid())
+  userId     String?
+  user       User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  username   String
+  ipAddress  String?
+  userAgent  String?
+  status     String   // success, failed_bad_password, locked_out
+  createdAt  DateTime @default(now())
+}
