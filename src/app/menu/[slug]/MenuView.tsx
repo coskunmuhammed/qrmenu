@@ -1105,37 +1105,6 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
 
       {/* Footer Contact Info Targets Premium Hospitality */}
       <footer className={styles.footerContainerTarget}>
-        {/* Concierge Card Dynamic Island / Apple Wallet Aesthetic */}
-        <div className={styles.conciergeDynamicCard}>
-          <div className={styles.conciergeHeader}>
-            <div className={styles.conciergeHostInfo}>
-              <span className={styles.conciergeLabel}>DIOR CONCIERGE</span>
-              <span className={styles.conciergeTitle}>Host Service</span>
-            </div>
-            <Bell className={styles.conciergeActionIcon} size={18} />
-          </div>
-          <p className={styles.conciergeSub}>
-            Your dedicated host is ready to assist you. Select an option below:
-          </p>
-          <div className={styles.conciergeGrid}>
-            <button className={styles.conciergeActionBtn} onClick={handleCallWaiter}>
-              <Bell className={styles.conciergeActionIcon} size={18} />
-              <span>Call Waiter</span>
-            </button>
-            <button className={styles.conciergeActionBtn} onClick={() => setShowBillModal(true)}>
-              <CreditCard className={styles.conciergeActionIcon} size={18} />
-              <span>Request Bill</span>
-            </button>
-            <button className={styles.conciergeActionBtn} onClick={getWhatsappUrl ? () => window.open(getWhatsappUrl(), '_blank') : undefined}>
-              <Sparkles className={styles.conciergeActionIcon} size={18} />
-              <span>Reserve VIP</span>
-            </button>
-            <button className={styles.conciergeActionBtn} onClick={getWhatsappUrl ? () => window.open(getWhatsappUrl(), '_blank') : undefined}>
-              <HelpCircle className={styles.conciergeActionIcon} size={18} />
-              <span>Assistance</span>
-            </button>
-          </div>
-        </div>
 
         {/* Premium VIP Card */}
         {business.vipMinSpendInfo && (
