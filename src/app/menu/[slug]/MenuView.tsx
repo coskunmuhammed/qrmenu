@@ -175,14 +175,14 @@ const THEMES: Record<string, {
     borderGold: '1px solid rgba(189, 0, 255, 0.25)',
   },
   'white-premium': {
-    bg: '#f8f9fa',
-    bgSecondary: '#ffffff',
-    card: 'rgba(255, 255, 255, 0.95)',
-    primary: '#aa8620',
-    accent: '#333333',
-    text: '#1a1a1a',
-    textSecondary: '#6c757d',
-    borderGold: '1px solid rgba(170, 134, 32, 0.2)',
+    bg: '#FAFAF8',
+    bgSecondary: '#FAFAF8',
+    card: '#FFFFFF',
+    primary: '#B08D57',
+    accent: '#D6B97A',
+    text: '#1B1B1B',
+    textSecondary: '#6B7280',
+    borderGold: '1px solid #E8E3D9',
   }
 };
 
@@ -223,8 +223,8 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
   const categoryRefs = useRef<{ [key: string]: HTMLElement | null }>({});
   const categoryMenuRef = useRef<HTMLDivElement | null>(null);
 
-  // Apply custom theme parameters dynamically
-  const activeTheme = THEMES[business.themeName] || THEMES['luxury-gold'];
+  // Apply custom theme parameters dynamically (enforcing white-premium theme for UI Redesign)
+  const activeTheme = THEMES['white-premium'];
 
   // Safe Multi-language String Resolution Helper
   const resolveStr = (item: any, prefix: string) => {
@@ -419,15 +419,10 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
           --border-gold: ${activeTheme.borderGold};
           
           /* Shadows adjustments for light theme */
-          --shadow-neon-p: 0 0 15px ${business.themeName === 'white-premium' ? 'rgba(0,0,0,0.1)' : 'rgba(189, 0, 255, 0.3)'};
-          --shadow-gold: 0 0 15px ${business.themeName === 'white-premium' ? 'rgba(0,0,0,0.05)' : 'rgba(212, 175, 55, 0.2)'};
+          --shadow-neon-p: 0 4px 20px rgba(0, 0, 0, 0.02);
+          --shadow-gold: 0 4px 20px rgba(176, 141, 87, 0.05);
         }
       `}</style>
-
-      {/* Ambient glow backgrounds and moving smoke patterns */}
-      <div className={styles.nebulaGlow1} />
-      <div className={styles.nebulaGlow2} />
-      <div className={styles.smokeOverlay} />
 
       {/* Toast Alert */}
       {toast && (
@@ -760,7 +755,19 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
       {/* Footer Contact Info */}
       <footer className={styles.footer}>
         <div className={styles.footerDivider}></div>
-        <p className={styles.footerTagline}>CRYSTAL VIP CLUB EXPERIENCE</p>
+        <p className={styles.footerTagline}>{business.name}</p>
+        
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '0.82rem', color: 'var(--text-secondary)', marginBottom: '24px', fontFamily: 'var(--font-body)', letterSpacing: '0.02em', lineHeight: '1.5' }}>
+          {business.openingHours && (
+            <p>🕒 {language === 'tr' ? 'Çalışma Saatleri' : 'Opening Hours'}: {business.openingHours}</p>
+          )}
+          {business.whatsappNumber && (
+            <p>📞 {language === 'tr' ? 'Telefon' : 'Phone'}: <a href={`tel:${business.whatsappNumber}`} style={{ textDecoration: 'underline', color: 'var(--text-primary)' }}>+{business.whatsappNumber}</a></p>
+          )}
+          {business.googleMapsUrl && (
+            <p>📍 {resolveStr(business, 'description') ? resolveStr(business, 'description').split('.')[0] : ''}</p>
+          )}
+        </div>
         
         <div className={styles.footerLinks}>
           {business.instagramUsername && (

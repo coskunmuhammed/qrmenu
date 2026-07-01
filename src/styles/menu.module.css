@@ -12,54 +12,33 @@
 }
 
 .nebulaGlow1 {
-  position: fixed;
-  top: -10%;
-  left: -20%;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(189, 0, 255, 0.15) 0%, transparent 70%);
-  z-index: 0;
-  pointer-events: none;
-  filter: blur(80px);
-  animation: ambientMove1 22s ease-in-out infinite alternate;
+  display: none;
 }
 
 .nebulaGlow2 {
-  position: fixed;
-  top: 50%;
-  right: -20%;
-  width: 450px;
-  height: 450px;
-  background: radial-gradient(circle, rgba(0, 224, 255, 0.1) 0%, transparent 70%);
-  z-index: 0;
-  pointer-events: none;
-  filter: blur(90px);
-  animation: ambientMove2 28s ease-in-out infinite alternate;
+  display: none;
 }
 
 /* Smoke Overlay Effect */
 .smokeOverlay {
-  position: fixed;
-  inset: 0;
-  z-index: 1;
-  background: radial-gradient(circle at 50% 50%, rgba(3, 3, 6, 0) 0%, rgba(3, 3, 6, 0.8) 100%);
-  pointer-events: none;
+  display: none;
 }
 
 .brandHeader {
-  background: rgba(13, 13, 13, 0.6);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background: #FFFFFF;
+  border-bottom: 1px solid #ECECEC;
+  padding: 8px 0;
 }
 
 .stickyHeader {
   position: sticky;
   top: 0;
   z-index: 90;
-  background: rgba(13, 13, 13, 0.85);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: var(--border-gold);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
 }
 
 .headerTop {
@@ -75,21 +54,20 @@
 }
 
 .clubTitleGroup h1 {
-  font-family: 'Cinzel', serif;
-  font-size: 1.6rem;
-  font-weight: 700;
+  font-family: var(--font-heading);
+  font-size: 1.7rem;
+  font-weight: 600;
   margin-bottom: 6px;
-  letter-spacing: 0.1em;
-  background: linear-gradient(135deg, #ffffff 0%, var(--gold-primary) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  letter-spacing: 0.15em;
+  color: var(--text-primary);
+  text-transform: uppercase;
 }
 
 .clubSubtitle {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-body);
   font-size: 0.8rem;
   color: var(--text-secondary);
-  line-height: 1.4;
+  line-height: 1.5;
 }
 
 .langSelectorContainer {
@@ -97,17 +75,17 @@
 }
 
 .langDropdown {
-  background: #181818;
+  background: #FFFFFF;
   border: var(--border-gold);
-  color: #ffffff;
+  color: var(--text-primary);
   padding: 6px 26px 6px 12px;
   border-radius: 20px;
   font-size: 0.78rem;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-body);
   outline: none;
   cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  background-image: url("data:image/svg+xml;utf8,<svg fill='%23d4af37' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+  box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+  background-image: url("data:image/svg+xml;utf8,<svg fill='%23B08D57' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
   background-repeat: no-repeat;
   background-position: right 6px center;
   background-size: 16px;
@@ -119,13 +97,13 @@
 /* Header Quick Contact Info Row */
 .headerContactInfo {
   display: flex;
-  gap: 12px;
+  gap: 14px;
   flex-wrap: wrap;
-  padding: 0 20px 12px 20px;
-  font-size: 0.72rem;
+  padding: 0 20px 16px 20px;
+  font-size: 0.75rem;
   color: var(--text-secondary);
-  font-family: 'Outfit', sans-serif;
-  border-bottom: var(--border-gold);
+  font-family: var(--font-body);
+  border-bottom: none;
 }
 
 .contactItem {
@@ -140,10 +118,10 @@
   justify-content: space-between;
   align-items: center;
   padding: 12px 20px;
-  background: rgba(212, 175, 55, 0.08);
+  background: #FAFAF8;
   border-bottom: var(--border-gold);
   font-size: 0.85rem;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-body);
 }
 
 .tableWidgetButtons {
@@ -152,16 +130,16 @@
 }
 
 .widgetBtn {
-  background: rgba(255, 255, 255, 0.03);
+  background: #FFFFFF;
   border: var(--border-gold);
   color: var(--text-primary);
   padding: 8px 16px;
   border-radius: 20px;
   font-size: 0.78rem;
-  font-weight: 600;
+  font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-body);
   min-height: 44px; /* Accessibility compliance */
   display: flex;
   align-items: center;
@@ -170,13 +148,12 @@
 
 .widgetBtn:hover {
   background: var(--gold-primary);
-  color: var(--bg-primary);
-  box-shadow: var(--shadow-gold);
+  color: #FFFFFF;
 }
 
 .widgetBtnGold {
   background: var(--gold-primary);
-  color: var(--bg-primary);
+  color: #FFFFFF;
 }
 
 .navTabs {
@@ -190,9 +167,9 @@
   border: none;
   border-bottom: 2px solid transparent;
   color: var(--text-secondary);
-  font-family: 'Cinzel', serif;
-  font-weight: 600;
-  font-size: 0.85rem;
+  font-family: var(--font-heading);
+  font-weight: 500;
+  font-size: 0.95rem;
   padding: 16px 0;
   cursor: pointer;
   letter-spacing: 0.1em;
@@ -203,7 +180,6 @@
 .tabBtnActive {
   color: var(--gold-primary);
   border-bottom: 2px solid var(--gold-primary);
-  text-shadow: var(--shadow-gold);
 }
 
 .subHeader {
@@ -228,21 +204,21 @@
 
 .searchInput {
   width: 100%;
-  background: rgba(24, 24, 24, 0.6);
+  background: #FFFFFF;
   border: var(--border-gold);
   border-radius: 30px;
   padding: 12px 18px 12px 46px;
   color: var(--text-primary);
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-body);
   font-size: 0.9rem;
   outline: none;
   transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.01);
 }
 
 .searchInput:focus {
   border-color: var(--gold-primary);
-  box-shadow: var(--shadow-gold);
-  background: rgba(24, 24, 24, 0.9);
+  background: #FFFFFF;
 }
 
 .searchClear {
@@ -277,26 +253,24 @@
 
 /* Apple Pill-style Category Buttons */
 .categoryTab {
-  background: rgba(24, 24, 24, 0.65);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #FFFFFF;
+  border: 1px solid #E8E3D9;
   border-radius: 30px;
   padding: 10px 20px;
   color: var(--text-secondary);
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-body);
   font-size: 0.82rem;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: all 0.2s ease;
   min-height: 44px;
 }
 
 .categoryTabActive {
-  background: linear-gradient(135deg, #f5d061 0%, var(--gold-primary) 50%, #aa8620 100%);
+  background: var(--gold-primary);
   border: 1px solid var(--gold-primary);
-  color: #000000;
-  font-weight: 700;
-  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
-  text-shadow: 0 1px 1px rgba(255,255,255,0.2);
+  color: #1B1B1B;
+  font-weight: 600;
 }
 
 .content {
@@ -322,10 +296,10 @@
 }
 
 .categoryTitle {
-  font-family: 'Cinzel', serif;
-  font-size: 1.25rem;
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
   font-weight: 600;
-  margin-bottom: 18px;
+  margin-bottom: 20px;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -335,14 +309,16 @@
   content: '';
   flex: 1;
   height: 1px;
-  background: linear-gradient(90deg, var(--gold-primary), transparent);
-  opacity: 0.25;
+  background: var(--gold-primary);
+  opacity: 0.3;
 }
 
 .categoryTitle span {
-  background: linear-gradient(135deg, #ffffff 0%, var(--gold-primary) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--text-primary);
+  background: none;
+  -webkit-text-fill-color: initial;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 }
 
 .productsGrid {
@@ -351,33 +327,36 @@
   gap: 20px;
 }
 
-/* Premium Antrasit Cards with Hover Glow */
+/* Premium White Luxury Cards */
 .productCard {
   display: flex;
-  background: #181818;
-  border: 1px solid rgba(212, 175, 55, 0.15);
-  border-radius: 16px;
+  background: #FFFFFF;
+  border: 1px solid #E8E3D9;
+  border-radius: 18px;
   overflow: hidden;
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: all 0.2s ease;
   cursor: pointer;
   min-height: 125px;
   position: relative;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
 }
 
 .productCard:hover {
-  transform: translateY(-3px) scale(1.01);
-  box-shadow: 0 10px 25px rgba(212, 175, 55, 0.15);
-  border-color: var(--gold-primary);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+  border-color: var(--gold-light);
 }
 
 .productImageWrapper {
   position: relative;
-  width: 115px;
-  align-self: stretch;
-  flex-shrink: 0;
-  background: #101010;
+  width: 100px;
+  height: 100px;
+  margin: 16px 0 16px 16px;
+  border-radius: 12px;
   overflow: hidden;
+  flex-shrink: 0;
+  background: #FAFAF8;
+  align-self: center;
 }
 
 .productImage {
@@ -386,11 +365,11 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: transform 0.4s ease;
 }
 
 .productCard:hover .productImage {
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 
 .unavailable {
@@ -403,17 +382,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.75);
+  background: rgba(255, 255, 255, 0.85);
   color: #ff3b30;
   font-weight: 700;
   font-size: 0.8rem;
   letter-spacing: 0.05em;
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
 }
 
 .productInfo {
   flex: 1;
-  padding: 14px 16px;
+  padding: 16px 18px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -428,7 +407,7 @@
 }
 
 .productName {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-body);
   font-size: 1rem;
   font-weight: 600;
   color: var(--text-primary);
@@ -437,58 +416,42 @@
 /* Badge styling */
 .badgeContainer {
   display: flex;
-  gap: 4px;
+  gap: 6px;
   flex-wrap: wrap;
 }
 
 .popularBadge, .newBadge, .recommendedBadge, .chefBadge, .limitedBadge, .vipBadge {
-  font-family: 'Outfit', sans-serif;
-  font-size: 0.58rem;
-  font-weight: 700;
-  padding: 2px 6px;
-  border-radius: 4px;
-  letter-spacing: 0.03em;
+  font-family: var(--font-body);
+  font-size: 0.62rem;
+  font-weight: 500;
+  padding: 3px 8px;
+  border-radius: 20px;
+  letter-spacing: 0.02em;
   white-space: nowrap;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 3px;
-}
-
-.popularBadge {
-  background: linear-gradient(135deg, var(--neon-purple), var(--gold-primary));
-  color: #ffffff;
-}
-
-.newBadge {
-  background: #00e0ff;
-  color: #030306;
-}
-
-.recommendedBadge {
-  background: var(--gold-primary);
-  color: #030306;
+  gap: 4px;
+  background: #FFFFFF;
+  border: 1px solid #E8E3D9;
+  color: var(--gold-primary);
 }
 
 .chefBadge {
-  background: #ff9500;
-  color: white;
+  border-color: rgba(176, 141, 87, 0.4);
+  background: rgba(176, 141, 87, 0.05);
 }
 
 .limitedBadge {
-  background: #ff3b30;
-  color: white;
-}
-
-.vipBadge {
-  background: linear-gradient(135deg, #aa8620, #d4af37);
-  color: black;
+  border-color: rgba(255, 59, 48, 0.25);
+  background: rgba(255, 59, 48, 0.03);
+  color: #ff3b30;
 }
 
 .productDescription {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-body);
   font-size: 0.78rem;
   color: var(--text-secondary);
-  line-height: 1.4;
+  line-height: 1.5;
   margin-bottom: 8px;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -512,11 +475,10 @@
 
 /* Premium Gold Pricing Design */
 .productPrice {
-  font-family: 'Cinzel', serif;
-  font-size: 1rem;
-  font-weight: 700;
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 600;
   color: var(--gold-primary);
-  text-shadow: 0 2px 10px rgba(212, 175, 55, 0.2);
 }
 
 .oldPricePreview {
@@ -535,9 +497,9 @@
 
 /* Shimmer Loading Skeletons */
 .skeletonCard {
-  background: #181818;
-  border: 1px solid rgba(255, 255, 255, 0.04);
-  border-radius: 16px;
+  background: #FFFFFF;
+  border: 1px solid #E8E3D9;
+  border-radius: 18px;
   height: 110px;
   display: flex;
   overflow: hidden;
@@ -561,7 +523,7 @@
 
 .skeletonLine {
   height: 12px;
-  background: linear-gradient(90deg, #1f1f1f 25%, #2a2a2a 50%, #1f1f1f 75%);
+  background: linear-gradient(90deg, #FAFAF8 25%, #ECECEC 50%, #FAFAF8 75%);
   background-size: 200% 100%;
   animation: shimmer 1.6s infinite;
   border-radius: 4px;
@@ -575,22 +537,22 @@
 .vipCard {
   margin-top: 30px;
   margin-bottom: 20px;
-  border-radius: 16px;
+  border-radius: 18px;
   padding: 24px;
   text-align: center;
   border: var(--border-gold);
-  background: rgba(212, 175, 55, 0.05);
+  background: #FFFFFF;
 }
 
 .vipCard h3 {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 1.3rem;
   margin-bottom: 10px;
   letter-spacing: 0.2em;
 }
 
 .vipCard p {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-body);
   font-size: 0.85rem;
   color: var(--text-secondary);
   line-height: 1.5;
@@ -607,11 +569,11 @@
 }
 
 .sectionHeading {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 1.3rem;
   margin-bottom: 24px;
   text-align: center;
-  color: var(--gold-primary);
+  color: var(--text-primary);
   position: relative;
   display: inline-block;
   left: 50%;
@@ -623,18 +585,18 @@
   content: '';
   display: block;
   width: 60px;
-  height: 2px;
+  height: 1px;
   background: var(--gold-primary);
   margin: 10px auto 0 auto;
 }
 
 .campaignCard {
-  border-radius: 16px;
+  border-radius: 18px;
   overflow: hidden;
   margin-bottom: 24px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
   border: var(--border-gold);
-  background: #181818;
+  background: #FFFFFF;
 }
 
 .campaignImage {
@@ -648,14 +610,15 @@
 }
 
 .campaignInfo h3 {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 1.15rem;
   margin-bottom: 10px;
   letter-spacing: 0.05em;
+  color: var(--text-primary);
 }
 
 .campaignInfo p {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-body);
   font-size: 0.85rem;
   color: var(--text-secondary);
   line-height: 1.6;
@@ -663,17 +626,17 @@
 
 /* Events styles */
 .eventCard {
-  border-radius: 16px;
+  border-radius: 18px;
   overflow: hidden;
   margin-bottom: 28px;
   border: var(--border-gold);
-  background: #181818;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  background: #FFFFFF;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
 }
 
 .eventImageWrapper {
   height: 195px;
-  background: #101010;
+  background: #FAFAF8;
 }
 
 .eventImage {
@@ -687,24 +650,25 @@
 }
 
 .eventDate {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-body);
   font-size: 0.75rem;
-  color: var(--neon-purple);
-  font-weight: 700;
+  color: var(--gold-primary);
+  font-weight: 500;
   margin-bottom: 8px;
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
 
 .eventTitle {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 1.2rem;
   margin-bottom: 8px;
   letter-spacing: 0.05em;
+  color: var(--text-primary);
 }
 
 .eventDj {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-body);
   font-size: 0.88rem;
   color: var(--gold-primary);
   font-weight: 500;
@@ -712,7 +676,7 @@
 }
 
 .eventDescription {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-body);
   font-size: 0.82rem;
   color: var(--text-secondary);
   line-height: 1.6;
@@ -734,14 +698,14 @@
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--gold-primary), var(--neon-purple));
-  color: #ffffff;
-  border: none;
+  background: #FFFFFF;
+  color: var(--gold-primary);
+  border: 1px solid #E8E3D9;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 4px 20px rgba(189, 0, 255, 0.4);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   min-width: 56px;
   min-height: 56px;
@@ -749,8 +713,9 @@
 
 .fabToggleActive {
   transform: rotate(135deg);
-  background: #ff3b30;
-  box-shadow: 0 4px 15px rgba(255, 59, 48, 0.5);
+  background: #FAFAF8;
+  color: var(--gold-primary);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
 }
 
 .fabMenu {
@@ -773,14 +738,14 @@
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: #1c1c1c;
-  border: 1px solid rgba(212, 175, 55, 0.3);
-  color: #ffffff;
+  background: #FFFFFF;
+  border: 1px solid #E8E3D9;
+  color: var(--gold-primary);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
   transition: all 0.2s ease;
   position: relative;
   min-width: 48px;
@@ -789,25 +754,25 @@
 
 .fabItem:hover {
   background: var(--gold-primary);
-  color: #030306;
+  color: #FFFFFF;
   transform: scale(1.08);
 }
 
 .fabLabel {
   position: absolute;
   right: 60px;
-  background: rgba(24, 24, 24, 0.95);
-  color: #ffffff;
-  font-family: 'Outfit', sans-serif;
+  background: rgba(255, 255, 255, 0.95);
+  color: var(--text-primary);
+  font-family: var(--font-body);
   font-size: 0.72rem;
   padding: 6px 10px;
   border-radius: 20px;
   white-space: nowrap;
-  border: 1px solid rgba(212,175,55,0.25);
+  border: 1px solid #E8E3D9;
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.2s ease;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.04);
 }
 
 .fabItem:hover .fabLabel {
@@ -824,12 +789,12 @@
 
 .footerDivider {
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.2), transparent);
+  background: #E8E3D9;
   margin-bottom: 28px;
 }
 
 .footerTagline {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 0.75rem;
   letter-spacing: 0.25em;
   color: var(--text-secondary);
@@ -846,7 +811,7 @@
 .footerLink {
   padding: 10px 20px;
   border-radius: 24px;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-body);
   font-size: 0.8rem;
   font-weight: 500;
   display: inline-flex;
@@ -872,7 +837,7 @@
 .modalOverlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.9);
+  background: rgba(27, 27, 27, 0.4);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   z-index: 1000;
@@ -900,7 +865,7 @@
   border-top: var(--border-gold);
   border-left: var(--border-gold);
   border-right: var(--border-gold);
-  background: #121212;
+  background: #FFFFFF;
 }
 
 @keyframes slideUp {
@@ -915,9 +880,9 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.6);
+  background: #FFFFFF;
   border: var(--border-gold);
-  color: white;
+  color: var(--text-primary);
   font-size: 1.4rem;
   display: flex;
   align-items: center;
@@ -930,7 +895,7 @@
 }
 
 .modalClose:hover {
-  background: rgba(0, 0, 0, 0.9);
+  background: #FAFAF8;
   border-color: var(--gold-primary);
   color: var(--gold-primary);
 }
@@ -938,7 +903,7 @@
 .modalImageWrapper {
   width: 100%;
   height: 250px;
-  background: #0d0d1a;
+  background: #FAFAF8;
   position: relative;
 }
 
@@ -963,12 +928,10 @@
 }
 
 .modalHeaderRow h2 {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 1.4rem;
   letter-spacing: 0.05em;
-  background: linear-gradient(135deg, #ffffff 0%, var(--gold-primary) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--text-primary);
 }
 
 .modalAvailability {
@@ -979,18 +942,18 @@
   color: #30d158;
   font-size: 0.8rem;
   font-weight: 600;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-body);
 }
 
 .statusUnavailable {
   color: #ff453a;
   font-size: 0.8rem;
   font-weight: 600;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-body);
 }
 
 .modalDescription {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-body);
   font-size: 0.9rem;
   color: var(--text-secondary);
   line-height: 1.6;
@@ -998,7 +961,7 @@
 }
 
 .ingredientsPanel {
-  background: rgba(255, 255, 255, 0.02);
+  background: #FAFAF8;
   border: var(--border-gold);
   border-radius: 12px;
   padding: 16px;
@@ -1006,7 +969,7 @@
   font-size: 0.82rem;
   color: var(--text-secondary);
   line-height: 1.6;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-body);
 }
 
 .ingredientsPanel p {
@@ -1031,12 +994,12 @@
 }
 
 .variationBtn {
-  background: rgba(255, 255, 255, 0.02);
+  background: #FFFFFF;
   border: var(--border-gold);
   color: var(--text-secondary);
   padding: 10px 16px;
   border-radius: 8px;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-body);
   font-size: 0.82rem;
   font-weight: 500;
   cursor: pointer;
@@ -1045,11 +1008,10 @@
 }
 
 .variationBtnActive {
-  background: linear-gradient(135deg, #f5d061, var(--gold-primary));
-  color: #030306;
+  background: var(--gold-primary);
+  color: #1B1B1B;
   border-color: var(--gold-primary);
-  font-weight: 700;
-  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+  font-weight: 600;
 }
 
 .modalFooter {
@@ -1061,7 +1023,7 @@
 }
 
 .modalPriceLabel {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-body);
   font-size: 0.8rem;
   color: var(--text-secondary);
   text-transform: uppercase;
@@ -1069,11 +1031,10 @@
 }
 
 .modalPrice {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 1.4rem;
-  font-weight: 700;
+  font-weight: 600;
   color: var(--gold-primary);
-  text-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);
 }
 
 /* Welcome highlight offer popup */
@@ -1082,9 +1043,9 @@
   max-width: 400px;
   border-radius: 20px;
   padding: 28px;
-  background: #181818;
+  background: #FFFFFF;
   border: var(--border-gold);
-  box-shadow: 0 10px 40px rgba(212, 175, 55, 0.3);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
   text-align: center;
   position: relative;
   animation: popupZoom 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -1096,22 +1057,22 @@
 }
 
 .welcomeTitle {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-heading);
   font-size: 1.4rem;
   margin-bottom: 12px;
   color: var(--gold-primary);
 }
 
 .welcomeBanner {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-body);
   font-size: 1.1rem;
-  font-weight: 700;
-  color: #ffffff;
+  font-weight: 600;
+  color: var(--text-primary);
   margin-bottom: 8px;
 }
 
 .welcomeDiscount {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-body);
   font-size: 0.9rem;
   color: #30d158;
   font-weight: 600;
@@ -1119,7 +1080,7 @@
 }
 
 .welcomeValid {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-body);
   font-size: 0.75rem;
   color: var(--text-secondary);
   margin-bottom: 20px;
@@ -1137,11 +1098,11 @@
   font-size: 0.85rem;
   font-weight: 600;
   text-align: center;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   animation: slideDownFade 0.4s ease-out;
   width: 90%;
   max-width: 400px;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-body);
 }
 
 @keyframes slideDownFade {
@@ -1152,13 +1113,13 @@
 .toastSuccess {
   border: 1px solid #30d158;
   color: #30d158;
-  background: rgba(48, 209, 88, 0.1);
+  background: rgba(48, 209, 88, 0.05);
 }
 
 .toastError {
   border: 1px solid #ff453a;
   color: #ff453a;
-  background: rgba(255, 69, 58, 0.1);
+  background: rgba(255, 69, 58, 0.05);
 }
 
 /* Responsive Grid Adjustments resolved via auto-fit minmax */
