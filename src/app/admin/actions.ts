@@ -16,16 +16,13 @@ async function checkAuth() {
 // Helper to assert businessId is available for standard tenant actions
 async function getTenantBusinessId() {
   const session = await checkAuth();
-  if (session.role === 'super_admin') {
-    // Super admin fallback (get first business if not assigned)
+  if (session.role === 'super_admin' || session.role === 'admin' || !session.businessId) {
+    // Super admin & admin fallback (get first business if not assigned or null)
     const business = await prisma.business.findFirst();
     if (!business) throw new Error('İşletme bulunamadı.');
     return business.id;
   }
   
-  if (!session.businessId) {
-    throw new Error('Kullanıcıya atanmış bir işletme bulunamadı.');
-  }
   return session.businessId;
 }
 
