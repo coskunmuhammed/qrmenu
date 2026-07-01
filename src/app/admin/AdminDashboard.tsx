@@ -2222,36 +2222,36 @@ export default function AdminDashboard({
               </form>
 
               {/* LIVE QR CODE SECTION */}
-              <div className={styles.qrSection}>
+              <div className={styles.qrSection} style={{ maxWidth: '420px', margin: '30px auto 0 auto', width: '100%' }}>
                 <h3 className="text-gold" style={{ marginBottom: '10px' }}>Menü QR Kodu (V2 SVG Generator)</h3>
                 <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '20px' }}>
                   Sistem kendi vector QR kodunu üretmektedir. QR kodu taranarak doğrudan menüye yönlendirilir.
                 </p>
 
-                <div className={styles.qrImagePlaceholder}>
+                <div className={styles.qrImagePlaceholder} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={getQrCodeUrl()} alt="Crystal Menu QR Code" />
+                  <img src={getQrCodeUrl()} alt="Dior Menu QR Code" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                 </div>
 
-                <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Canlı Menü Adresi:</p>
-                <a href={getMenuUrl()} target="_blank" rel="noopener noreferrer" className={styles.qrLinkText}>
+                <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '4px' }}>Canlı Menü Adresi:</p>
+                <a href={getMenuUrl()} target="_blank" rel="noopener noreferrer" className={styles.qrLinkText} style={{ color: 'var(--color-accent, #C8A977)', textDecoration: 'underline', wordBreak: 'break-all' }}>
                   {getMenuUrl()}
                 </a>
 
                 {/* Printable Window PDF & Image download actions */}
-                <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
+                <div style={{ display: 'flex', gap: '10px', marginTop: '20px', justifyContent: 'center', width: '100%' }}>
                   <button 
                     type="button" 
                     className="btn-primary" 
-                    style={{ fontSize: '0.8rem', padding: '10px 16px' }}
+                    style={{ fontSize: '0.8rem', padding: '10px 16px', flex: '1' }}
                     onClick={() => window.open(getQrCodeUrl(), '_blank')}
                   >
                     📥 PNG İndir
                   </button>
                   <button 
                     type="button" 
-                    className="btn-neon" 
-                    style={{ fontSize: '0.8rem', padding: '10px 16px' }}
+                    className="btn-primary" 
+                    style={{ fontSize: '0.8rem', padding: '10px 16px', flex: '1', backgroundColor: 'transparent', color: 'var(--color-accent, #C8A977)', border: '1px solid var(--border-gold, #E8DED0)' }}
                     onClick={() => {
                       const printWindow = window.open('', '_blank');
                       if (printWindow) {
