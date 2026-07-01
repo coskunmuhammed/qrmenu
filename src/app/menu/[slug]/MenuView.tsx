@@ -528,6 +528,35 @@ const TRANSLATIONS_LOOKUP: Record<string, Record<string, string>> = {
 
 export default function MenuView({ business, tableNo }: MenuViewProps) {
   const { language, setLanguage, t, isRtl } = useLanguage();
+
+  // Select featured products dynamically from business categories
+  const featuredProducts = business.categories
+    .flatMap((cat) => cat.products)
+    .filter((prod) => 
+      prod.name_en === 'Purple Rain' || 
+      prod.name_en === 'Dom Pérignon Vintage' || 
+      prod.name_en === 'Macallan 12 Y.O. (Glass)' ||
+      prod.name_en === 'Royal Sapphire VIP Package'
+    );
+
+  const campaigns = [
+    {
+      id: 'camp-1',
+      title_tr: 'Happy Hour Geceleri',
+      title_en: 'Happy Hour Evenings',
+      desc_tr: 'Her gün 17:00 - 19:00 saatleri arasında signature kokteyllerde %20 indirim.',
+      desc_en: '20% off on signature cocktails every day between 17:00 - 19:00.',
+      image: 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=600&auto=format&fit=crop&q=80'
+    },
+    {
+      id: 'camp-2',
+      title_tr: 'Dior VIP Deneyimi',
+      title_en: 'Dior VIP Experience',
+      desc_tr: 'Lüks localarımızda özel hizmet ve şampanya ikramları.',
+      desc_en: 'Private waiter service and complimentary champagne in our luxury daybeds.',
+      image: 'https://images.unsplash.com/photo-1543007630-9710e4a00a20?w=600&auto=format&fit=crop&q=80'
+    }
+  ];
   
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<'menu' | 'cocktails' | 'food' | 'wine' | 'champagne' | 'events'>('menu');
@@ -758,6 +787,40 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
     return tags;
   };
 
+  const getPairingText = (product: Product) => {
+    const name = (product.name_en || '').toLowerCase();
+    if (name.includes('champagne') || name.includes('dom')) {
+      return language === 'tr' ? 'VIP Peynir ve Meyve Sunumu ile mükemmel uyum sağlar.' : 'Pairs beautifully with our VIP Cheese & Fruit Presentation.';
+    }
+    if (name.includes('whiskey') || name.includes('macallan') || name.includes('chivas')) {
+      return language === 'tr' ? 'Lüks kuruyemiş tabağı ve çikolata ile servis edilmesi önerilir.' : 'Best paired with our luxury nut platter and chocolates.';
+    }
+    return language === 'tr' ? 'Didim sahil esintisinde taze meyve tabağı ile önerilir.' : 'Recommended with a fresh fruit platter in the beach breeze.';
+  };
+
+  const handleShare = async () => {
+    if (!selectedProduct) return;
+    const shareUrl = `${window.location.origin}/menu/${business.slug}?product=${selectedProduct.id}`;
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: resolveStr(selectedProduct, 'name'),
+          text: resolveStr(selectedProduct, 'description'),
+          url: shareUrl,
+        });
+      } catch (e) {
+        console.log('Share canceled or failed', e);
+      }
+    } else {
+      try {
+        await navigator.clipboard.writeText(shareUrl);
+        triggerToast(language === 'tr' ? 'Ürün linki kopyalandı!' : 'Product link copied!');
+      } catch (err) {
+        console.error('Failed to copy', err);
+      }
+    }
+  };
+
   return (
     <div className="menu-container">
       {/* Inject selected theme variables */}
@@ -786,113 +849,81 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
       )}
 
       {/* Brand Branding Header (non-sticky, scrolls away) */}
-      <div className={styles.brandHeader}>
-        {/* Palm Branch Shadow Overlay */}
-        <svg className={styles.palmShadow} viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <g opacity="0.045" filter="url(#blur-palm)">
-            <path d="M500,0 C420,100 350,150 150,300 C120,320 80,360 0,500" stroke="#000" strokeWidth="8" strokeLinecap="round"/>
-            <path d="M420,100 C390,50 350,10 320,0" stroke="#000" strokeWidth="4" strokeLinecap="round"/>
-            <path d="M380,120 C330,80 290,40 260,30" stroke="#000" strokeWidth="4" strokeLinecap="round"/>
-            <path d="M350,140 C290,100 240,60 210,50" stroke="#000" strokeWidth="4" strokeLinecap="round"/>
-            <path d="M310,165 C250,125 190,85 160,75" stroke="#000" strokeWidth="4" strokeLinecap="round"/>
-            <path d="M280,185 C210,145 150,105 120,95" stroke="#000" strokeWidth="4" strokeLinecap="round"/>
-            <path d="M240,210 C170,170 110,130 80,120" stroke="#000" strokeWidth="4" strokeLinecap="round"/>
-            <path d="M200,235 C130,195 70,155 40,145" stroke="#000" strokeWidth="4" strokeLinecap="round"/>
-            <path d="M160,260 C90,220 30,180 0,170" stroke="#000" strokeWidth="4" strokeLinecap="round"/>
-            <path d="M420,100 C450,150 490,190 500,200" stroke="#000" strokeWidth="4" strokeLinecap="round"/>
-            <path d="M380,120 C420,180 450,210 470,230" stroke="#000" strokeWidth="4" strokeLinecap="round"/>
-            <path d="M350,140 C380,200 410,235 430,250" stroke="#000" strokeWidth="4" strokeLinecap="round"/>
-            <path d="M310,165 C340,225 370,260 390,275" stroke="#000" strokeWidth="4" strokeLinecap="round"/>
-            <path d="M280,185 C310,245 335,280 350,295" stroke="#000" strokeWidth="4" strokeLinecap="round"/>
-            <path d="M240,210 C270,270 295,305 310,320" stroke="#000" strokeWidth="4" strokeLinecap="round"/>
-            <path d="M200,235 C230,295 255,330 270,345" stroke="#000" strokeWidth="4" strokeLinecap="round"/>
-            <path d="M160,260 C190,320 215,355 230,370" stroke="#000" strokeWidth="4" strokeLinecap="round"/>
-          </g>
-          <defs>
-            <filter id="blur-palm" x="-50" y="-50" width="600" height="600" filterUnits="userSpaceOnUse">
-              <feGaussianBlur stdDeviation="12" />
-            </filter>
-          </defs>
-        </svg>
-
-        <div className={styles.headerTop} style={{ flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
-          {/* Custom SVG Dior Beach Club Logo */}
-          <div className={styles.logoContainer}>
+      <div className={styles.heroBannerV3}>
+        <img 
+          src="https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=1200&auto=format&fit=crop&q=80" 
+          alt="Dior Beach Club Backdrop" 
+          className={styles.heroImageV3}
+        />
+        <div className={styles.heroGradientV3}></div>
+        <div className={styles.heroContentV3}>
+          {/* Custom SVG Dior Beach Club Logo (white version overlay) */}
+          <div className={styles.heroLogoV3} style={{ width: '220px' }}>
             <svg viewBox="0 0 300 110" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">
               <style>{`
-                .brand-dior {
+                .brand-dior-white {
                   font-family: 'Playfair Display', 'Cormorant Garamond', 'Times New Roman', serif;
                   font-size: 54px;
-                  fill: #1D1D1D;
+                  fill: #FFFFFF;
                   letter-spacing: 5px;
                 }
-                .brand-sub {
+                .brand-sub-white {
                   font-family: 'Inter', 'Manrope', sans-serif;
                   font-size: 11px;
-                  fill: #6D6D6D;
+                  fill: #ECE7DF;
                   letter-spacing: 5px;
                   font-weight: 500;
                 }
-                .wave-line {
-                  stroke: #1D1D1D;
+                .wave-line-white {
+                  stroke: #FFFFFF;
                   stroke-width: 1.8;
                   fill: none;
                   stroke-linecap: round;
                 }
               `}</style>
               <g transform="translate(150, 50)" textAnchor="middle">
-                <text x="-48" y="5" className="brand-dior" textAnchor="middle">DI</text>
+                <text x="-48" y="5" className="brand-dior-white" textAnchor="middle">DI</text>
                 <g transform="translate(0, -12)">
-                  <circle cx="0" cy="0" r="23" stroke="#1D1D1D" strokeWidth="4.5" fill="none" />
-                  <path d="M-15,4 Q-7,0 0,4 T15,4" className="wave-line" />
-                  <path d="M-13,-2 Q-6.5,-5 0,-2 T13,-2" className="wave-line" />
+                  <circle cx="0" cy="0" r="23" stroke="#FFFFFF" strokeWidth="4.5" fill="none" />
+                  <path d="M-15,4 Q-7,0 0,4 T15,4" className="wave-line-white" />
+                  <path d="M-13,-2 Q-6.5,-5 0,-2 T13,-2" className="wave-line-white" />
                 </g>
-                <text x="48" y="5" className="brand-dior" textAnchor="middle">R</text>
-                <text x="0" y="38" className="brand-sub" textAnchor="middle">BEACH CLUB</text>
-                <line x1="-105" y1="34" x2="-62" y2="34" stroke="#6D6D6D" strokeWidth="0.8" />
-                <line x1="62" y1="34" x2="105" y2="34" stroke="#6D6D6D" strokeWidth="0.8" />
+                <text x="48" y="5" className="brand-dior-white" textAnchor="middle">R</text>
+                <text x="0" y="38" className="brand-sub-white" textAnchor="middle">BEACH CLUB</text>
+                <line x1="-105" y1="34" x2="-62" y2="34" stroke="#ECE7DF" strokeWidth="0.8" />
+                <line x1="62" y1="34" x2="105" y2="34" stroke="#ECE7DF" strokeWidth="0.8" />
               </g>
             </svg>
           </div>
 
-          <p className={styles.clubSubtitle} style={{ textAlign: 'center', maxWidth: '380px', margin: '0 auto', fontSize: '0.85rem' }}>
+          <p style={{ textAlign: 'center', maxWidth: '340px', margin: '0 auto', fontSize: '0.8rem', color: '#ECE7DF', fontFamily: 'var(--font-body)', letterSpacing: '0.02em', lineHeight: '1.5', opacity: '0.95' }}>
             {resolveStr(business, 'description')}
           </p>
 
-          {/* Multi Language Select Dropdown */}
-          <div className={styles.langSelectorContainer} style={{ marginTop: '8px' }}>
+          <div className={styles.heroMetaV3}>
+            <span>📍 Didim</span>
+            <span>🕒 09:00 - 02:00</span>
+            <a href="https://www.instagram.com/diorbeachclub_?igsh=ZzRieTY5Z25xeHM1" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'underline' }}>
+              📷 Instagram
+            </a>
+          </div>
+
+          {/* Language Selector Overlay */}
+          <div style={{ marginTop: '16px' }}>
             <select
               value={language}
               onChange={(e) => setLanguage(e.target.value as Language)}
               className={styles.langDropdown}
+              style={{ background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(10px)', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.25)', padding: '5px 24px 5px 12px' }}
               aria-label="Dil Seçimi / Select Language"
             >
-              <option value="tr">TR</option>
-              <option value="en">EN</option>
-              <option value="ru">RU</option>
-              <option value="de">DE</option>
-              <option value="ar">AR</option>
+              <option value="tr" style={{ color: '#1A1A1A' }}>TR</option>
+              <option value="en" style={{ color: '#1A1A1A' }}>EN</option>
+              <option value="ru" style={{ color: '#1A1A1A' }}>RU</option>
+              <option value="de" style={{ color: '#1A1A1A' }}>DE</option>
+              <option value="ar" style={{ color: '#1A1A1A' }}>AR</option>
             </select>
           </div>
-        </div>
-
-        {/* Quick Contact rows (Hours, Maps, Instagram) */}
-        <div className={styles.headerContactInfo} style={{ justifyContent: 'center', flexWrap: 'wrap', gap: '12px 18px', marginTop: '16px' }}>
-          <span className={styles.contactItem} style={{ fontStyle: 'normal' }}>
-            📍 Didim / Altınkum
-          </span>
-          <a href="https://www.instagram.com/diorbeachclub_?igsh=ZzRieTY5Z25xeHM1" target="_blank" rel="noopener noreferrer" className={styles.contactItem}>
-            📷 Instagram
-          </a>
-          <a href="https://maps.app.goo.gl/1Vji6CvwNdqSH3Jn9?g_st=i" target="_blank" rel="noopener noreferrer" className={styles.contactItem}>
-            🗺 {language === 'tr' ? 'Yol Tarifi' : 'Directions'}
-          </a>
-          <a href="tel:+905322098964" className={styles.contactItem}>
-            📞 {language === 'tr' ? 'Telefon' : 'Phone'}
-          </a>
-          <span className={styles.contactItem}>
-            🕒 09:00 - 02:00
-          </span>
         </div>
       </div>
 
@@ -984,7 +1015,7 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
                   className={`${styles.categoryTab} ${activeCategory === 'all' ? styles.categoryTabActive : ''}`}
                   onClick={() => scrollToCategory('all')}
                 >
-                  {t('all')}
+                  {t('all')} ({filteredCategories.reduce((acc, cat) => acc + cat.products.length, 0)})
                 </button>
                 {filteredCategories.map((cat) => (
                   <button
@@ -1004,6 +1035,42 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
 
       {/* Main Content Area */}
       <main className={styles.content}>
+        {/* Featured Selection Section */}
+        {activeTab !== 'events' && featuredProducts.length > 0 && searchQuery === '' && activeCategory === 'all' && (
+          <div className={styles.featuredSection}>
+            <h3 className={styles.sectionHeadingV3}>
+              {language === 'tr' ? 'Öne Çıkan Lezzetler' : 'Featured Selection'}
+            </h3>
+            <div className={styles.featuredContainer}>
+              {featuredProducts.map((product) => (
+                <div 
+                  key={product.id} 
+                  className={styles.featuredCard}
+                  onClick={() => setSelectedProduct(product)}
+                >
+                  <div className={styles.featuredBadge}>
+                    ⭐ {language === 'tr' ? 'Seçkin' : 'Signature'}
+                  </div>
+                  {product.imageUrl && (
+                    <img src={product.imageUrl} alt={resolveStr(product, 'name')} className={styles.featuredImage} />
+                  )}
+                  <div className={styles.featuredOverlay}></div>
+                  <div className={styles.featuredInfo}>
+                    <h4 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.25rem', fontWeight: '500', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                      {resolveStr(product, 'name')}
+                    </h4>
+                    <p style={{ fontSize: '0.72rem', color: '#ECE7DF', opacity: '0.9', display: '-webkit-box', WebkitLineClamp: '2', WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                      {resolveStr(product, 'description')}
+                    </p>
+                    <span style={{ fontSize: '1rem', fontWeight: '600', color: 'var(--gold-primary)', marginTop: '4px' }}>
+                      {product.price.toLocaleString()} {t('currency')}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
         
         {/* TAB 1: MENU */}
         {activeTab !== 'events' && (
@@ -1120,6 +1187,31 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
               <div className={`${styles.vipCard} animate-pulse-gold`}>
                 <h3 className="text-gold">👑 VIP SERVICE</h3>
                 <p>{business.vipMinSpendInfo}</p>
+              </div>
+            )}
+
+            {/* Campaigns Section */}
+            {searchQuery === '' && activeCategory === 'all' && (
+              <div className={styles.campaignsSection}>
+                <h3 className={styles.sectionHeadingV3}>
+                  {language === 'tr' ? 'Ayrıcalıklar & Kampanyalar' : 'Privileges & Campaigns'}
+                </h3>
+                <div className={styles.campaignsSlider}>
+                  {campaigns.map((camp) => (
+                    <div key={camp.id} className={styles.campaignCard}>
+                      <img src={camp.image} alt={language === 'tr' ? camp.title_tr : camp.title_en} className={styles.campaignImage} />
+                      <div className={styles.campaignOverlay}></div>
+                      <div className={styles.campaignContent}>
+                        <h4 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.15rem', fontWeight: '500', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '4px' }}>
+                          {language === 'tr' ? camp.title_tr : camp.title_en}
+                        </h4>
+                        <p style={{ fontSize: '0.72rem', color: '#ECE7DF', opacity: '0.9' }}>
+                          {language === 'tr' ? camp.desc_tr : camp.desc_en}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
           </div>
@@ -1290,37 +1382,38 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
         </div>
       )}
 
-      {/* POPUP DETAIL MODAL */}
+      {/* BOTTOM SHEET PRODUCT DETAIL (V3 Redesign) */}
       {selectedProduct && (
-        <div className={styles.modalOverlay} onClick={() => setSelectedProduct(null)} role="dialog" aria-modal="true">
-          <div 
-            className={`${styles.modalContent}`}
-            onClick={(e) => e.stopPropagation()}
-          >
+        <>
+          <div className={styles.sheetBackdrop} onClick={() => { setSelectedProduct(null); setSelectedVar(null); }} />
+          <div className={styles.bottomSheet}>
+            <div className={styles.sheetHandle} />
             <button 
               className={styles.modalClose} 
-              onClick={() => setSelectedProduct(null)}
+              onClick={() => { setSelectedProduct(null); setSelectedVar(null); }}
               aria-label="Kapat"
+              style={{ top: '20px', right: '20px' }}
             >
               ×
             </button>
 
             {selectedProduct.imageUrl && (
-              <div className={styles.modalImageWrapper}>
+              <div className={styles.modalImageWrapper} style={{ width: '100%', aspectRatio: '16/10', margin: '0 0 20px 0', borderRadius: '16px', overflow: 'hidden' }}>
                 <img 
                   src={selectedProduct.imageUrl} 
                   alt={resolveStr(selectedProduct, 'name')} 
                   className={styles.modalImage}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                 />
               </div>
             )}
 
-            <div className={styles.modalDetails}>
-              <div className={styles.modalHeaderRow}>
-                <h2>
+            <div className={styles.modalDetails} style={{ padding: '0' }}>
+              <div className={styles.modalHeaderRow} style={{ marginBottom: '10px' }}>
+                <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem', fontWeight: '500', color: 'var(--text-primary)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
                   {resolveStr(selectedProduct, 'name')}
                 </h2>
-                <div className={styles.badgeContainer}>
+                <div className={styles.badgeContainer} style={{ marginTop: '6px' }}>
                   {getProductTags(selectedProduct).map((tag, idx) => (
                     <span key={idx} className={tag.class}>
                       {tag.icon} {tag.label}
@@ -1329,35 +1422,46 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
                 </div>
               </div>
 
-              <div className={styles.modalAvailability}>
-                <span className={selectedProduct.isAvailable ? styles.statusAvailable : styles.statusUnavailable}>
+              <div className={styles.modalAvailability} style={{ marginBottom: '14px' }}>
+                <span className={selectedProduct.isAvailable ? styles.statusAvailable : styles.statusUnavailable} style={{ fontSize: '0.78rem' }}>
                   {selectedProduct.isAvailable ? `● ${t('inStock')}` : `● ${t('outOfStock')}`}
                 </span>
               </div>
 
-              <p className={styles.modalDescription}>
+              <p className={styles.modalDescription} style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.6', marginBottom: '20px' }}>
                 {resolveStr(selectedProduct, 'description')}
               </p>
 
               {/* Advanced info panel */}
               {(selectedProduct.ingredients || selectedProduct.volume || selectedProduct.alcoholRatio) && (
-                <div className={styles.ingredientsPanel}>
-                  {selectedProduct.volume && <p><Wine size={12} /> <strong>{t('volume')}:</strong> {selectedProduct.volume}</p>}
-                  {selectedProduct.alcoholRatio && <p><Wine size={12} /> <strong>{t('alcohol')}:</strong> %{selectedProduct.alcoholRatio}</p>}
-                  {selectedProduct.ingredients && <p><Award size={12} /> <strong>{t('ingredients')}:</strong> {selectedProduct.ingredients}</p>}
+                <div className={styles.ingredientsPanel} style={{ background: '#F8F7F4', border: 'var(--border-gold)', borderRadius: '16px', padding: '16px', display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '20px' }}>
+                  {selectedProduct.volume && <p style={{ fontSize: '0.78rem', display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--text-secondary)' }}><Wine size={12} /> <strong>{t('volume')}:</strong> {selectedProduct.volume}</p>}
+                  {selectedProduct.alcoholRatio && <p style={{ fontSize: '0.78rem', display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--text-secondary)' }}><Wine size={12} /> <strong>{t('alcohol')}:</strong> %{selectedProduct.alcoholRatio}</p>}
+                  {selectedProduct.ingredients && <p style={{ fontSize: '0.78rem', display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--text-secondary)' }}><Award size={12} /> <strong>{t('ingredients')}:</strong> {selectedProduct.ingredients}</p>}
                 </div>
               )}
 
+              {/* Recommended pairing Section */}
+              <div style={{ background: 'rgba(184, 148, 99, 0.05)', border: '1px solid rgba(184, 148, 99, 0.15)', borderRadius: '16px', padding: '14px 16px', marginBottom: '24px' }}>
+                <h4 style={{ fontSize: '0.75rem', fontWeight: '600', color: 'var(--gold-primary)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '4px' }}>
+                  🍷 {language === 'tr' ? 'ÖNERİLEN EŞLEŞME' : 'RECOMMENDED PAIRING'}
+                </h4>
+                <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: '1.4' }}>
+                  {getPairingText(selectedProduct)}
+                </p>
+              </div>
+
               {/* Variations Selector */}
               {selectedProduct.variations && selectedProduct.variations.length > 0 && (
-                <div className={styles.variationGroup}>
-                  <label className={styles.modalPriceLabel} style={{ display: 'block', marginBottom: '8px' }}>
+                <div className={styles.variationGroup} style={{ marginBottom: '24px' }}>
+                  <label className={styles.modalPriceLabel} style={{ display: 'block', marginBottom: '8px', fontSize: '0.8rem', fontWeight: '600', textTransform: 'uppercase', color: 'var(--text-secondary)' }}>
                     {t('variations')}
                   </label>
-                  <div className={styles.variationsGrid}>
+                  <div className={styles.variationsGrid} style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                     <button 
                       className={`${styles.variationBtn} ${selectedVar === null ? styles.variationBtnActive : ''}`}
                       onClick={() => setSelectedVar(null)}
+                      style={{ fontSize: '0.78rem', padding: '8px 16px', borderRadius: '30px' }}
                     >
                       {language === 'tr' ? 'Standart' : 'Standard'}
                     </button>
@@ -1366,6 +1470,7 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
                         key={v.id}
                         className={`${styles.variationBtn} ${selectedVar?.id === v.id ? styles.variationBtnActive : ''}`}
                         onClick={() => setSelectedVar(v)}
+                        style={{ fontSize: '0.78rem', padding: '8px 16px', borderRadius: '30px' }}
                       >
                         {resolveStr(v, 'name')}
                       </button>
@@ -1374,28 +1479,53 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
                 </div>
               )}
 
-              <div className={styles.modalFooter}>
-                <div className={styles.modalPriceLabel}>{t('price')}</div>
-                <div className={styles.modalPrice}>
-                  {selectedProduct.discountPrice && !selectedVar ? (
-                    <span style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                      <span className={styles.oldPriceCrossed}>
-                        {selectedProduct.price.toLocaleString()}
+              <div className={styles.modalFooter} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: 'var(--border-gold)', paddingTop: '20px', marginTop: '20px' }}>
+                <div>
+                  <div className={styles.modalPriceLabel} style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-secondary)', marginBottom: '2px' }}>{t('price')}</div>
+                  <div className={styles.modalPrice} style={{ fontSize: '1.3rem', fontWeight: '700', color: 'var(--text-primary)' }}>
+                    {selectedProduct.discountPrice && !selectedVar ? (
+                      <span style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                        <span className={styles.oldPriceCrossed} style={{ fontSize: '1rem', color: 'var(--text-secondary)' }}>
+                          {selectedProduct.price.toLocaleString()}
+                        </span>
+                        <span>
+                          {selectedProduct.discountPrice.toLocaleString()} {t('currency')}
+                        </span>
                       </span>
+                    ) : (
                       <span>
-                        {selectedProduct.discountPrice.toLocaleString()} {t('currency')}
+                        {activeProductPrice().toLocaleString()} {t('currency')}
                       </span>
-                    </span>
-                  ) : (
-                    <span>
-                      {activeProductPrice().toLocaleString()} {t('currency')}
-                    </span>
+                    )}
+                  </div>
+                </div>
+                
+                <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                  {selectedProduct.isAvailable && (
+                    <button 
+                      className="btn-primary" 
+                      onClick={() => {
+                        handleCallWaiter();
+                        setSelectedProduct(null);
+                      }}
+                      style={{ fontSize: '0.8rem', padding: '10px 20px' }}
+                    >
+                      🔔 {t('callWaiter')}
+                    </button>
                   )}
+                  <button 
+                    className="btn-neon" 
+                    onClick={handleShare}
+                    aria-label="Paylaş"
+                    style={{ width: '42px', height: '42px', padding: '0', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%' }}
+                  >
+                    📤
+                  </button>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </>
       )}
 
       {/* BILL REQUEST MODAL */}
@@ -1451,6 +1581,29 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
           </div>
         </div>
       )}
+
+      {/* Bottom Tab Bar (iOS Native Style V3) */}
+      <div className={styles.bottomTabBar}>
+        <div className={`${styles.tabItem} ${activeTab === 'menu' ? styles.tabItemActive : ''}`} onClick={() => { setActiveTab('menu'); setActiveCategory('all'); }}>
+          <span style={{ fontSize: '1.25rem' }}>🏠</span>
+          <span>{language === 'tr' ? 'Menü' : 'Menu'}</span>
+        </div>
+        <div className={`${styles.tabItem} ${activeTab === 'cocktails' ? styles.tabItemActive : ''}`} onClick={() => { setActiveTab('cocktails'); setActiveCategory('all'); }}>
+          <span style={{ fontSize: '1.25rem' }}>🍸</span>
+          <span>{language === 'tr' ? 'Bar' : 'Drinks'}</span>
+        </div>
+        <div className={styles.centerTabItem} onClick={() => setFabOpen(!fabOpen)} style={{ cursor: 'pointer' }}>
+          <span style={{ fontSize: '1.4rem', fontWeight: 'bold' }}>+</span>
+        </div>
+        <div className={`${styles.tabItem} ${activeTab === 'champagne' ? styles.tabItemActive : ''}`} onClick={() => { setActiveTab('champagne'); setActiveCategory('all'); }}>
+          <span style={{ fontSize: '1.25rem' }}>🍾</span>
+          <span>{language === 'tr' ? 'Kav' : 'Cellar'}</span>
+        </div>
+        <div className={`${styles.tabItem} ${activeTab === 'events' ? styles.tabItemActive : ''}`} onClick={() => { setActiveTab('events'); setActiveCategory('all'); }}>
+          <span style={{ fontSize: '1.25rem' }}>🎉</span>
+          <span>{language === 'tr' ? 'Etkinlik' : 'Events'}</span>
+        </div>
+      </div>
     </div>
   );
 }
