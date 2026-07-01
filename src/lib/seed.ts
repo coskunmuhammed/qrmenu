@@ -14,9 +14,9 @@ async function main() {
     business = await prisma.business.create({
       data: {
         slug: businessSlug,
-        name: 'Crystal VIP Lounge',
-        description_tr: 'İstanbul\'un en prestijli gece kulübü. Eşsiz kokteyller, canlı DJ performansları ve VIP hizmeti.',
-        description_en: 'The most prestigious night club in Istanbul. Unique cocktails, live DJ performances, and VIP service.',
+        name: 'Dior Beach Club',
+        description_tr: 'Dior Beach Club\'ın eşsiz ortamında, lüks ve konforun buluştuğu dijital gastronomi deneyimine hoş geldiniz.',
+        description_en: 'Welcome to the digital gastronomy experience where luxury and comfort meet in the unique atmosphere of Dior Beach Club.',
         description_ru: 'Самый престижный ночной клуб в Стамбуле. Уникальные коктейли, живые выступления ди-джеев и VIP-обслуживание.',
         description_de: 'Der renommierteste Nachtclub in Istanbul. Einzigartige Cocktails, Live-DJ-Auftritte und VIP-Service.',
         description_ar: 'نادي الرقص الأكثر شهرة في إسطنبول. الكوكتيلات الفريدة، عروض الدي جي الحية، وخدمة كبار الشخصيات.',

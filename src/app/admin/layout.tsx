@@ -1,7 +1,7 @@
 import React from 'react';
 
 export const metadata = {
-  title: 'Crystal Lounge - Yönetim Paneli',
+  title: 'Dior Beach Club - Yönetim Paneli',
   description: 'QR Menü ve Kulüp İçerik Yönetimi',
 };
 
