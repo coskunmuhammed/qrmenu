@@ -436,8 +436,8 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
         </div>
       )}
 
-      {/* Header Sticky wrapper */}
-      <header className={styles.header}>
+      {/* Brand Branding Header (non-sticky, scrolls away) */}
+      <div className={styles.brandHeader}>
         <div className={styles.headerTop}>
           <div className={styles.clubTitleGroup}>
             <h1>{business.name}</h1>
@@ -481,7 +481,10 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
             </a>
           )}
         </div>
+      </div>
 
+      {/* Sticky Navigation & Category Bar */}
+      <header className={styles.stickyHeader}>
         {/* Table Operations Widget */}
         {tableNo && (
           <div className={`${styles.tableWidget} glass-gold`}>

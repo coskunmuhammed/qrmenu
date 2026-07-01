@@ -46,14 +46,20 @@
   pointer-events: none;
 }
 
-.header {
+.brandHeader {
+  background: rgba(13, 13, 13, 0.6);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.stickyHeader {
   position: sticky;
   top: 0;
   z-index: 90;
-  background: rgba(13, 13, 13, 0.82);
+  background: rgba(13, 13, 13, 0.85);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: var(--border-gold);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
 .headerTop {
