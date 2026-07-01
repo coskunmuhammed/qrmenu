@@ -945,9 +945,8 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
           </span>
         </div>
 
-        {/* Hero Title & Info Group */}
         <div className={styles.heroTitleGroup} style={{ zIndex: 2 }}>
-          <h1 className={styles.heroTitle}>Dior Beach</h1>
+          <h1 className={styles.heroTitle}>DIOR BEACH</h1>
           <p className={styles.heroDesc}>
             {resolveStr(business, 'description') || 'Gourmet selections and beach lounge cocktails.'}
           </p>

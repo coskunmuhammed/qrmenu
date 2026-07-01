@@ -32,6 +32,12 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      document.documentElement.setAttribute('lang', language);
+    }
+  }, [language]);
+
   const setLanguage = (lang: Language) => {
     if (Object.keys(locales).includes(lang)) {
       setLanguageState(lang);
