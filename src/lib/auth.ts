@@ -102,14 +102,18 @@ export async function getSession(): Promise<UserSession | null> {
     };
 
     // Set new access token cookie
-    const newAccessToken = await signAccessToken(newSession);
-    cookieStore.set(ACCESS_COOKIE, newAccessToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
-      maxAge: 15 * 60, // 15 minutes
-      path: '/',
-    });
+    try {
+      const newAccessToken = await signAccessToken(newSession);
+      cookieStore.set(ACCESS_COOKIE, newAccessToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
+        maxAge: 15 * 60, // 15 minutes
+        path: '/',
+      });
+    } catch (cookieErr) {
+      console.warn("Could not set access token cookie during getSession SSR:", cookieErr);
+    }
 
     return newSession;
   } catch (e) {
@@ -154,10 +158,14 @@ export async function setSession(sessionData: UserSession): Promise<string> {
 }
 
 export async function destroySession(): Promise<void> {
-  const cookieStore = await cookies();
-  cookieStore.delete(ACCESS_COOKIE);
-  cookieStore.delete(REFRESH_COOKIE);
-  cookieStore.delete(CSRF_COOKIE);
+  try {
+    const cookieStore = await cookies();
+    cookieStore.delete(ACCESS_COOKIE);
+    cookieStore.delete(REFRESH_COOKIE);
+    cookieStore.delete(CSRF_COOKIE);
+  } catch (cookieErr) {
+    console.warn("Could not delete session cookies during SSR:", cookieErr);
+  }
 }
 
 // CSRF check function to protect API updates
