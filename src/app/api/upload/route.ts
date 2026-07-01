@@ -65,18 +65,26 @@ export async function POST(request: Request) {
     // 4. Option B: Local Disk Fallback (Development/Local Test)
     const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
     
-    // Ensure directory exists
     try {
-      await fs.access(uploadsDir);
-    } catch {
-      await fs.mkdir(uploadsDir, { recursive: true });
+      // Ensure directory exists
+      try {
+        await fs.access(uploadsDir);
+      } catch {
+        await fs.mkdir(uploadsDir, { recursive: true });
+      }
+
+      const filePath = path.join(uploadsDir, uniqueFileName);
+      await fs.writeFile(filePath, buffer);
+
+      const localUrl = `/uploads/${uniqueFileName}`;
+      return NextResponse.json({ url: localUrl });
+    } catch (diskError) {
+      console.warn('Local disk write failed, falling back to Base64 URI:', diskError);
+      // Fallback: Convert to Base64 data URI
+      const base64Data = buffer.toString('base64');
+      const dataUri = `data:${file.type || 'image/jpeg'};base64,${base64Data}`;
+      return NextResponse.json({ url: dataUri });
     }
-
-    const filePath = path.join(uploadsDir, uniqueFileName);
-    await fs.writeFile(filePath, buffer);
-
-    const localUrl = `/uploads/${uniqueFileName}`;
-    return NextResponse.json({ url: localUrl });
 
   } catch (error: any) {
     console.error('Upload Endpoint Error:', error);

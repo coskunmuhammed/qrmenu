@@ -568,6 +568,8 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [selectedVar, setSelectedVar] = useState<ProductVariation | null>(null);
 
+  const [favorites, setFavorites] = useState<string[]>([]);
+
   // Expandable FAB Menu State
   const [fabOpen, setFabOpen] = useState(false);
 
@@ -603,6 +605,27 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
     return () => clearTimeout(timer);
   }, []);
 
+  // Initialize favorites from localStorage on mount
+  useEffect(() => {
+    const stored = localStorage.getItem('dior_favorites');
+    if (stored) {
+      try {
+        setFavorites(JSON.parse(stored));
+      } catch (e) {}
+    }
+  }, []);
+
+  const toggleFavorite = (productId: string) => {
+    setFavorites((prev) => {
+      const next = prev.includes(productId) 
+        ? prev.filter((id) => id !== productId)
+        : [...prev, productId];
+      localStorage.setItem('dior_favorites', JSON.stringify(next));
+      triggerToast(prev.includes(productId) ? 'Favorilerden çıkarıldı.' : 'Favorilere eklendi.');
+      return next;
+    });
+  };
+
   // Today's Highlight trigger
   useEffect(() => {
     if (business.showHighlightPopup && business.highlightProductId) {
@@ -623,7 +646,9 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
         const title = resolveStr(prod, 'name').toLowerCase();
         const desc = (resolveStr(prod, 'description') || '').toLowerCase();
         const query = searchQuery.toLowerCase();
-        return title.includes(query) || desc.includes(query);
+        const matchesSearch = title.includes(query) || desc.includes(query);
+        const matchesFavorite = activeCategory === 'favorites' ? favorites.includes(prod.id) : true;
+        return matchesSearch && matchesFavorite;
       });
 
       return {
@@ -887,8 +912,7 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
           </p>
         </div>
 
-        {/* Floating circular option button */}
-        <button className={styles.heroFloatingBtn} onClick={() => setFabOpen(!fabOpen)}>
+        <button className={styles.heroFloatingBtn} onClick={handleShare}>
           •••
         </button>
 
@@ -1403,6 +1427,14 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
                     style={{ width: '42px', height: '42px', padding: '0', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%' }}
                   >
                     📤
+                  </button>
+                  <button 
+                    className="btn-neon" 
+                    onClick={() => toggleFavorite(selectedProduct.id)}
+                    aria-label="Favori Ekle"
+                    style={{ width: '42px', height: '42px', padding: '0', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', color: favorites.includes(selectedProduct.id) ? '#d9534f' : 'inherit' }}
+                  >
+                    {favorites.includes(selectedProduct.id) ? '❤️' : '🤍'}
                   </button>
                 </div>
               </div>
