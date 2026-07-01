@@ -730,7 +730,7 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
   };
 
   const getWhatsappUrl = () => {
-    const phone = business.whatsappNumber || '905300000000';
+    const phone = '905322098964';
     const message = encodeURIComponent(t('whatsappReserveText'));
     return `https://wa.me/${phone}?text=${message}`;
   };
@@ -881,26 +881,18 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
           <span className={styles.contactItem} style={{ fontStyle: 'normal' }}>
             📍 Didim / Altınkum
           </span>
-          {business.instagramUsername && (
-            <a href={`https://instagram.com/${business.instagramUsername}`} target="_blank" rel="noopener noreferrer" className={styles.contactItem}>
-              📷 Instagram
-            </a>
-          )}
-          {business.googleMapsUrl && (
-            <a href={business.googleMapsUrl} target="_blank" rel="noopener noreferrer" className={styles.contactItem}>
-              🗺 {language === 'tr' ? 'Yol Tarifi' : 'Directions'}
-            </a>
-          )}
-          {business.whatsappNumber && (
-            <a href={`tel:${business.whatsappNumber}`} className={styles.contactItem}>
-              📞 {language === 'tr' ? 'Telefon' : 'Phone'}
-            </a>
-          )}
-          {business.openingHours && (
-            <span className={styles.contactItem}>
-              🕒 {business.openingHours}
-            </span>
-          )}
+          <a href="https://www.instagram.com/diorbeachclub_?igsh=ZzRieTY5Z25xeHM1" target="_blank" rel="noopener noreferrer" className={styles.contactItem}>
+            📷 Instagram
+          </a>
+          <a href="https://maps.app.goo.gl/1Vji6CvwNdqSH3Jn9?g_st=i" target="_blank" rel="noopener noreferrer" className={styles.contactItem}>
+            🗺 {language === 'tr' ? 'Yol Tarifi' : 'Directions'}
+          </a>
+          <a href="tel:+905322098964" className={styles.contactItem}>
+            📞 {language === 'tr' ? 'Telefon' : 'Phone'}
+          </a>
+          <span className={styles.contactItem}>
+            🕒 09:00 - 02:00
+          </span>
         </div>
       </div>
 
@@ -1182,38 +1174,28 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
         <p className={styles.footerTagline}>{business.name}</p>
         
         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '0.82rem', color: 'var(--text-secondary)', marginBottom: '24px', fontFamily: 'var(--font-body)', letterSpacing: '0.02em', lineHeight: '1.5' }}>
-          {business.openingHours && (
-            <p>🕒 {language === 'tr' ? 'Çalışma Saatleri' : 'Opening Hours'}: {business.openingHours}</p>
-          )}
-          {business.whatsappNumber && (
-            <p>📞 {language === 'tr' ? 'Telefon' : 'Phone'}: <a href={`tel:${business.whatsappNumber}`} style={{ textDecoration: 'underline', color: 'var(--text-primary)' }}>+{business.whatsappNumber}</a></p>
-          )}
-          {business.googleMapsUrl && (
-            <p>📍 {resolveStr(business, 'description') ? resolveStr(business, 'description').split('.')[0] : ''}</p>
-          )}
+          <p>🕒 {language === 'tr' ? 'Çalışma Saatleri' : 'Opening Hours'}: 09:00 - 02:00</p>
+          <p>📞 {language === 'tr' ? 'Telefon' : 'Phone'}: <a href="tel:+905322098964" style={{ textDecoration: 'underline', color: 'var(--text-primary)' }}>0532 209 89 64</a></p>
+          <p>📍 Didim / Altınkum</p>
         </div>
         
         <div className={styles.footerLinks}>
-          {business.instagramUsername && (
-            <a 
-              href={`https://instagram.com/${business.instagramUsername}`} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className={`${styles.footerLink} glass`}
-            >
-              📷 Instagram
-            </a>
-          )}
-          {business.googleMapsUrl && (
-            <a 
-              href={business.googleMapsUrl} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className={`${styles.footerLink} glass`}
-            >
-              📍 {t('location')}
-            </a>
-          )}
+          <a 
+            href="https://www.instagram.com/diorbeachclub_?igsh=ZzRieTY5Z25xeHM1" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className={`${styles.footerLink} glass`}
+          >
+            📷 Instagram
+          </a>
+          <a 
+            href="https://maps.app.goo.gl/1Vji6CvwNdqSH3Jn9?g_st=i" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className={`${styles.footerLink} glass`}
+          >
+            📍 {language === 'tr' ? 'Yol Tarifi' : 'Location'}
+          </a>
         </div>
         <p className={styles.copyright}>&copy; 2026 {business.name}. All Rights Reserved.</p>
       </footer>
@@ -1221,40 +1203,34 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
       {/* Expandable FAB communication triggers */}
       <div className={styles.fabContainer}>
         <div className={`${styles.fabMenu} ${fabOpen ? styles.fabMenuOpen : ''}`}>
-          {business.whatsappNumber && (
-            <a 
-              href={getWhatsappUrl()}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.fabItem}
-              aria-label={t('whatsappReserve')}
-            >
-              <MessageCircle size={20} />
-              <span className={styles.fabLabel}>{t('whatsappReserve')}</span>
-            </a>
-          )}
-          {business.instagramUsername && (
-            <a 
-              href={`https://instagram.com/${business.instagramUsername}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.fabItem}
-              aria-label="Instagram"
-            >
-              <InstagramIcon size={20} />
-              <span className={styles.fabLabel}>Instagram</span>
-            </a>
-          )}
-          {business.whatsappNumber && (
-            <a 
-              href={`tel:${business.whatsappNumber}`}
-              className={styles.fabItem}
-              aria-label="Telefon"
-            >
-              <Phone size={20} />
-              <span className={styles.fabLabel}>Telefon</span>
-            </a>
-          )}
+          <a 
+            href={getWhatsappUrl()}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.fabItem}
+            aria-label={t('whatsappReserve')}
+          >
+            <MessageCircle size={20} />
+            <span className={styles.fabLabel}>{t('whatsappReserve')}</span>
+          </a>
+          <a 
+            href="https://www.instagram.com/diorbeachclub_?igsh=ZzRieTY5Z25xeHM1"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.fabItem}
+            aria-label="Instagram"
+          >
+            <InstagramIcon size={20} />
+            <span className={styles.fabLabel}>Instagram</span>
+          </a>
+          <a 
+            href="tel:+905322098964"
+            className={styles.fabItem}
+            aria-label="Telefon"
+          >
+            <Phone size={20} />
+            <span className={styles.fabLabel}>{language === 'tr' ? 'Telefon' : 'Phone'}</span>
+          </a>
         </div>
         <button 
           className={`${styles.fabToggle} ${fabOpen ? styles.fabToggleActive : ''}`}
