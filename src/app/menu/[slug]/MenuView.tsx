@@ -848,104 +848,100 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
         </div>
       )}
 
-      {/* Brand Branding Header (non-sticky, scrolls away) */}
-      <div className={styles.heroBannerV3}>
+      {/* Brand Branding Header Target Mobile Design */}
+      <div className={styles.heroBannerTarget}>
         <img 
-          src="https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=1200&auto=format&fit=crop&q=80" 
+          src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1000&auto=format&fit=crop&q=80" 
           alt="Dior Beach Club Backdrop" 
           className={styles.heroImageV3}
         />
-        <div className={styles.heroGradientV3}></div>
-        <div className={styles.heroContentV3}>
-          {/* Custom SVG Dior Beach Club Logo (white version overlay) */}
-          <div className={styles.heroLogoV3} style={{ width: '220px' }}>
-            <svg viewBox="0 0 300 110" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">
-              <style>{`
-                .brand-dior-white {
-                  font-family: 'Playfair Display', 'Cormorant Garamond', 'Times New Roman', serif;
-                  font-size: 54px;
-                  fill: #FFFFFF;
-                  letter-spacing: 5px;
-                }
-                .brand-sub-white {
-                  font-family: 'Inter', 'Manrope', sans-serif;
-                  font-size: 11px;
-                  fill: #ECE7DF;
-                  letter-spacing: 5px;
-                  font-weight: 500;
-                }
-                .wave-line-white {
-                  stroke: #FFFFFF;
-                  stroke-width: 1.8;
-                  fill: none;
-                  stroke-linecap: round;
-                }
-              `}</style>
-              <g transform="translate(150, 50)" textAnchor="middle">
-                <text x="-48" y="5" className="brand-dior-white" textAnchor="middle">DI</text>
-                <g transform="translate(0, -12)">
-                  <circle cx="0" cy="0" r="23" stroke="#FFFFFF" strokeWidth="4.5" fill="none" />
-                  <path d="M-15,4 Q-7,0 0,4 T15,4" className="wave-line-white" />
-                  <path d="M-13,-2 Q-6.5,-5 0,-2 T13,-2" className="wave-line-white" />
-                </g>
-                <text x="48" y="5" className="brand-dior-white" textAnchor="middle">R</text>
-                <text x="0" y="38" className="brand-sub-white" textAnchor="middle">BEACH CLUB</text>
-                <line x1="-105" y1="34" x2="-62" y2="34" stroke="#ECE7DF" strokeWidth="0.8" />
-                <line x1="62" y1="34" x2="105" y2="34" stroke="#ECE7DF" strokeWidth="0.8" />
-              </g>
-            </svg>
-          </div>
+        <div className={styles.heroGradientV3} />
+        
+        {/* Top Search bar overlay (User Center) */}
+        <div className={styles.heroSearchContainer}>
+          <span className={styles.heroSearchIcon}>🔍</span>
+          <input 
+            type="text" 
+            className={styles.heroSearchInput}
+            placeholder="User center..." 
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <span className={styles.heroSearchRightIcon} onClick={() => setLanguage(language === 'tr' ? 'en' : 'tr')}>
+            🌐 {language.toUpperCase()}
+          </span>
+        </div>
 
-          <p style={{ textAlign: 'center', maxWidth: '340px', margin: '0 auto', fontSize: '0.8rem', color: '#ECE7DF', fontFamily: 'var(--font-body)', letterSpacing: '0.02em', lineHeight: '1.5', opacity: '0.95' }}>
-            {resolveStr(business, 'description')}
+        {/* Hero Title & Info Group */}
+        <div className={styles.heroTitleGroup}>
+          <span className={styles.heroBadge}>PREMIUM</span>
+          <h1 className={styles.heroTitle}>Dior Beach</h1>
+          <p className={styles.heroDesc}>
+            {resolveStr(business, 'description') || 'Gourmet selections and beach lounge cocktails.'}
           </p>
+        </div>
 
-          <div className={styles.heroMetaV3}>
-            <span>📍 Didim</span>
-            <span>🕒 09:00 - 02:00</span>
-            <a href="https://www.instagram.com/diorbeachclub_?igsh=ZzRieTY5Z25xeHM1" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'underline' }}>
-              📷 Instagram
-            </a>
-          </div>
+        {/* Floating circular option button */}
+        <button className={styles.heroFloatingBtn} onClick={() => setFabOpen(!fabOpen)}>
+          •••
+        </button>
 
-          {/* Language Selector Overlay */}
-          <div style={{ marginTop: '16px' }}>
-            <select
-              value={language}
-              onChange={(e) => setLanguage(e.target.value as Language)}
-              className={styles.langDropdown}
-              style={{ background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(10px)', color: '#FFFFFF', border: '1px solid rgba(255,255,255,0.25)', padding: '5px 24px 5px 12px' }}
-              aria-label="Dil Seçimi / Select Language"
-            >
-              <option value="tr" style={{ color: '#1A1A1A' }}>TR</option>
-              <option value="en" style={{ color: '#1A1A1A' }}>EN</option>
-              <option value="ru" style={{ color: '#1A1A1A' }}>RU</option>
-              <option value="de" style={{ color: '#1A1A1A' }}>DE</option>
-              <option value="ar" style={{ color: '#1A1A1A' }}>AR</option>
-            </select>
-          </div>
+        {/* Hero pagination dots indicator */}
+        <div className={styles.heroDotsIndicator}>
+          <div className={`${styles.heroDot} ${styles.heroDotActive}`} />
+          <div className={styles.heroDot} />
+          <div className={styles.heroDot} />
+          <div className={styles.heroDot} />
+          <div className={styles.heroDot} />
         </div>
       </div>
 
-      {/* Sticky Navigation & Category Bar */}
-      <header className={styles.stickyHeader}>
-        {/* Table Operations Widget */}
-        {tableNo && (
-          <div className={`${styles.tableWidget} glass-gold`}>
-            <span>📍 {t('table')}: <strong>{tableNo}</strong></span>
-            <div className={styles.tableWidgetButtons}>
-              <button className={styles.widgetBtn} onClick={handleCallWaiter}>
-                🔔 {t('callWaiter')}
-              </button>
-              <button className={`${styles.widgetBtn} ${styles.widgetBtnGold}`} onClick={() => setShowBillModal(true)}>
-                💵 {t('requestBill')}
-              </button>
-            </div>
+      {/* Main Panel Target (Overlapping Container) */}
+      <div className={styles.mainPanelTarget}>
+        {/* Search input and heart favorite row */}
+        <div className={styles.panelSearchRow}>
+          <div className={styles.panelSearchContainer}>
+            <input 
+              type="text" 
+              className={styles.panelSearchInput}
+              placeholder={t('searchPlaceholder') || "Sxitoped mmceoltive"} 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <span className={styles.panelSearchIcon}>🔍</span>
           </div>
-        )}
+          <button 
+            className={`${styles.heartButton} ${activeCategory === 'favorites' ? styles.heartButtonActive : ''}`}
+            onClick={() => setActiveCategory(activeCategory === 'favorites' ? 'all' : 'favorites')}
+          >
+            ♥
+          </button>
+        </div>
 
-        {/* Navigation Tabs */}
-        <div className={styles.navTabs} style={{ overflowX: 'auto', whiteSpace: 'nowrap', scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}>
+        {/* Menu title & Horizontal Category tabs */}
+        <div className={styles.panelHeaderRow}>
+          <h2 className={styles.panelTitle}>Menu</h2>
+          <div className={styles.categorySliderTarget} ref={categoryMenuRef}>
+            <span 
+              className={`${styles.categoryLink} ${activeCategory === 'all' ? styles.categoryLinkActive : ''}`}
+              onClick={() => scrollToCategory('all')}
+            >
+              {t('all') || 'All'}
+            </span>
+            {filteredCategories.map((cat) => (
+              <span
+                key={cat.id}
+                className={`${styles.categoryLink} ${activeCategory === cat.id ? styles.categoryLinkActive : ''}`}
+                onClick={() => scrollToCategory(cat.id)}
+              >
+                {resolveStr(cat, 'name')}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* Horizontal Navigation tabs under categories list */}
+        <div className={styles.navTabs} style={{ overflowX: 'auto', whiteSpace: 'nowrap', scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch', marginBottom: '24px' }}>
           <button 
             className={`${styles.tabBtn} ${activeTab === 'menu' ? styles.tabBtnActive : ''}`}
             onClick={() => { setActiveTab('menu'); setActiveCategory('all'); }}
@@ -990,101 +986,17 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
           </button>
         </div>
 
-        {/* Search & Categories Bar */}
-        {activeTab !== 'events' && (
-          <div className={styles.subHeader}>
-            <div className={styles.searchContainer}>
-              <span className={styles.searchIcon}>🔍</span>
-              <input 
-                type="text" 
-                placeholder={t('searchPlaceholder')} 
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className={styles.searchInput}
-                aria-label={t('searchPlaceholder')}
-              />
-              {searchQuery && (
-                <button className={styles.searchClear} onClick={() => setSearchQuery('')} aria-label="Temizle">×</button>
-              )}
-            </div>
-
-            {searchQuery === '' && (
-              <div className={styles.categoriesSlider} ref={categoryMenuRef}>
-                <button 
-                  id="tab-all"
-                  className={`${styles.categoryTab} ${activeCategory === 'all' ? styles.categoryTabActive : ''}`}
-                  onClick={() => scrollToCategory('all')}
-                >
-                  {t('all')} ({filteredCategories.reduce((acc, cat) => acc + cat.products.length, 0)})
-                </button>
-                {filteredCategories.map((cat) => (
-                  <button
-                    key={cat.id}
-                    id={`tab-${cat.id}`}
-                    className={`${styles.categoryTab} ${activeCategory === cat.id ? styles.categoryTabActive : ''}`}
-                    onClick={() => scrollToCategory(cat.id)}
-                  >
-                    {resolveStr(cat, 'name')} ({cat.products.length})
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
-      </header>
-
-      {/* Main Content Area */}
-      <main className={styles.content}>
-        {/* Featured Selection Section */}
-        {activeTab !== 'events' && featuredProducts.length > 0 && searchQuery === '' && activeCategory === 'all' && (
-          <div className={styles.featuredSection}>
-            <h3 className={styles.sectionHeadingV3}>
-              {language === 'tr' ? 'Öne Çıkan Lezzetler' : 'Featured Selection'}
-            </h3>
-            <div className={styles.featuredContainer}>
-              {featuredProducts.map((product) => (
-                <div 
-                  key={product.id} 
-                  className={styles.featuredCard}
-                  onClick={() => setSelectedProduct(product)}
-                >
-                  <div className={styles.featuredBadge}>
-                    ⭐ {language === 'tr' ? 'Seçkin' : 'Signature'}
-                  </div>
-                  {product.imageUrl && (
-                    <img src={product.imageUrl} alt={resolveStr(product, 'name')} className={styles.featuredImage} />
-                  )}
-                  <div className={styles.featuredOverlay}></div>
-                  <div className={styles.featuredInfo}>
-                    <h4 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.25rem', fontWeight: '500', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-                      {resolveStr(product, 'name')}
-                    </h4>
-                    <p style={{ fontSize: '0.72rem', color: '#ECE7DF', opacity: '0.9', display: '-webkit-box', WebkitLineClamp: '2', WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
-                      {resolveStr(product, 'description')}
-                    </p>
-                    <span style={{ fontSize: '1rem', fontWeight: '600', color: 'var(--gold-primary)', marginTop: '4px' }}>
-                      {product.price.toLocaleString()} {t('currency')}
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-        
-        {/* TAB 1: MENU */}
+        {/* Dynamic products list scrolling */}
         {activeTab !== 'events' && (
           <div className={styles.menuTabContent}>
             {loading ? (
-              // Shimmer skeletons placeholders during mount latency
-              <div className={styles.productsGrid}>
-                {Array(6).fill(0).map((_, idx) => (
-                  <SkeletonCard key={idx} />
+              <div className={styles.horizontalCardsScroll}>
+                {Array(3).fill(0).map((_, idx) => (
+                  <div key={idx} className={styles.darkProductCard} style={{ width: '172px', height: '240px', background: '#222' }} />
                 ))}
               </div>
             ) : filteredCategories.length === 0 ? (
               <div className={styles.emptyState}>
-                <div style={{ fontSize: '3rem' }}>🔍</div>
                 <p>{t('emptySearch')}</p>
               </div>
             ) : (
@@ -1092,27 +1004,28 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
                 <section 
                   key={category.id} 
                   ref={(el) => { categoryRefs.current[category.id] = el; }}
-                  className={styles.categorySection}
+                  style={{ marginBottom: '20px' }}
                 >
-                  <h2 className={styles.categoryTitle}>
-                    <span>
-                      {resolveStr(category, 'name')} ({category.products.length})
-                    </span>
-                  </h2>
+                  <h3 style={{ fontSize: '1rem', fontWeight: '600', color: 'var(--text-primary)', marginBottom: '12px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                    {resolveStr(category, 'name')}
+                  </h3>
 
-                  <div className={styles.productsGrid}>
+                  <div className={styles.horizontalCardsScroll}>
                     {category.products.map((product) => (
                       <div 
                         key={product.id}
-                        className={`${styles.productCard} ${!product.isAvailable ? styles.unavailable : ''}`}
+                        className={`${styles.darkProductCard} ${!product.isAvailable ? styles.unavailable : ''}`}
                         onClick={() => setSelectedProduct(product)}
                       >
+                        <button className={styles.darkCardOptionBtn} onClick={(e) => { e.stopPropagation(); setSelectedProduct(product); }}>
+                          ⋮
+                        </button>
                         {product.imageUrl && (
-                          <div className={styles.productImageWrapper}>
+                          <div className={styles.darkProductCardImageWrapper}>
                             <img 
                               src={product.imageUrl} 
                               alt={resolveStr(product, 'name')}
-                              className={styles.productImage}
+                              className={styles.darkProductCardImage}
                               loading="lazy"
                             />
                             {!product.isAvailable && (
@@ -1120,59 +1033,15 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
                             )}
                           </div>
                         )}
-                        
-                        <div className={styles.productInfo}>
-                          <div className={styles.productNameRow}>
-                            <h3 className={styles.productName}>
-                              {resolveStr(product, 'name')}
-                            </h3>
-                          </div>
-                          
-                          {getProductTags(product).length > 0 && (
-                            <div className={styles.badgeContainer} style={{ marginBottom: '6px' }}>
-                              {getProductTags(product).map((tag, idx) => (
-                                <span key={idx} className={tag.class}>
-                                  {tag.icon} {tag.label}
-                                </span>
-                              ))}
-                            </div>
-                          )}
-                          
-                          <p className={styles.productDescription}>
-                            {resolveStr(product, 'description')}
+                        <div className={styles.darkProductCardInfo}>
+                          <h4 className={styles.darkProductCardTitle}>
+                            {resolveStr(product, 'name')}
+                          </h4>
+                          <p className={styles.darkProductCardDesc}>
+                            {resolveStr(product, 'description') || 'Fresh luxury item'}
                           </p>
-
-                          <div className={styles.productFooter}>
-                            {/* Icons details row */}
-                            <div className={styles.productAttributes}>
-                              {product.volume && (
-                                <span className={styles.contactItem}>
-                                  <Wine size={10} /> {product.volume}
-                                </span>
-                              )}
-                              {product.alcoholRatio && (
-                                <span className={styles.contactItem}>
-                                  <Wine size={10} /> %{product.alcoholRatio}
-                                </span>
-                              )}
-                            </div>
-
-                            <span className={styles.productPrice}>
-                              {product.discountPrice ? (
-                                <span style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
-                                  <span className={styles.oldPricePreview}>
-                                    {product.price.toLocaleString()}
-                                  </span>
-                                  <span>
-                                    {product.discountPrice.toLocaleString()} {t('currency')}
-                                  </span>
-                                </span>
-                              ) : (
-                                <span>
-                                  {product.price.toLocaleString()} {t('currency')}
-                                </span>
-                              )}
-                            </span>
+                          <div className={styles.darkProductCardPrice}>
+                            {product.price.toLocaleString()} {t('currency')}
                           </div>
                         </div>
                       </div>
@@ -1182,36 +1051,35 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
               ))
             )}
 
+            {/* Host Service Widget */}
+            <div className={styles.hostServiceCard}>
+              <div className={styles.hostInfoGroup}>
+                <img 
+                  src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80" 
+                  alt="Dior Hostess" 
+                  className={styles.hostAvatar} 
+                />
+                <div className={styles.hostMeta}>
+                  <span className={styles.hostTitle}>DIOR HOSTESS</span>
+                  <span className={styles.hostName}>Dior Beach Concierge</span>
+                  <span className={styles.hostSubtitle}>Tap to request table service</span>
+                </div>
+              </div>
+              <button className={styles.hostCallBtn} onClick={handleCallWaiter}>
+                🔔 Call Waiter
+              </button>
+              {tableNo && (
+                <span className={styles.hostBadgeText}>
+                  📍 TABLE: {tableNo}
+                </span>
+              )}
+            </div>
+
             {/* VIP Info Card */}
             {business.vipMinSpendInfo && (
-              <div className={`${styles.vipCard} animate-pulse-gold`}>
+              <div className={`${styles.vipCard} animate-pulse-gold`} style={{ margin: '20px 0' }}>
                 <h3 className="text-gold">👑 VIP SERVICE</h3>
                 <p>{business.vipMinSpendInfo}</p>
-              </div>
-            )}
-
-            {/* Campaigns Section */}
-            {searchQuery === '' && activeCategory === 'all' && (
-              <div className={styles.campaignsSection}>
-                <h3 className={styles.sectionHeadingV3}>
-                  {language === 'tr' ? 'Ayrıcalıklar & Kampanyalar' : 'Privileges & Campaigns'}
-                </h3>
-                <div className={styles.campaignsSlider}>
-                  {campaigns.map((camp) => (
-                    <div key={camp.id} className={styles.campaignCard}>
-                      <img src={camp.image} alt={language === 'tr' ? camp.title_tr : camp.title_en} className={styles.campaignImage} />
-                      <div className={styles.campaignOverlay}></div>
-                      <div className={styles.campaignContent}>
-                        <h4 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.15rem', fontWeight: '500', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '4px' }}>
-                          {language === 'tr' ? camp.title_tr : camp.title_en}
-                        </h4>
-                        <p style={{ fontSize: '0.72rem', color: '#ECE7DF', opacity: '0.9' }}>
-                          {language === 'tr' ? camp.desc_tr : camp.desc_en}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
               </div>
             )}
           </div>
@@ -1258,7 +1126,7 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
             )}
           </div>
         )}
-      </main>
+      </div>
 
       {/* Footer Contact Info */}
       <footer className={styles.footer}>
