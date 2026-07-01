@@ -40,7 +40,7 @@ async function main() {
   });
 
   if (!existingUser) {
-    const passwordHash = await bcrypt.hash('admin123', 10);
+    const passwordHash = await bcrypt.hash('0142753869Aa.', 10);
     await prisma.user.create({
       data: {
         username: 'admin',
@@ -49,7 +49,7 @@ async function main() {
         businessId: business.id,
       },
     });
-    console.log('Created admin user (admin / admin123) linked to business');
+    console.log('Created admin user (admin / 0142753869Aa.) linked to business');
   } else {
     // Ensure existing user is linked to business
     await prisma.user.update({
