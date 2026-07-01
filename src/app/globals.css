@@ -188,14 +188,14 @@ a {
   box-shadow: 0 6px 24px rgba(0,0,0,0.08);
 }
 
-/* Mobile-first constraints */
 .menu-container {
   width: 100%;
-  max-width: 1200px;
+  max-width: 500px;
   margin: 0 auto;
   min-height: 100vh;
   position: relative;
-  padding: 0 16px 90px 16px;
+  padding: 0 0 90px 0;
+  background-color: var(--bg-primary);
 }
 
 /* Input Fields and Buttons for Forms */
