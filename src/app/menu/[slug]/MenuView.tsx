@@ -197,6 +197,335 @@ const SkeletonCard = () => (
   </div>
 );
 
+const TRANSLATIONS_LOOKUP: Record<string, Record<string, string>> = {
+  // Category names
+  "Signature Kokteyller": {
+    tr: "Signature Kokteyller",
+    en: "Signature Cocktails",
+    ru: "Фирменные Коктейли",
+    de: "Signature Cocktails",
+    ar: "كوكتيلات مميزة"
+  },
+  "Signature Cocktails": {
+    tr: "Signature Kokteyller",
+    en: "Signature Cocktails",
+    ru: "Фирменные Коктейли",
+    de: "Signature Cocktails",
+    ar: "كوكتيلات مميزة"
+  },
+  "Klasik Kokteyller": {
+    tr: "Klasik Kokteyller",
+    en: "Classic Cocktails",
+    ru: "Классические Коктейли",
+    de: "Klassische Cocktails",
+    ar: "كوكتيلات كلاسيكية"
+  },
+  "Classic Cocktails": {
+    tr: "Klasik Kokteyller",
+    en: "Classic Cocktails",
+    ru: "Классические Коктейли",
+    de: "Klassische Cocktails",
+    ar: "كوكتيلات كلاسيكية"
+  },
+  "Premium Viski": {
+    tr: "Premium Viski",
+    en: "Premium Whiskey",
+    ru: "Премиум Виски",
+    de: "Premium Whisky",
+    ar: "ويسكي فاخر"
+  },
+  "Premium Whiskey": {
+    tr: "Premium Viski",
+    en: "Premium Whiskey",
+    ru: "Премиум Виски",
+    de: "Premium Whisky",
+    ar: "ويسكي فاخر"
+  },
+  "Şampanya & Şişe Servis": {
+    tr: "Şampanya & Şişe Servis",
+    en: "Champagne & Bottle Service",
+    ru: "Шампанское и бутылочный сервис",
+    de: "Champagner & Flaschenservice",
+    ar: "خدمة الشمبانيا والزجاجات"
+  },
+  "Champagne & Bottle Service": {
+    tr: "Şampanya & Şişe Servis",
+    en: "Champagne & Bottle Service",
+    ru: "Шампанское и бутылочный сервис",
+    de: "Champagner & Flaschenservice",
+    ar: "خدمة الشمبانيا والزجاجات"
+  },
+  "VIP Paketler": {
+    tr: "VIP Paketler",
+    en: "VIP Packages",
+    ru: "VIP Пакеты",
+    de: "VIP-Pakete",
+    ar: "باقات VIP"
+  },
+  "VIP Packages": {
+    tr: "VIP Paketler",
+    en: "VIP Packages",
+    ru: "VIP Пакеты",
+    de: "VIP-Pakete",
+    ar: "باقات VIP"
+  },
+  // Business descriptions
+  "İstanbul'un en prestijli gece kulübü. Eşsiz kokteyller, canlı DJ performansları ve VIP hizmeti.": {
+    tr: "Dior Beach Club'ın eşsiz ortamında, lüks ve konforun buluştuğu dijital gastronomi deneyimine hoş geldiniz.",
+    en: "Welcome to the digital gastronomy experience where luxury and comfort meet in the unique atmosphere of Dior Beach Club.",
+    ru: "Добро пожаловать в мир цифровой гастрономии, где роскошь и комфорт встречаются в уникальной атмосфере Dior Beach Club.",
+    de: "Willkommen beim digitalen Gastronomie-Erlebnis, bei dem Luxus und Komfort in der einzigartigen Atmosphäre des Dior Beach Clubs aufeinandertreffen.",
+    ar: "مرحبًا بكم في تجربة الطهي الرقمية حيث يلتقي الفخامة والراحة في الأجواء الفريدة لنادي ديور الشاطئي."
+  },
+  "The most prestigious night club in Istanbul. Unique cocktails, live DJ performances, and VIP service.": {
+    tr: "Dior Beach Club'ın eşsiz ortamında, lüks ve konforun buluştuğu dijital gastronomi deneyimine hoş geldiniz.",
+    en: "Welcome to the digital gastronomy experience where luxury and comfort meet in the unique atmosphere of Dior Beach Club.",
+    ru: "Добро пожаловать в мир цифровой гастрономии, где роскошь и комфорт встречаются в уникальной атмосфере Dior Beach Club.",
+    de: "Willkommen beim digitalen Gastronomie-Erlebnis, bei dem Luxus und Komfort in der einzigartigen Atmosphäre des Dior Beach Clubs aufeinandertreffen.",
+    ar: "مرحبًا بكم في تجربة الطهي الرقمية حيث يلتقي الفخامة والراحة في الأجواء الفريدة لنادي ديور الشاطئي."
+  },
+  // VIP Harcama Bilgisi
+  "VIP masalar için minimum harcama limiti 15,000 TL / $450'dır.": {
+    tr: "VIP masalar için minimum harcama limiti 15,000 TL / $450'dır.",
+    en: "Minimum spend for VIP tables is 15,000 TL / $450.",
+    ru: "Минимальный лимит расходов на VIP-столы составляет 15 000 TL / 450 $.",
+    de: "Das Mindestguthaben für VIP-Tische beträgt 15.000 TL / 450 $.",
+    ar: "الحد الأدنى للإنفاق على طاولات VIP هو 15,000 ليرة تركية / 450 دولارًا."
+  },
+  // Products
+  "Purple Rain": {
+    tr: "Purple Rain",
+    en: "Purple Rain",
+    ru: "Пурпурный Дождь",
+    de: "Purple Rain",
+    ar: "مطر بنفسجي"
+  },
+  "Cin, hibiskus şurubu, taze limon suyu ve tonik.": {
+    tr: "Cin, hibiskus şurubu, taze limon suyu ve tonik.",
+    en: "Gin, hibiscus syrup, fresh lemon juice and tonic.",
+    ru: "Джин, сироп гибискуса, свежий лимонный сок и тоник.",
+    de: "Gin, Hibiskussirup, frischer Zitronensaft und Tonic.",
+    ar: "جين، شراب الكركديه، عصير الليمون الطازج والتونيك."
+  },
+  "Gin, hibiscus syrup, fresh lemon juice and tonic.": {
+    tr: "Cin, hibiskus şurubu, taze limon suyu ve tonik.",
+    en: "Gin, hibiscus syrup, fresh lemon juice and tonic.",
+    ru: "Джин, сироп гибискуса, свежий лимонный сок и тоник.",
+    de: "Gin, Hibiskussirup, frischer Zitronensaft und Tonic.",
+    ar: "جين، شراب الكركديه، عصير الليمون الطازج والتونيك."
+  },
+  "Gold Rush": {
+    tr: "Gold Rush",
+    en: "Gold Rush",
+    ru: "Золотая Лихорадка",
+    de: "Gold Rush",
+    ar: "حمى الذهب"
+  },
+  "Premium viski, bal şurubu, taze limon suyu.": {
+    tr: "Premium viski, bal şurubu, taze limon suyu.",
+    en: "Premium whiskey, honey syrup, fresh lemon juice.",
+    ru: "Премиум виски, медовый сироп, свежий лимонный сок.",
+    de: "Premium-Whisky, Honigsirup, frischer Zitronensaft.",
+    ar: "ويسكي فاخر، شراب العسل، عصير الليمون الطازج."
+  },
+  "Premium whiskey, honey syrup, fresh lemon juice.": {
+    tr: "Premium viski, bal şurubu, taze limon suyu.",
+    en: "Premium whiskey, honey syrup, fresh lemon juice.",
+    ru: "Премиум viski, медовый сироп, свежий лимонный сок.",
+    de: "Premium-Whisky, Honigsirup, frischer Zitronensaft.",
+    ar: "ويسكي فاخر، شراب العسل، عصير الليمون الطازج."
+  },
+  "Nebula Glow": {
+    tr: "Nebula Glow",
+    en: "Nebula Glow",
+    ru: "Свечение Небулы",
+    de: "Nebula Glow",
+    ar: "توهج السديم"
+  },
+  "Votka, mavi kelebek çayı şurubu, taze lime suyu, soda.": {
+    tr: "Votka, mavi kelebek çayı şurubu, taze lime suyu, soda.",
+    en: "Vodka, blue butterfly pea tea syrup, fresh lime juice, soda.",
+    ru: "Водка, сироп чая анчан, свежий сок лайма, содовая.",
+    de: "Wodka, blauer Schmetterlingserbsentee-Sirup, frischer Limettensaft, Soda.",
+    ar: "فودكا، شراب شاي bazلاء الفراشة الزرقاء، عصير لايم طازج، صودا."
+  },
+  "Vodka, blue butterfly pea tea syrup, fresh lime juice, soda.": {
+    tr: "Votka, mavi kelebek çayı şurubu, taze lime suyu, soda.",
+    en: "Vodka, blue butterfly pea tea syrup, fresh lime juice, soda.",
+    ru: "Водка, сироп чая анчан, свежий сок лайма, содовая.",
+    de: "Wodka, blauer Schmetterlingserbsentee-Sirup, frischer Limettensaft, Soda.",
+    ar: "فودكا، شراب شاي bazلاء الفراشة الزرقاء، عصير لايم طازج، صودا."
+  },
+  "Classic Margarita": {
+    tr: "Classic Margarita",
+    en: "Classic Margarita",
+    ru: "Классическая Маргарита",
+    de: "Classic Margarita",
+    ar: "مارغريتا كلاسيكية"
+  },
+  "Tekila, portakal likörü, taze kireç suyu.": {
+    tr: "Tekila, portakal likörü, taze kireç suyu.",
+    en: "Tequila, orange liqueur, fresh lime juice.",
+    ru: "Текила, апельсиновый ликер, свежий сок лайма.",
+    de: "Tequila, Orangenlikör, frischer Limettensaft.",
+    ar: "تيكيلا، ليكور البرتقال، عصير الليمون الطازج."
+  },
+  "Tequila, orange liqueur, fresh lime juice.": {
+    tr: "Tekila, portakal likörü, taze kireç suyu.",
+    en: "Tequila, orange liqueur, fresh lime juice.",
+    ru: "Текила, апельсиновый ликер, свежий сок лайма.",
+    de: "Tequila, Orangenlikör, frischer Limettensaft.",
+    ar: "تيكيلا، ليكور البرتقال، عصير الليمون الطازج."
+  },
+  "Premium Mojito": {
+    tr: "Premium Mojito",
+    en: "Premium Mojito",
+    ru: "Премиум Мохито",
+    de: "Premium Mojito",
+    ar: "موهيتو فاخر"
+  },
+  "Premium rom, taze nane yaprakları, lime dilimleri, esmer şeker, soda.": {
+    tr: "Premium rom, taze nane yaprakları, lime dilimleri, esmer şeker, soda.",
+    en: "Premium rum, fresh mint leaves, lime slices, brown sugar, soda.",
+    ru: "Премиум ром, свежие листья мяты, дольки лайма, тростниковый сахар, содовая.",
+    de: "Premium-Rum, frische Minzblätter, Limettenscheiben, brauner Zucker, Soda.",
+    ar: "روم فاخر، أوراق نعناع طازجة، شرائح لايم، سكر بني، صودا."
+  },
+  "Premium rum, fresh mint leaves, lime slices, brown sugar, soda.": {
+    tr: "Premium rom, taze nane yaprakları, lime dilimleri, esmer şeker, soda.",
+    en: "Premium rum, fresh mint leaves, lime slices, brown sugar, soda.",
+    ru: "Премиум ром, свежие листья мяты, дольки лайма, тростниковый сахар, содовая.",
+    de: "Premium-Rum, frische Minzblätter, Limettenscheiben, brauner Zucker, Soda.",
+    ar: "روم فاخر، أوراق نعناع طازجة، شرائح لايم، سكر بني، صودا."
+  },
+  "Macallan 12 Y.O. (Glass)": {
+    tr: "Macallan 12 Y.O. (Kadeh)",
+    en: "Macallan 12 Y.O. (Glass)",
+    ru: "Макаллан 12 лет (Бокал)",
+    de: "Macallan 12 J. (Glas)",
+    ar: "ماكالان 12 سنة (كأس)"
+  },
+  "Sherry meşe fıçılarda dinlendirilmiş single malt viski.": {
+    tr: "Sherry meşe fıçılarda dinlendirilmiş single malt viski.",
+    en: "Single malt whiskey aged in sherry oak casks.",
+    ru: "Односолодовый виски, выдержанный в бочках из-под хереса.",
+    de: "Single Malt Whisky, gereift in Sherry-Eichenfässern.",
+    ar: "ويسكي سنغل مالت معتق في براميل بلوط الشيري."
+  },
+  "Single malt whiskey aged in sherry oak casks.": {
+    tr: "Sherry meşe fıçılarda dinlendirilmiş single malt viski.",
+    en: "Single malt whiskey aged in sherry oak casks.",
+    ru: "Односолодовый виски, выдержанный в бочках из-под хереса.",
+    de: "Single Malt Whisky, gereift in Sherry-Eichenfässern.",
+    ar: "ويسكي سنغل مالت معتق في براميل بلوط الشيري."
+  },
+  "Chivas Regal 18 Y.O.": {
+    tr: "Chivas Regal 18 Y.O.",
+    en: "Chivas Regal 18 Y.O.",
+    ru: "Чивас Ригал 18 лет",
+    de: "Chivas Regal 18 J.",
+    ar: "شيفاز ريجال 18 سنة"
+  },
+  "85 farklı aroma notası içeren premium harman viski.": {
+    tr: "85 farklı aroma notası içeren premium harman viski.",
+    en: "Premium blended whiskey containing 85 different flavor notes.",
+    ru: "Премиум купажированный виски, содержащий 85 различных ароматических нот.",
+    de: "Premium Blended Whisky mit 85 verschiedenen Geschmacksnoten.",
+    ar: "ويسكي مخلوط فاخر يحتوي على 85 نكهة مختلفة."
+  },
+  "Premium blended whiskey containing 85 different flavor notes.": {
+    tr: "85 farklı aroma notası içeren premium harman viski.",
+    en: "Premium blended whiskey containing 85 different flavor notes.",
+    ru: "Премиум купажированный виски, содержащий 85 различных ароматических нот.",
+    de: "Premium Blended Whisky mit 85 verschiedenen Geschmacksnoten.",
+    ar: "ويسكي مخلوط فاخر يحتوي على 85 نكهة مختلفة."
+  },
+  "Dom Pérignon Vintage": {
+    tr: "Dom Pérignon Vintage",
+    en: "Dom Pérignon Vintage",
+    ru: "Дом Периньон Винтаж",
+    de: "Dom Pérignon Vintage",
+    ar: "دوم بيرينيون عتيق"
+  },
+  "Zengin aromalı, prestijli vintage şampanya.": {
+    tr: "Zengin aromalı, prestijli vintage şampanya.",
+    en: "Prestigious vintage champagne with a rich aroma.",
+    ru: "Престижное винтажное шампанское с богатым ароматом.",
+    de: "Prestigeträchtiger Vintage-Champagner mit reichem Aroma.",
+    ar: "شمبانيا عتيقة مرموقة ذات رائحة غنية."
+  },
+  "Prestigious vintage champagne with a rich aroma.": {
+    tr: "Zengin aromalı, prestijli vintage şampanya.",
+    en: "Prestigious vintage champagne with a rich aroma.",
+    ru: "Престижное винтажное шампанское с богатым ароматом.",
+    de: "Prestigeträchtiger Vintage-Champagner mit reichem Aroma.",
+    ar: "شمبانيا عتيقة مرموقة ذات رائحة غنية."
+  },
+  "Belvedere Vodka 70cl (Bottle)": {
+    tr: "Belvedere Votka 70cl (Şişe)",
+    en: "Belvedere Vodka 70cl (Bottle)",
+    ru: "Водка Бельведер 70cl (Бутылка)",
+    de: "Belvedere Wodka 70cl (Flasche)",
+    ar: "فودكا بيلفيدير 70 مل (زجاجة)"
+  },
+  "Dört kez damıtılmış premium Polonya votkası.": {
+    tr: "Dört kez damıtılmış premium Polonya votkası.",
+    en: "Four-times distilled premium Polish vodka.",
+    ru: "Премиальная польская водка четырехкратной дистилляции.",
+    de: "Vierfach destillierter Premium-Wodka aus Polen.",
+    ar: "فودكا بولندية فاخرة مقطرة أربع مرات."
+  },
+  "Four-times distilled premium Polish vodka.": {
+    tr: "Dört kez damıtılmış premium Polonya votkası.",
+    en: "Four-times distilled premium Polish vodka.",
+    ru: "Премиальная польская водка четырехкратной дистилляции.",
+    de: "Vierfach destillierter Premium-Wodka aus Polen.",
+    ar: "فودكا بولندية فاخرة مقطرة أربع مرات."
+  },
+  "Royal Sapphire VIP Package": {
+    tr: "Royal Sapphire VIP Paketi",
+    en: "Royal Sapphire VIP Package",
+    ru: "VIP Пакет Роял Сапфир",
+    de: "Royal Sapphire VIP-Paket",
+    ar: "باقة رويال سفاير VIP"
+  },
+  "1 Şişe Premium Viski veya Votka, 4 adet Red Bull, taze meyve sepeti, lüks kuruyemiş tabağı.": {
+    tr: "1 Şişe Premium Viski veya Votka, 4 adet Red Bull, taze meyve sepeti, lüks kuruyemiş tabağı.",
+    en: "1 Bottle of Premium Whiskey or Vodka, 4 Red Bulls, fresh fruit basket, luxury nut platter.",
+    ru: "1 бутылка виски или водки премиум-класса, 4 редбулла, корзина свежих фруктов, элитное ассорти орехов.",
+    de: "1 Flasche Premium-Whisky oder Wodka, 4 Red Bull, frischer Obstkorb, luxuriöser Nußteller.",
+    ar: "زجاجة واحدة من الويسكي أو الفودكا الفاخرة، 4 رد بول، سلة فواكه طازجة، طبق مكسرات فاخر."
+  },
+  "1 Bottle of Premium Whiskey or Vodka, 4 Red Bulls, fresh fruit basket, luxury nut platter.": {
+    tr: "1 Şişe Premium Viski veya Votka, 4 adet Red Bull, taze meyve sepeti, lüks kuruyemiş tabağı.",
+    en: "1 Bottle of Premium Whiskey or Vodka, 4 Red Bulls, fresh fruit basket, luxury nut platter.",
+    ru: "1 бутылка виски или водки премиум-класса, 4 редбулла, корзина свежих фруктов, элитное ассорти орехов.",
+    de: "1 Flasche Premium-Whisky oder Wodka, 4 Red Bull, frischer Obstkorb, luxuriöser Nußteller.",
+    ar: "زجاجة واحدة من الويسكي أو الفودكا الفاخرة، 4 رد بول، سلة فواكه طازجة، طبق مكسرات فاخر."
+  },
+  "Crystal Imperial VIP Package": {
+    tr: "Crystal Imperial VIP Paketi",
+    en: "Crystal Imperial VIP Package",
+    ru: "VIP Пакет Кристал Империал",
+    de: "Crystal Imperial VIP-Paket",
+    ar: "باقة كريستال إمبيريال VIP"
+  },
+  "1 Şişe Dom Pérignon Vintage, 1 Şişe Belvedere Votka 70cl, premium meyve ve peynir sunumu, özel VIP garson hizmeti.": {
+    tr: "1 Şişe Dom Pérignon Vintage, 1 Şişe Belvedere Votka 70cl, premium meyve ve peynir sunumu, özel VIP garson hizmeti.",
+    en: "1 Bottle of Dom Pérignon Vintage, 1 Bottle of Belvedere Vodka 70cl, premium fruit and cheese presentation, private VIP waiter service.",
+    ru: "1 бутылка Dom Pérignon Vintage, 1 бутылка Belvedere Vodka 70cl, фруктовое и сырное ассорти премиум-класса, услуги персонального VIP-официанта.",
+    de: "1 Flasche Dom Pérignon Vintage, 1 Flasche Belvedere Wodka 70cl, Premium-Obst- und Käsepräsentation, privater VIP-Kellnerservice.",
+    ar: "زجاجة واحدة من شمبانيا دوم بيرينيون العتيقة، زجاجة واحدة من فودكا بيلفيدير 70 مل، طبق فاكهة وجبن فاخر، خدمة نادل VIP خاصة."
+  },
+  "1 Bottle of Dom Pérignon Vintage, 1 Bottle of Belvedere Vodka 70cl, premium fruit and cheese presentation, private VIP waiter service.": {
+    tr: "1 Şişe Dom Pérignon Vintage, 1 Şişe Belvedere Votka 70cl, premium meyve ve peynir sunumu, özel VIP garson hizmeti.",
+    en: "1 Bottle of Dom Pérignon Vintage, 1 Bottle of Belvedere Vodka 70cl, premium fruit and cheese presentation, private VIP waiter service.",
+    ru: "1 бутылка Dom Pérignon Vintage, 1 бутылка Belvedere Vodka 70cl, фруктовое и сырное ассорти премиум-класса, услуги персонального VIP-официанта.",
+    de: "1 Flasche Dom Pérignon Vintage, 1 Flasche Belvedere Wodka 70cl, Premium-Obst- und Käsepräsentation, privater VIP-Kellnerservice.",
+    ar: "زجاجة واحدة من شمبانيا دوم بيرينيون العتيقة، زجاجة واحدة من فودكا بيلفيدير 70 مل، طبق فاكهة وجبن فاخر، خدمة نادل VIP خاصة."
+  }
+};
+
 export default function MenuView({ business, tableNo }: MenuViewProps) {
   const { language, setLanguage, t, isRtl } = useLanguage();
   
@@ -226,10 +555,15 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
   // Apply custom theme parameters dynamically (enforcing white-premium theme for UI Redesign)
   const activeTheme = THEMES['white-premium'];
 
-  // Safe Multi-language String Resolution Helper
+  // Safe Multi-language String Resolution Helper with Dictionary Overrides
   const resolveStr = (item: any, prefix: string) => {
     const key = `${prefix}_${language}`;
-    return item[key] || item[`${prefix}_tr`] || item[`${prefix}_en`] || '';
+    const rawVal = item[key] || item[`${prefix}_tr`] || item[`${prefix}_en`] || '';
+    
+    if (rawVal && TRANSLATIONS_LOOKUP[rawVal]) {
+      return TRANSLATIONS_LOOKUP[rawVal][language] || TRANSLATIONS_LOOKUP[rawVal]['en'] || rawVal;
+    }
+    return rawVal;
   };
 
   // Simulate skeleton loaders on mount
