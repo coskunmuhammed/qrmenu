@@ -6,7 +6,8 @@ import { guestCallWaiter, guestRequestBill } from '@/app/admin/actions';
 import styles from '@/styles/menu.module.css';
 import {
   Clock, Wine, Award, MessageCircle,
-  MapPin, Clock3, Phone, ChevronUp, Sparkles, Flame, Percent
+  MapPin, Clock3, Phone, ChevronUp, Sparkles, Flame, Percent,
+  Mail, Globe, Bell, CreditCard, HelpCircle, Home, BookOpen, User, ArrowUp
 } from 'lucide-react';
 
 const InstagramIcon = ({ size = 20 }: { size?: number }) => (
@@ -734,6 +735,10 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
     setTimeout(() => setToast(null), 4000);
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   /* =========================================================================
      GUEST ACTION HANDLERS
      ========================================================================= */
@@ -1051,37 +1056,7 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
               ))
             )}
 
-            {/* Host Service Widget */}
-            <div className={styles.hostServiceCard}>
-              <div className={styles.hostInfoGroup}>
-                <img 
-                  src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80" 
-                  alt="Dior Hostess" 
-                  className={styles.hostAvatar} 
-                />
-                <div className={styles.hostMeta}>
-                  <span className={styles.hostTitle}>DIOR HOSTESS</span>
-                  <span className={styles.hostName}>Dior Beach Concierge</span>
-                  <span className={styles.hostSubtitle}>Tap to request table service</span>
-                </div>
-              </div>
-              <button className={styles.hostCallBtn} onClick={handleCallWaiter}>
-                🔔 Call Waiter
-              </button>
-              {tableNo && (
-                <span className={styles.hostBadgeText}>
-                  📍 TABLE: {tableNo}
-                </span>
-              )}
-            </div>
 
-            {/* VIP Info Card */}
-            {business.vipMinSpendInfo && (
-              <div className={`${styles.vipCard} animate-pulse-gold`} style={{ margin: '20px 0' }}>
-                <h3 className="text-gold">👑 VIP SERVICE</h3>
-                <p>{business.vipMinSpendInfo}</p>
-              </div>
-            )}
           </div>
         )}
 
@@ -1128,79 +1103,149 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
         )}
       </div>
 
-      {/* Footer Contact Info */}
-      <footer className={styles.footer}>
-        <div className={styles.footerDivider}></div>
-        <p className={styles.footerTagline}>{business.name}</p>
-        
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '0.82rem', color: 'var(--text-secondary)', marginBottom: '24px', fontFamily: 'var(--font-body)', letterSpacing: '0.02em', lineHeight: '1.5' }}>
-          <p>🕒 {language === 'tr' ? 'Çalışma Saatleri' : 'Opening Hours'}: 09:00 - 02:00</p>
-          <p>📞 {language === 'tr' ? 'Telefon' : 'Phone'}: <a href="tel:+905322098964" style={{ textDecoration: 'underline', color: 'var(--text-primary)' }}>0532 209 89 64</a></p>
-          <p>📍 Didim / Altınkum</p>
+      {/* Footer Contact Info Targets Premium Hospitality */}
+      <footer className={styles.footerContainerTarget}>
+        {/* Concierge Card Dynamic Island / Apple Wallet Aesthetic */}
+        <div className={styles.conciergeDynamicCard}>
+          <div className={styles.conciergeHeader}>
+            <div className={styles.conciergeHostInfo}>
+              <span className={styles.conciergeLabel}>DIOR CONCIERGE</span>
+              <span className={styles.conciergeTitle}>Host Service</span>
+            </div>
+            <Bell className={styles.conciergeActionIcon} size={18} />
+          </div>
+          <p className={styles.conciergeSub}>
+            Your dedicated host is ready to assist you. Select an option below:
+          </p>
+          <div className={styles.conciergeGrid}>
+            <button className={styles.conciergeActionBtn} onClick={handleCallWaiter}>
+              <Bell className={styles.conciergeActionIcon} size={18} />
+              <span>Call Waiter</span>
+            </button>
+            <button className={styles.conciergeActionBtn} onClick={() => setShowBillModal(true)}>
+              <CreditCard className={styles.conciergeActionIcon} size={18} />
+              <span>Request Bill</span>
+            </button>
+            <button className={styles.conciergeActionBtn} onClick={getWhatsappUrl ? () => window.open(getWhatsappUrl(), '_blank') : undefined}>
+              <Sparkles className={styles.conciergeActionIcon} size={18} />
+              <span>Reserve VIP</span>
+            </button>
+            <button className={styles.conciergeActionBtn} onClick={getWhatsappUrl ? () => window.open(getWhatsappUrl(), '_blank') : undefined}>
+              <HelpCircle className={styles.conciergeActionIcon} size={18} />
+              <span>Assistance</span>
+            </button>
+          </div>
         </div>
-        
-        <div className={styles.footerLinks}>
-          <a 
-            href="https://www.instagram.com/diorbeachclub_?igsh=ZzRieTY5Z25xeHM1" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className={`${styles.footerLink} glass`}
-          >
-            📷 Instagram
-          </a>
-          <a 
-            href="https://maps.app.goo.gl/1Vji6CvwNdqSH3Jn9?g_st=i" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className={`${styles.footerLink} glass`}
-          >
-            📍 {language === 'tr' ? 'Yol Tarifi' : 'Location'}
-          </a>
-        </div>
-        <p className={styles.copyright}>&copy; 2026 {business.name}. All Rights Reserved.</p>
-      </footer>
 
-      {/* Expandable FAB communication triggers */}
-      <div className={styles.fabContainer}>
-        <div className={`${styles.fabMenu} ${fabOpen ? styles.fabMenuOpen : ''}`}>
-          <a 
-            href={getWhatsappUrl()}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.fabItem}
-            aria-label={t('whatsappReserve')}
-          >
-            <MessageCircle size={20} />
-            <span className={styles.fabLabel}>{t('whatsappReserve')}</span>
-          </a>
-          <a 
-            href="https://www.instagram.com/diorbeachclub_?igsh=ZzRieTY5Z25xeHM1"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.fabItem}
-            aria-label="Instagram"
-          >
-            <InstagramIcon size={20} />
-            <span className={styles.fabLabel}>Instagram</span>
-          </a>
-          <a 
-            href="tel:+905322098964"
-            className={styles.fabItem}
-            aria-label="Telefon"
-          >
-            <Phone size={20} />
-            <span className={styles.fabLabel}>{language === 'tr' ? 'Telefon' : 'Phone'}</span>
-          </a>
+        {/* Premium VIP Card */}
+        {business.vipMinSpendInfo && (
+          <div className={styles.vipPromotionCard}>
+            <span className={styles.vipBadge}>VIP Experience</span>
+            <h3 className={styles.vipTitle}>Exclusive Beach Lounges</h3>
+            <p className={styles.vipDesc}>
+              Private daybeds, dedicated host services, premium bottle collections, and priority beachside dining.
+            </p>
+            <div className={styles.vipSpendRow}>
+              <span className={styles.vipSpendText}>Minimum spend:</span>
+              <span className={styles.vipSpendVal}>15.000 TL</span>
+            </div>
+            <button 
+              className={styles.vipReserveBtn}
+              onClick={getWhatsappUrl ? () => window.open(getWhatsappUrl(), '_blank') : undefined}
+            >
+              Reserve Now <Sparkles size={12} style={{ marginLeft: '4px' }} />
+            </button>
+          </div>
+        )}
+
+        {/* Business Information Card */}
+        <div className={styles.businessInfoCard}>
+          <div className={styles.bizLogo} style={{ width: '130px', fill: '#1d1d1d' }}>
+            <svg viewBox="0 0 300 110" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">
+              <style>{`
+                .brand-dior-dark {
+                  font-family: 'Playfair Display', 'Cormorant Garamond', 'Times New Roman', serif;
+                  font-size: 54px;
+                  fill: #111111;
+                  letter-spacing: 5px;
+                }
+                .brand-sub-dark {
+                  font-family: 'Inter', 'Manrope', sans-serif;
+                  font-size: 11px;
+                  fill: #666666;
+                  letter-spacing: 5px;
+                  font-weight: 500;
+                }
+                .wave-line-dark {
+                  stroke: #111111;
+                  stroke-width: 1.8;
+                  fill: none;
+                  stroke-linecap: round;
+                }
+              `}</style>
+              <g transform="translate(150, 50)" textAnchor="middle">
+                <text x="-48" y="5" className="brand-dior-dark" textAnchor="middle">DI</text>
+                <g transform="translate(0, -12)">
+                  <circle cx="0" cy="0" r="23" stroke="#111111" strokeWidth="4.5" fill="none" />
+                  <path d="M-15,4 Q-7,0 0,4 T15,4" className="wave-line-dark" />
+                  <path d="M-13,-2 Q-6.5,-5 0,-2 T13,-2" className="wave-line-dark" />
+                </g>
+                <text x="48" y="5" className="brand-dior-dark" textAnchor="middle">R</text>
+                <text x="0" y="38" className="brand-sub-dark" textAnchor="middle">BEACH CLUB</text>
+                <line x1="-105" y1="34" x2="-62" y2="34" stroke="#666666" strokeWidth="0.8" />
+                <line x1="62" y1="34" x2="105" y2="34" stroke="#666666" strokeWidth="0.8" />
+              </g>
+            </svg>
+          </div>
+          <p className={styles.bizDesc}>
+            Dior Beach Club'ın eşsiz ortamında, lüks ve konforun buluştuğu dijital gastronomi deneyimi.
+          </p>
+          
+          <div className={styles.bizDetailRows}>
+            <div className={styles.bizDetailRow}>
+              <Clock className={styles.bizDetailIcon} size={14} />
+              <span>🕒 09:00 - 02:00</span>
+            </div>
+            <div className={styles.bizDetailRow}>
+              <Phone className={styles.bizDetailIcon} size={14} />
+              <span>0532 209 89 64</span>
+            </div>
+            <div className={styles.bizDetailRow}>
+              <MapPin className={styles.bizDetailIcon} size={14} />
+              <span>Didim / Altınkum</span>
+            </div>
+          </div>
+
+          <div className={styles.bizActionButtons}>
+            <button className={styles.bizBtn} onClick={() => window.open('https://maps.app.goo.gl/1Vji6CvwNdqSH3Jn9?g_st=i', '_blank')}>
+              <MapPin size={12} />
+              <span>Get Directions</span>
+            </button>
+            <button className={styles.bizBtn} onClick={() => window.open('tel:+905322098964')}>
+              <Phone size={12} />
+              <span>Call</span>
+            </button>
+            <button className={styles.bizBtn} onClick={() => window.open('https://www.instagram.com/diorbeachclub_?igsh=ZzRieTY5Z25xeHM1', '_blank')}>
+              <InstagramIcon size={12} />
+              <span>Instagram</span>
+            </button>
+            <button className={styles.bizBtn} onClick={() => window.open(getWhatsappUrl(), '_blank')}>
+              <MessageCircle size={12} />
+              <span>WhatsApp</span>
+            </button>
+          </div>
         </div>
-        <button 
-          className={`${styles.fabToggle} ${fabOpen ? styles.fabToggleActive : ''}`}
-          onClick={() => setFabOpen(!fabOpen)}
-          aria-expanded={fabOpen}
-          aria-label="Menü İletişim Butonları"
-        >
-          <ChevronUp size={24} style={{ transform: fabOpen ? 'rotate(180deg)' : 'none', transition: 'all 0.3s' }} />
+
+        {/* Muted Copyright */}
+        <p style={{ fontFamily: 'var(--font-body)', fontSize: '0.65rem', color: 'var(--text-secondary)', opacity: '0.6', margin: '12px 0 0 0' }}>
+          &copy; 2026 Dior Beach Club. All Rights Reserved.
+        </p>
+
+        {/* Scroll to Top button */}
+        <button className={styles.scrollToTopBtn} onClick={scrollToTop} aria-label="Yukarı Git">
+          <ArrowUp size={16} />
         </button>
-      </div>
+      </footer>
 
       {/* TODAY'S RECOMMENDATION POPUP */}
       {showHighlight && recommendedProduct && (
@@ -1450,26 +1495,45 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
         </div>
       )}
 
-      {/* Bottom Tab Bar (iOS Native Style V3) */}
-      <div className={styles.bottomTabBar}>
-        <div className={`${styles.tabItem} ${activeTab === 'menu' ? styles.tabItemActive : ''}`} onClick={() => { setActiveTab('menu'); setActiveCategory('all'); }}>
-          <span style={{ fontSize: '1.25rem' }}>🏠</span>
+      {/* Bottom Tab Bar (iOS Floating Concierge Navigation) */}
+      <div className={styles.iosBottomNavBar}>
+        <div 
+          className={`${styles.tabItemTarget} ${activeTab === 'menu' ? styles.tabItemTargetActive : ''}`} 
+          onClick={() => { setActiveTab('menu'); setActiveCategory('all'); }}
+        >
+          <Home size={18} />
+          <span>{language === 'tr' ? 'Ana Sayfa' : 'Home'}</span>
+        </div>
+        <div 
+          className={`${styles.tabItemTarget} ${activeTab === 'cocktails' ? styles.tabItemTargetActive : ''}`} 
+          onClick={() => { setActiveTab('cocktails'); setActiveCategory('all'); }}
+        >
+          <BookOpen size={18} />
           <span>{language === 'tr' ? 'Menü' : 'Menu'}</span>
         </div>
-        <div className={`${styles.tabItem} ${activeTab === 'cocktails' ? styles.tabItemActive : ''}`} onClick={() => { setActiveTab('cocktails'); setActiveCategory('all'); }}>
-          <span style={{ fontSize: '1.25rem' }}>🍸</span>
-          <span>{language === 'tr' ? 'Bar' : 'Drinks'}</span>
+        
+        {/* Center Golden Concierge Action Button */}
+        <button 
+          className={styles.centerConciergeBtn} 
+          onClick={handleCallWaiter}
+          aria-label={t('callWaiter') || "Call Waiter"}
+        >
+          <Bell size={20} />
+        </button>
+        
+        <div 
+          className={`${styles.tabItemTarget} ${activeTab === 'champagne' ? styles.tabItemTargetActive : ''}`} 
+          onClick={() => { setActiveTab('champagne'); setActiveCategory('all'); }}
+        >
+          <Sparkles size={18} />
+          <span>{language === 'tr' ? 'Rezervasyon' : 'Booking'}</span>
         </div>
-        <div className={styles.centerTabItem} onClick={() => setFabOpen(!fabOpen)} style={{ cursor: 'pointer' }}>
-          <span style={{ fontSize: '1.4rem', fontWeight: 'bold' }}>+</span>
-        </div>
-        <div className={`${styles.tabItem} ${activeTab === 'champagne' ? styles.tabItemActive : ''}`} onClick={() => { setActiveTab('champagne'); setActiveCategory('all'); }}>
-          <span style={{ fontSize: '1.25rem' }}>🍾</span>
-          <span>{language === 'tr' ? 'Kav' : 'Cellar'}</span>
-        </div>
-        <div className={`${styles.tabItem} ${activeTab === 'events' ? styles.tabItemActive : ''}`} onClick={() => { setActiveTab('events'); setActiveCategory('all'); }}>
-          <span style={{ fontSize: '1.25rem' }}>🎉</span>
-          <span>{language === 'tr' ? 'Etkinlik' : 'Events'}</span>
+        <div 
+          className={`${styles.tabItemTarget} ${activeTab === 'events' ? styles.tabItemTargetActive : ''}`} 
+          onClick={() => { setActiveTab('events'); setActiveCategory('all'); }}
+        >
+          <User size={18} />
+          <span>{language === 'tr' ? 'Profil' : 'Profile'}</span>
         </div>
       </div>
     </div>
