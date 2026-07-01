@@ -582,6 +582,35 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
   const [tipPercentage, setTipPercentage] = useState<number>(10);
   const [toast, setToast] = useState<{ text: string; error?: boolean } | null>(null);
 
+  // Background images array resolution
+  let coverImages = [
+    "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1000&auto=format&fit=crop&q=80",
+    "https://images.unsplash.com/photo-1578474846511-04ba529f0b88?w=1000&auto=format&fit=crop&q=80",
+    "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=1000&auto=format&fit=crop&q=80"
+  ];
+  if (business.coverUrl) {
+    if (business.coverUrl.startsWith('[')) {
+      try {
+        const parsed = JSON.parse(business.coverUrl);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          coverImages = parsed;
+        }
+      } catch (e) {}
+    } else {
+      coverImages = [business.coverUrl];
+    }
+  }
+
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  useEffect(() => {
+    if (coverImages.length <= 1) return;
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % coverImages.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [coverImages.length]);
+
   const categoryRefs = useRef<{ [key: string]: HTMLElement | null }>({});
   const categoryMenuRef = useRef<HTMLDivElement | null>(null);
 
@@ -881,15 +910,28 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
 
       {/* Brand Branding Header Target Mobile Design */}
       <div className={styles.heroBannerTarget}>
-        <img 
-          src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1000&auto=format&fit=crop&q=80" 
-          alt="Dior Beach Club Backdrop" 
-          className={styles.heroImageV3}
-        />
-        <div className={styles.heroGradientV3} />
+        {coverImages.map((imgUrl, idx) => (
+          <img 
+            key={idx}
+            src={imgUrl} 
+            alt={`Dior Beach Club Backdrop ${idx + 1}`} 
+            className={styles.heroImageV3}
+            style={{
+              opacity: idx === currentSlide ? 1 : 0,
+              transition: 'opacity 1s ease-in-out',
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover'
+            }}
+          />
+        ))}
+        <div className={styles.heroGradientV3} style={{ zIndex: 1 }} />
         
         {/* Top Search bar overlay (User Center) */}
-        <div className={styles.heroSearchContainer}>
+        <div className={styles.heroSearchContainer} style={{ zIndex: 2 }}>
           <span className={styles.heroSearchIcon}>🔍</span>
           <input 
             type="text" 
@@ -904,26 +946,24 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
         </div>
 
         {/* Hero Title & Info Group */}
-        <div className={styles.heroTitleGroup}>
-          <span className={styles.heroBadge}>PREMIUM</span>
+        <div className={styles.heroTitleGroup} style={{ zIndex: 2 }}>
           <h1 className={styles.heroTitle}>Dior Beach</h1>
           <p className={styles.heroDesc}>
             {resolveStr(business, 'description') || 'Gourmet selections and beach lounge cocktails.'}
           </p>
         </div>
 
-        <button className={styles.heroFloatingBtn} onClick={handleShare}>
-          •••
-        </button>
-
         {/* Hero pagination dots indicator */}
-        <div className={styles.heroDotsIndicator}>
-          <div className={`${styles.heroDot} ${styles.heroDotActive}`} />
-          <div className={styles.heroDot} />
-          <div className={styles.heroDot} />
-          <div className={styles.heroDot} />
-          <div className={styles.heroDot} />
-        </div>
+        {coverImages.length > 1 && (
+          <div className={styles.heroDotsIndicator} style={{ zIndex: 2 }}>
+            {coverImages.map((_, idx) => (
+              <div 
+                key={idx}
+                className={`${styles.heroDot} ${idx === currentSlide ? styles.heroDotActive : ''}`} 
+              />
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Main Panel Target (Overlapping Container) */}

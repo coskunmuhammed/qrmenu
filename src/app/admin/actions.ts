@@ -60,6 +60,7 @@ export async function updateBusinessSettings(data: {
   highlightProductId?: string | null;
   highlightDiscountText?: string | null;
   highlightValidUntil?: string | null;
+  coverUrl?: string | null;
 }) {
   const businessId = await getTenantBusinessId();
 
@@ -84,6 +85,7 @@ export async function updateBusinessSettings(data: {
       highlightProductId: data.highlightProductId || null,
       highlightDiscountText: data.highlightDiscountText || null,
       highlightValidUntil: data.highlightValidUntil || null,
+      coverUrl: data.coverUrl !== undefined ? data.coverUrl : undefined,
     },
   });
 

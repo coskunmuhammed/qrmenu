@@ -253,6 +253,7 @@ export default function AdminDashboard({
     highlightProductId: business.highlightProductId || '',
     highlightDiscountText: business.highlightDiscountText || '',
     highlightValidUntil: business.highlightValidUntil || '',
+    coverUrl: business.coverUrl || '',
   });
 
   // Pull dynamic tables and requests on load or menu swap
@@ -697,6 +698,56 @@ export default function AdminDashboard({
       showStatus(err.message, 'error');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const getCoversList = (): string[] => {
+    if (!settingsForm.coverUrl) return [];
+    if (settingsForm.coverUrl.startsWith('[')) {
+      try {
+        return JSON.parse(settingsForm.coverUrl);
+      } catch (e) {
+        return [];
+      }
+    }
+    return [settingsForm.coverUrl];
+  };
+
+  const handleAddCoverUrl = (url: string) => {
+    const list = getCoversList();
+    if (!list.includes(url)) {
+      const newList = [...list, url];
+      setSettingsForm({ ...settingsForm, coverUrl: JSON.stringify(newList) });
+    }
+  };
+
+  const handleRemoveCoverUrl = (idx: number) => {
+    const list = getCoversList();
+    const newList = list.filter((_, i) => i !== idx);
+    setSettingsForm({ ...settingsForm, coverUrl: JSON.stringify(newList) });
+  };
+
+  const handleCoverUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    
+    const formData = new FormData();
+    formData.append('file', file);
+    
+    try {
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
+      const data = await res.json();
+      if (data.url) {
+        handleAddCoverUrl(data.url);
+        showStatus('Görsel başarıyla yüklendi.', 'success');
+      } else {
+        showStatus('Yükleme başarısız oldu.', 'error');
+      }
+    } catch (err) {
+      showStatus('Yükleme hatası oluştu.', 'error');
     }
   };
 
@@ -2050,6 +2101,82 @@ export default function AdminDashboard({
                       <option value="dark-club">Dark Club (Siyah / Neon Mor)</option>
                       <option value="white-premium">White Premium (Lüks Beyaz / Altın)</option>
                     </select>
+                  </div>
+
+                  {/* BACKGROUND IMAGES (SLIDER) SETTING */}
+                  <div className={styles.formGroup} style={{ gridColumn: 'span 2' }}>
+                    <label className={styles.formLabel}>
+                      Arka Plan Görselleri (Slider - Çoklu Eklenebilir)
+                    </label>
+                    
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', marginBottom: '12px' }}>
+                      {getCoversList().map((url, idx) => (
+                        <div 
+                          key={idx} 
+                          style={{ 
+                            position: 'relative', 
+                            width: '80px', 
+                            height: '80px', 
+                            borderRadius: '6px', 
+                            border: '1px solid #c8a261', 
+                            overflow: 'hidden' 
+                          }}
+                        >
+                          <img 
+                            src={url} 
+                            alt="" 
+                            style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+                          />
+                          <button
+                            type="button"
+                            onClick={() => handleRemoveCoverUrl(idx)}
+                            style={{
+                              position: 'absolute',
+                              top: '2px',
+                              right: '2px',
+                              width: '18px',
+                              height: '18px',
+                              borderRadius: '50%',
+                              backgroundColor: 'rgba(217, 83, 79, 0.9)',
+                              color: '#fff',
+                              border: 'none',
+                              fontSize: '10px',
+                              cursor: 'pointer',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center'
+                            }}
+                          >
+                            ✕
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                    
+                    <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleCoverUpload}
+                        style={{ display: 'none' }}
+                        id="cover-upload-input"
+                      />
+                      <label
+                        htmlFor="cover-upload-input"
+                        className="btn-primary"
+                        style={{ 
+                          fontSize: '0.8rem', 
+                          padding: '8px 16px', 
+                          borderRadius: '4px', 
+                          cursor: 'pointer', 
+                          backgroundColor: '#c8a261', 
+                          color: '#111',
+                          fontWeight: 'bold' 
+                        }}
+                      >
+                        📷 Yeni Görsel Yükle
+                      </label>
+                    </div>
                   </div>
 
                   <div className={styles.formGroup}>
