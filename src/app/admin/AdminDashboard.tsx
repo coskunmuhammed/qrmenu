@@ -308,14 +308,75 @@ export default function AdminDashboard({
   /* =========================================================================
      DRAG & DROP / FILE UPLOAD HANDLER
      ========================================================================= */
+  const compressImage = (file: File, maxWidth = 800, maxHeight = 800, quality = 0.7): Promise<Blob> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (event) => {
+        const img = document.createElement('img');
+        img.src = event.target?.result as string;
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          let width = img.width;
+          let height = img.height;
+
+          if (width > height) {
+            if (width > maxWidth) {
+              height = Math.round((height * maxWidth) / width);
+              width = maxWidth;
+            }
+          } else {
+            if (height > maxHeight) {
+              width = Math.round((width * maxHeight) / height);
+              height = maxHeight;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+
+          const ctx = canvas.getContext('2d');
+          if (!ctx) {
+            resolve(file);
+            return;
+          }
+
+          ctx.drawImage(img, 0, 0, width, height);
+          canvas.toBlob(
+            (blob) => {
+              if (blob) {
+                resolve(blob);
+              } else {
+                resolve(file);
+              }
+            },
+            'image/jpeg',
+            quality
+          );
+        };
+        img.onerror = (err) => reject(err);
+      };
+      reader.onerror = (err) => reject(err);
+    });
+  };
+
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
     setUploading(true);
 
     try {
+      let uploadBlob: Blob = file;
+      if (file.type.startsWith('image/')) {
+        try {
+          uploadBlob = await compressImage(file);
+        } catch (compressErr) {
+          console.warn('Client-side compression failed, using original:', compressErr);
+        }
+      }
+
       const formData = new FormData();
-      formData.append('file', file);
+      formData.append('file', uploadBlob, file.name.replace(/\.[^/.]+$/, "") + ".jpg");
 
       const res = await fetch('/api/upload', {
         method: 'POST',
@@ -345,8 +406,10 @@ export default function AdminDashboard({
       }
 
       showStatus('Dosya başarıyla yüklendi.', 'success');
+      alert('Görsel başarıyla yüklendi! Görsel metin kutusuna eklendi.');
     } catch (err: any) {
       showStatus(err.message, 'error');
+      alert('Hata: ' + err.message);
     } finally {
       setUploading(false);
     }
@@ -431,6 +494,7 @@ export default function AdminDashboard({
         setProducts(products.map((p) => (p.id === updated.id ? updatedWithCategory : p)));
         setEditingProduct(null);
         showStatus('Ürün güncellendi.', 'success');
+        alert('Ürün başarıyla güncellendi!');
       } else {
         const created = await createProduct({
           ...newProduct,
@@ -453,6 +517,7 @@ export default function AdminDashboard({
           volume: '', order: 0
         });
         showStatus('Ürün eklendi.', 'success');
+        alert('Ürün başarıyla eklendi!');
       }
     } catch (err: any) {
       showStatus(err.message, 'error');
