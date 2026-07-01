@@ -894,7 +894,7 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
           <input 
             type="text" 
             className={styles.heroSearchInput}
-            placeholder="User center..." 
+            placeholder={language === 'tr' ? 'Kullanıcı paneli...' : 'User center...'} 
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -950,7 +950,7 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
 
         {/* Menu title & Horizontal Category tabs */}
         <div className={styles.panelHeaderRow}>
-          <h2 className={styles.panelTitle}>Menu</h2>
+          <h2 className={styles.panelTitle}>{language === 'tr' ? 'Menü' : 'Menu'}</h2>
           <div className={styles.categorySliderTarget} ref={categoryMenuRef}>
             <span 
               className={`${styles.categoryLink} ${activeCategory === 'all' ? styles.categoryLinkActive : ''}`}
@@ -1134,20 +1134,20 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
         {/* Premium VIP Card */}
         {business.vipMinSpendInfo && (
           <div className={styles.vipPromotionCard}>
-            <span className={styles.vipBadge}>VIP Experience</span>
-            <h3 className={styles.vipTitle}>Exclusive Beach Lounges</h3>
+            <span className={styles.vipBadge}>{language === 'tr' ? 'VIP Deneyimi' : 'VIP Experience'}</span>
+            <h3 className={styles.vipTitle}>{language === 'tr' ? 'Özel Plaj Locaları' : 'Exclusive Beach Lounges'}</h3>
             <p className={styles.vipDesc}>
-              Private daybeds, dedicated host services, premium bottle collections, and priority beachside dining.
+              {language === 'tr' ? 'Özel localar, kişisel host hizmetleri, seçkin şişe servisleri ve öncelikli plaj alanı.' : 'Private daybeds, dedicated host services, premium bottle collections, and priority beachside dining.'}
             </p>
             <div className={styles.vipSpendRow}>
-              <span className={styles.vipSpendText}>Minimum spend:</span>
+              <span className={styles.vipSpendText}>{language === 'tr' ? 'Minimum harcama:' : 'Minimum spend:'}</span>
               <span className={styles.vipSpendVal}>15.000 TL</span>
             </div>
             <button 
               className={styles.vipReserveBtn}
               onClick={getWhatsappUrl ? () => window.open(getWhatsappUrl(), '_blank') : undefined}
             >
-              Reserve Now <Sparkles size={12} style={{ marginLeft: '4px' }} />
+              {language === 'tr' ? 'Şimdi Rezervasyon Yap' : 'Reserve Now'} <Sparkles size={12} style={{ marginLeft: '4px' }} />
             </button>
           </div>
         )}
@@ -1192,7 +1192,7 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
             </svg>
           </div>
           <p className={styles.bizDesc}>
-            Dior Beach Club'ın eşsiz ortamında, lüks ve konforun buluştuğu dijital gastronomi deneyimi.
+            {language === 'tr' ? "Dior Beach Club'ın eşsiz ortamında, lüks ve konforun buluştuğu dijital gastronomi deneyimi." : "Welcome to the digital gastronomy experience where luxury and comfort meet in the unique atmosphere of Dior Beach Club."}
           </p>
           
           <div className={styles.bizDetailRows}>
@@ -1213,11 +1213,11 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
           <div className={styles.bizActionButtons}>
             <button className={styles.bizBtn} onClick={() => window.open('https://maps.app.goo.gl/1Vji6CvwNdqSH3Jn9?g_st=i', '_blank')}>
               <MapPin size={12} />
-              <span>Get Directions</span>
+              <span>{language === 'tr' ? 'Yol Tarifi' : 'Get Directions'}</span>
             </button>
             <button className={styles.bizBtn} onClick={() => window.open('tel:+905322098964')}>
               <Phone size={12} />
-              <span>Call</span>
+              <span>{language === 'tr' ? 'Telefon Et' : 'Call'}</span>
             </button>
             <button className={styles.bizBtn} onClick={() => window.open('https://www.instagram.com/diorbeachclub_?igsh=ZzRieTY5Z25xeHM1', '_blank')}>
               <InstagramIcon size={12} />
@@ -1408,18 +1408,6 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
                 </div>
                 
                 <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                  {selectedProduct.isAvailable && (
-                    <button 
-                      className="btn-primary" 
-                      onClick={() => {
-                        handleCallWaiter();
-                        setSelectedProduct(null);
-                      }}
-                      style={{ fontSize: '0.8rem', padding: '10px 20px' }}
-                    >
-                      🔔 {t('callWaiter')}
-                    </button>
-                  )}
                   <button 
                     className="btn-neon" 
                     onClick={handleShare}
@@ -1524,8 +1512,8 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
         {/* Center Golden Concierge Action Button */}
         <button 
           className={styles.centerConciergeBtn} 
-          onClick={handleCallWaiter}
-          aria-label={t('callWaiter') || "Call Waiter"}
+          onClick={handleShare}
+          aria-label="Paylaş / Share"
         >
           <svg viewBox="0 0 50 50" width="22" height="22" xmlns="http://www.w3.org/2000/svg">
             <circle cx="25" cy="25" r="18" stroke="#FFFFFF" strokeWidth="2.5" fill="none" />
