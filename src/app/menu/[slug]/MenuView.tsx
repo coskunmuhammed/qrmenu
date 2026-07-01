@@ -7,7 +7,8 @@ import styles from '@/styles/menu.module.css';
 import {
   Clock, Wine, Award, MessageCircle,
   MapPin, Clock3, Phone, ChevronUp, Sparkles, Flame, Percent,
-  Mail, Globe, Bell, CreditCard, HelpCircle, Home, BookOpen, User, ArrowUp
+  Mail, Globe, Bell, CreditCard, HelpCircle, Home, BookOpen, User, ArrowUp,
+  Search, Calendar
 } from 'lucide-react';
 
 const InstagramIcon = ({ size = 20 }: { size?: number }) => (
@@ -1467,18 +1468,25 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
       {/* Bottom Tab Bar (iOS Floating Concierge Navigation) */}
       <div className={styles.iosBottomNavBar}>
         <div 
-          className={`${styles.tabItemTarget} ${activeTab === 'menu' ? styles.tabItemTargetActive : ''}`} 
-          onClick={() => { setActiveTab('menu'); setActiveCategory('all'); }}
+          className={`${styles.tabItemTarget} ${activeTab === 'menu' && searchQuery === '' ? styles.tabItemTargetActive : ''}`} 
+          onClick={() => { setActiveTab('menu'); setActiveCategory('all'); setSearchQuery(''); }}
         >
           <Home size={18} />
           <span>{language === 'tr' ? 'Ana Sayfa' : 'Home'}</span>
         </div>
         <div 
-          className={`${styles.tabItemTarget} ${activeTab === 'cocktails' ? styles.tabItemTargetActive : ''}`} 
-          onClick={() => { setActiveTab('cocktails'); setActiveCategory('all'); }}
+          className={`${styles.tabItemTarget} ${searchQuery !== '' ? styles.tabItemTargetActive : ''}`} 
+          onClick={() => {
+            setActiveTab('menu');
+            scrollToTop();
+            setTimeout(() => {
+              const inputEl = document.querySelector(`.${styles.panelSearchInput}`) as HTMLInputElement;
+              if (inputEl) inputEl.focus();
+            }, 100);
+          }}
         >
-          <BookOpen size={18} />
-          <span>{language === 'tr' ? 'Menü' : 'Menu'}</span>
+          <Search size={18} />
+          <span>{language === 'tr' ? 'Arama' : 'Search'}</span>
         </div>
         
         {/* Center Golden Concierge Action Button */}
@@ -1487,22 +1495,26 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
           onClick={handleCallWaiter}
           aria-label={t('callWaiter') || "Call Waiter"}
         >
-          <Bell size={20} />
+          <svg viewBox="0 0 50 50" width="22" height="22" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="25" cy="25" r="18" stroke="#FFFFFF" strokeWidth="2.5" fill="none" />
+            <path d="M15,27 Q20,24 25,27 T35,27" stroke="#FFFFFF" strokeWidth="1.2" fill="none" strokeLinecap="round" />
+            <path d="M16.5,23 Q20.75,20.5 25,23 T33.5,23" stroke="#FFFFFF" strokeWidth="1.2" fill="none" strokeLinecap="round" />
+          </svg>
         </button>
         
         <div 
           className={`${styles.tabItemTarget} ${activeTab === 'champagne' ? styles.tabItemTargetActive : ''}`} 
           onClick={() => { setActiveTab('champagne'); setActiveCategory('all'); }}
         >
-          <Sparkles size={18} />
-          <span>{language === 'tr' ? 'Rezervasyon' : 'Booking'}</span>
+          <Wine size={18} />
+          <span>{language === 'tr' ? 'Kav' : 'Cellar'}</span>
         </div>
         <div 
           className={`${styles.tabItemTarget} ${activeTab === 'events' ? styles.tabItemTargetActive : ''}`} 
           onClick={() => { setActiveTab('events'); setActiveCategory('all'); }}
         >
-          <User size={18} />
-          <span>{language === 'tr' ? 'Profil' : 'Profile'}</span>
+          <Calendar size={18} />
+          <span>{language === 'tr' ? 'Etkinlikler' : 'Events'}</span>
         </div>
       </div>
     </div>
