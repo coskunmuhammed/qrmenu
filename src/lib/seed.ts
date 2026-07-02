@@ -29,7 +29,7 @@ async function main() {
         name: 'Dior Beach Club',
         description_tr: 'Dior Beach Club\'ın eşsiz ortamında, lüks ve konforun buluştuğu dijital gastronomi deneyimine hoş geldiniz.',
         description_en: 'Welcome to the digital gastronomy experience where luxury and comfort meet in the unique atmosphere of Dior Beach Club.',
-        description_ru: 'Самый престижный ночной клуб в Стамбуле. Уникальные коктейли, живые выступления ди-джеев и VIP-обслуживание.',
+        description_ru: 'Самый престижный ночной klub в Стамбуле. Уникальные коктейли, живые выступления ди-джеев и VIP-обслуживание.',
         description_de: 'Der renommierteste Nachtclub in Istanbul. Einzigartige Cocktails, Live-DJ-Auftritte und VIP-Service.',
         description_ar: 'نادي الرقص الأكثر شهرة في إسطنبول. الكوكتيلات الفريدة، عروض الدي جي الحية، وخدمة كبار الشخصيات.',
         whatsappNumber: '905322098964', // Number from the menu image
@@ -170,8 +170,8 @@ async function main() {
       products: [
         { name_tr: 'Chicken Burger', name_en: 'Chicken Burger', price: 800, description_tr: 'Tavuk pane, göbek marul, turşu, domates, karamelize soğan, şefin özel sosu ve patates kızartması ile.' },
         { name_tr: 'Chesse Burger', name_en: 'Cheeseburger', price: 800, description_tr: 'Özel köfte, erimiş cheddar peyniri, salatalık turşusu, domates, karamelize soğan, şefin özel sosu ve patates kızartması ile.' },
-        { name_tr: 'Füme Kaburga Burger', name_en: 'Smoked Ribs Burger', price: 1000, description_tr: 'Özel köfte, cheddar peyniri, karamelize soğan, şefin özel sosu, füme dana kaburga dilimleri ve patates kızartması ile.' },
-        { name_tr: 'Mushroom Burger', name_en: 'Mushroom Burger', price: 800, description_tr: 'Özel köfte, cheddar peyniri, turşu, domates, karamelize soğan, şefin özel sosu, sote mantar ve patates kızartması ile.' },
+        { name_tr: 'Füme Kaburga Burger', name_en: 'Smoked Ribs Burger', price: 1000, description_tr: 'Özel köfte, cheddar peyniri, karamelize soğan, şefin özel sosu, füme dana kaburga dilimleri ve patates kızartması ile.', imageUrl: '/images/products/smoked-ribs-burger.png' },
+        { name_tr: 'Mushroom Burger', name_en: 'Mushroom Burger', price: 800, description_tr: 'Özel köfte, cheddar peyniri, turşu, domates, karamelize soğan, şefin özel sosu, sote mantar and patates kızartması ile.' },
         { name_tr: 'Klasik Burger', name_en: 'Classic Burger', price: 800, description_tr: 'Özel köfte, salatalık turşusu, domates, karamelize soğan, şefin özel sosu ve patates kızartması ile.' }
       ]
     },
@@ -192,7 +192,7 @@ async function main() {
       name_en: 'Pizzas',
       order: 9,
       products: [
-        { name_tr: 'Margherita Pizza', name_en: 'Margherita Pizza', price: 600, description_tr: 'Mozzarella peyniri, domates sos ve taze roka yaprakları.' },
+        { name_tr: 'Margherita Pizza', name_en: 'Margherita Pizza', price: 600, description_tr: 'Mozzarella peyniri, domates sos ve taze roka yaprakları.', imageUrl: '/images/products/margherita-pizza.png' },
         { name_tr: 'Karışık Pizza', name_en: 'Mixed Pizza', price: 700, description_tr: 'Sucuk, salam, mısır, zeytin, kapya biber, çarliston biber, mantar, mozzarella peyniri ve şefin domates sosu.' },
         { name_tr: 'Tavuklu Mantarlı Pizza', name_en: 'Chicken & Mushroom Pizza', price: 600, description_tr: 'Tavuk göğsü dilimleri, mantar, mozzarella peyniri ve şefin domates sosu.' },
         { name_tr: 'Füme Kaburgalı Pizza', name_en: 'Smoked Ribs Pizza', price: 800, description_tr: 'Özel domates sos, mozzarella peyniri, füme kaburga dilimleri ve parmesan peyniri.' }
@@ -203,7 +203,7 @@ async function main() {
       name_en: 'Pastas',
       order: 10,
       products: [
-        { name_tr: 'Fettuccine Alfredo', name_en: 'Fettuccine Alfredo', price: 600, description_tr: 'Krema, sarımsak, bonfile dilimleri, tavuk, mantar ve parmesan peyniri.' },
+        { name_tr: 'Fettuccine Alfredo', name_en: 'Fettuccine Alfredo', price: 600, description_tr: 'Krema, sarımsak, bonfile dilimleri, tavuk, mantar ve parmesan peyniri.', imageUrl: '/images/products/fettuccine-alfredo.png' },
         { name_tr: 'Barbie Fettuccine', name_en: 'Barbie Fettuccine', price: 600, description_tr: 'Pesto sos, krema, sarımsak, tavuk, mantar ve parmesan peyniri.' },
         { name_tr: 'Etli Penne Arabiata', name_en: 'Beef Penne Arrabbiata', price: 700, description_tr: 'Acılı domates sosu, dilimlenmiş bonfile, mantar, zeytin, kapya biber ve parmesan peyniri.' },
         { name_tr: '5 Peynir Soslu Ravioli', name_en: '5 Cheese Ravioli', price: 600, description_tr: 'Gravyer, parmesan, rokfor, mozzarella ve cheddar peynirli sos ile krema ve fesleğen.' }
@@ -403,9 +403,9 @@ async function main() {
       name_en: 'Dior Specials',
       order: 22,
       products: [
-        { name_tr: 'Dior Special Cocktail', name_en: 'Dior Special Cocktail', price: 1000, description_tr: 'Lüks ve taze aromalarla Dior Beach Club imzalı kokteyl.' },
-        { name_tr: 'Chili Martini', name_en: 'Chili Martini', price: 1000, description_tr: 'Hafif acı severler için chili biberi aromalı martini.' },
-        { name_tr: 'Pornstar Martini', name_en: 'Pornstar Martini', price: 1000, description_tr: 'Çarkıfelek meyvesi, vanilyalı votka ve yanında bir kadeh Prosecco köpüklü şarap ile.' },
+        { name_tr: 'Dior Special Cocktail', name_en: 'Dior Special Cocktail', price: 1000, description_tr: 'Lüks ve taze aromalarla Dior Beach Club imzalı kokteyl.', imageUrl: '/images/products/dior-special.png' },
+        { name_tr: 'Chili Martini', name_en: 'Chili Martini', price: 1000, description_tr: 'Hafif acı severler için chili biberi aromalı martini.', imageUrl: '/images/products/chili-martini.png' },
+        { name_tr: 'Pornstar Martini', name_en: 'Pornstar Martini', price: 1000, description_tr: 'Çarkıfelek meyvesi, vanilyalı votka ve yanında bir kadeh Prosecco köpüklü şarap ile.', imageUrl: '/images/products/pornstar-martini.png' },
         { name_tr: 'Kuzu Kulağı', name_en: 'Sorrel Cocktail', price: 1000, description_tr: 'Taze kuzukulağı bitkisi ile hazırlanan ekşi ve ferahlatıcı kokteyl.' },
         { name_tr: 'Ah Belinda', name_en: 'Ah Belinda Cocktail', price: 1000, description_tr: 'Dior Beach Club\'a özel ferahlatıcı meyveli özel kokteyl.' },
         { name_tr: 'Berry Sour', name_en: 'Berry Sour', price: 1000, description_tr: 'Orman meyveleri ve ekşi notaların tatlı uyumu.' },
@@ -450,7 +450,7 @@ async function main() {
           isNew: false,
           isRecommended: false,
           isAvailable: true,
-          imageUrl: null,
+          imageUrl: (prodData as any).imageUrl || null,
         },
       });
       console.log(`Created Product: ${prodData.name_tr}`);
