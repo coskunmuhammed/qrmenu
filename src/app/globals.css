@@ -1,5 +1,4 @@
-@import url('https://db.onlinewebfonts.com/c/b82329475307e0380dc1ea23f0c35266?family=adineue+PRO');
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Italiana&family=Montserrat:wght@300;400;500;600&display=swap');
 
 :root {
   --bg-primary: #F8F7F4;
@@ -24,8 +23,8 @@
   --border-glass: 1px solid #ECE7DF;
   --border-neon: 1px solid #ECE7DF;
   
-  --font-heading: 'Playfair Display', 'Cormorant Garamond', serif;
-  --font-body: 'adineue PRO', 'Inter', sans-serif;
+  --font-heading: 'Cinzel', 'Italiana', serif;
+  --font-body: 'Cormorant Garamond', 'Montserrat', serif;
   
   --shadow-neon-p: 0 4px 20px rgba(0, 0, 0, 0.02);
   --shadow-neon-b: 0 4px 20px rgba(0, 0, 0, 0.02);
