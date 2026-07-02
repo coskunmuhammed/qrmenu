@@ -481,7 +481,7 @@ export default function AdminDashboard({
           description_ru: editingProduct.description_ru || '',
           description_de: editingProduct.description_de || '',
           description_ar: editingProduct.description_ar || '',
-          imageUrl: editingProduct.imageUrl || '',
+          imageUrl: editingProduct.imageUrl || '/images/placeholders/product-placeholder.jpg',
         });
 
         const categoryObj = categories.find((c) => c.id === catId);
@@ -499,6 +499,7 @@ export default function AdminDashboard({
         const created = await createProduct({
           ...newProduct,
           categoryId: catId,
+          imageUrl: newProduct.imageUrl || '/images/placeholders/product-placeholder.jpg',
         });
 
         const categoryObj = categories.find((c) => c.id === catId);
@@ -1177,6 +1178,45 @@ export default function AdminDashboard({
                       🖼️ {preset.name}
                     </button>
                   ))}
+                </div>
+              </div>
+
+              {/* Image Preview Block */}
+              <div style={{ marginBottom: '20px', padding: '12px', border: '1px solid var(--border-glass)', borderRadius: '8px', background: 'rgba(255, 255, 255, 0.02)' }}>
+                <span className={styles.formLabel} style={{ display: 'block', marginBottom: '8px' }}>Görsel Önizleme:</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                  <div style={{ width: '100px', height: '100px', borderRadius: '8px', overflow: 'hidden', border: '1px solid rgba(212, 175, 55, 0.3)', flexShrink: 0 }}>
+                    <img
+                      src={
+                        (() => {
+                          const currentUrl = editingProduct ? editingProduct.imageUrl : newProduct.imageUrl;
+                          if (!currentUrl) return '/images/placeholders/product-placeholder.jpg';
+                          if (currentUrl.startsWith('http://') || currentUrl.startsWith('https://') || currentUrl.startsWith('/') || currentUrl.startsWith('data:')) {
+                            return currentUrl;
+                          }
+                          return `/images/products/${currentUrl}`;
+                        })()
+                      }
+                      alt="Önizleme"
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = '/images/placeholders/product-placeholder.jpg';
+                      }}
+                    />
+                  </div>
+                  <div>
+                    <span style={{ fontSize: '0.85rem', color: '#a1a1aa', display: 'block' }}>
+                      {(() => {
+                        const currentUrl = editingProduct ? editingProduct.imageUrl : newProduct.imageUrl;
+                        if (!currentUrl) return '⚠️ Görsel tanımlanmamış. Varsayılan premium placeholder gösterilecek.';
+                        if (currentUrl.length > 50) return `Yol: ${currentUrl.substring(0, 47)}...`;
+                        return `Yol: ${currentUrl}`;
+                      })()}
+                    </span>
+                    <span style={{ fontSize: '0.75rem', color: '#bd00ff', display: 'block', marginTop: '4px' }}>
+                      * Kırık veya yüklenmeyen görseller otomatik olarak şampanya renkli Dior temalı önizlemeye düşecektir.
+                    </span>
+                  </div>
                 </div>
               </div>
 

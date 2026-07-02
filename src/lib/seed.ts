@@ -4,6 +4,18 @@ import bcrypt from 'bcryptjs';
 async function main() {
   console.log('Seeding V2 started...');
 
+  // Clean start for menu data to ensure correct image references
+  try {
+    console.log('Cleaning up old menu data for re-seeding...');
+    await prisma.productVariation.deleteMany({});
+    await prisma.product.deleteMany({});
+    await prisma.category.deleteMany({});
+    await prisma.campaign.deleteMany({});
+    await prisma.event.deleteMany({});
+  } catch (e) {
+    console.warn('Failed to clean up old database records:', e);
+  }
+
   // 1. Create Default Business
   const businessSlug = 'crystal-club';
   let business = await prisma.business.findUnique({
@@ -105,7 +117,8 @@ async function main() {
           isAvailable: true,
           alcoholRatio: 15.0,
           volume: '300ml',
-          ingredients: 'Gin, Tonic, Lime, Butterfly Pea Pea Tea',
+          ingredients: 'Gin, Tonic, Lime, Butterfly Pea Tea',
+          imageUrl: '/images/products/purple-rain.jpg',
           variations: [],
         },
         {
@@ -128,6 +141,7 @@ async function main() {
           alcoholRatio: 18.5,
           volume: '250ml',
           ingredients: 'Bourbon, Lemon Juice, Honey, 24k Gold',
+          imageUrl: '/images/products/gold-rush.jpg',
           variations: [],
         },
       ],
@@ -160,6 +174,7 @@ async function main() {
           alcoholRatio: 40.0,
           volume: 'Kadeh (Glass)',
           ingredients: 'Charcoal Mellowed Tennessee Whiskey',
+          imageUrl: '/images/products/whiskey.jpg',
           variations: [
             { name_tr: '35 cl Şişe', name_en: '35 cl Bottle', price: 2800 },
             { name_tr: '70 cl Şişe', name_en: '70 cl Bottle', price: 4800 },
@@ -196,6 +211,7 @@ async function main() {
           alcoholRatio: null,
           volume: 'Paket',
           ingredients: 'Vodka, Champagne, Fruits, Nuts, Energy Drinks',
+          imageUrl: '/images/products/champagne.jpg',
           variations: [],
         },
       ],
@@ -256,6 +272,7 @@ async function main() {
             alcoholRatio: prodData.alcoholRatio,
             ingredients: prodData.ingredients,
             volume: prodData.volume,
+            imageUrl: prodData.imageUrl || null,
           },
         });
         console.log(`Created Product: ${prodData.name_tr}`);
@@ -302,6 +319,7 @@ async function main() {
         description_en: 'Don\'t miss 20% off on all cocktails every Wednesday night.',
         isActive: true,
         order: 1,
+        imageUrl: '/images/products/lounge.jpg',
       },
     });
     console.log('Created campaign');
@@ -328,6 +346,7 @@ async function main() {
         description_tr: 'Eşsiz elektronik müzik setleri ve dans gösterileriyle dolu çılgın bir gece.',
         description_en: 'A wild night full of unique electronic music sets and dance shows.',
         isActive: true,
+        imageUrl: '/images/products/lounge.jpg',
       },
     });
     console.log('Created event');

@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useLanguage, Language } from '@/components/LanguageContext';
 import { guestCallWaiter, guestRequestBill } from '@/app/admin/actions';
+import SafeProductImage from '@/components/SafeProductImage';
 import styles from '@/styles/menu.module.css';
 import {
   Clock, Wine, Award, MessageCircle,
@@ -1089,19 +1090,16 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
                         <button className={styles.darkCardOptionBtn} onClick={(e) => { e.stopPropagation(); setSelectedProduct(product); }}>
                           ⋮
                         </button>
-                        {product.imageUrl && (
-                          <div className={styles.darkProductCardImageWrapper}>
-                            <img 
-                              src={product.imageUrl} 
-                              alt={resolveStr(product, 'name')}
-                              className={styles.darkProductCardImage}
-                              loading="lazy"
-                            />
-                            {!product.isAvailable && (
-                              <div className={styles.outOfStockBadge}>{t('outOfStock')}</div>
-                            )}
-                          </div>
-                        )}
+                        <div className={styles.darkProductCardImageWrapper}>
+                          <SafeProductImage 
+                            src={product.imageUrl} 
+                            alt={resolveStr(product, 'name')}
+                            className={styles.darkProductCardImage}
+                          />
+                          {!product.isAvailable && (
+                            <div className={styles.outOfStockBadge}>{t('outOfStock')}</div>
+                          )}
+                        </div>
                         <div className={styles.darkProductCardInfo}>
                           <h4 className={styles.darkProductCardTitle}>
                             {resolveStr(product, 'name')}
@@ -1137,15 +1135,13 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
             ) : (
               business.events.map((event) => (
                 <div key={event.id} className={`${styles.eventCard}`}>
-                  {event.imageUrl && (
-                    <div className={styles.eventImageWrapper}>
-                      <img 
-                        src={event.imageUrl} 
-                        alt={resolveStr(event, 'title')}
-                        className={styles.eventImage}
-                      />
-                    </div>
-                  )}
+                  <div className={styles.eventImageWrapper}>
+                    <SafeProductImage 
+                      src={event.imageUrl} 
+                      alt={resolveStr(event, 'title')}
+                      className={styles.eventImage}
+                    />
+                  </div>
                   <div className={styles.eventInfo}>
                     <div className={styles.eventDate}>
                       {new Date(event.date).toLocaleDateString(language === 'tr' ? 'tr-TR' : 'en-US', {
@@ -1287,15 +1283,13 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
             <button className={styles.modalClose} onClick={() => setShowHighlight(false)} aria-label="Kapat">×</button>
             <h3 className={styles.welcomeTitle}>{business.highlightTitle || t('chefChoice')}</h3>
             
-            {recommendedProduct.imageUrl && (
-              <div className={styles.modalImageWrapper} style={{ height: '170px', borderRadius: '12px', overflow: 'hidden', marginBottom: '16px' }}>
-                <img 
-                  src={recommendedProduct.imageUrl} 
-                  alt={resolveStr(recommendedProduct, 'name')} 
-                  className={styles.modalImage}
-                />
-              </div>
-            )}
+            <div className={styles.modalImageWrapper} style={{ height: '170px', borderRadius: '12px', overflow: 'hidden', marginBottom: '16px' }}>
+              <SafeProductImage 
+                src={recommendedProduct.imageUrl} 
+                alt={resolveStr(recommendedProduct, 'name')} 
+                className={styles.modalImage}
+              />
+            </div>
 
             <div className={styles.welcomeBanner}>{resolveStr(recommendedProduct, 'name')}</div>
             {business.highlightDiscountText && (
@@ -1343,16 +1337,14 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
               ×
             </button>
 
-            {selectedProduct.imageUrl && (
-              <div className={styles.modalImageWrapper} style={{ width: '100%', aspectRatio: '16/10', margin: '0 0 20px 0', borderRadius: '16px', overflow: 'hidden' }}>
-                <img 
-                  src={selectedProduct.imageUrl} 
-                  alt={resolveStr(selectedProduct, 'name')} 
-                  className={styles.modalImage}
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                />
-              </div>
-            )}
+            <div className={styles.modalImageWrapper} style={{ width: '100%', aspectRatio: '16/10', margin: '0 0 20px 0', borderRadius: '16px', overflow: 'hidden' }}>
+              <SafeProductImage 
+                src={selectedProduct.imageUrl} 
+                alt={resolveStr(selectedProduct, 'name')} 
+                className={styles.modalImage}
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              />
+            </div>
 
             <div className={styles.modalDetails} style={{ padding: '0' }}>
               <div className={styles.modalHeaderRow} style={{ marginBottom: '10px' }}>
