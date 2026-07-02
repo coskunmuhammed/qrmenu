@@ -1189,43 +1189,51 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
 
         {/* Business Information Card */}
         <div className={styles.businessInfoCard}>
+
           <div className={styles.bizLogo} style={{ width: '130px', fill: '#1d1d1d' }}>
             <svg viewBox="0 0 300 110" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">
               <style>{`
                 .brand-dior-dark {
-                  font-family: 'Playfair Display', 'Cormorant Garamond', 'Times New Roman', serif;
+                  font-family: 'Cinzel', 'Playfair Display', 'Times New Roman', serif;
                   font-size: 54px;
                   fill: #111111;
                   letter-spacing: 5px;
-                }
-                .brand-sub-dark {
-                  font-family: 'Inter', 'Manrope', sans-serif;
-                  font-size: 11px;
-                  fill: #666666;
-                  letter-spacing: 5px;
                   font-weight: 500;
                 }
-                .wave-line-dark {
-                  stroke: #111111;
-                  stroke-width: 1.8;
-                  fill: none;
-                  stroke-linecap: round;
+                .brand-sub-dark {
+                  font-family: 'Montserrat', 'Inter', sans-serif;
+                  font-size: 10px;
+                  fill: #111111;
+                  letter-spacing: 6px;
+                  font-weight: 600;
                 }
               `}</style>
-              <g transform="translate(150, 50)" textAnchor="middle">
-                <text x="-48" y="5" className="brand-dior-dark" textAnchor="middle">DI</text>
-                <g transform="translate(0, -12)">
-                  <circle cx="0" cy="0" r="23" stroke="#111111" strokeWidth="4.5" fill="none" />
-                  <path d="M-15,4 Q-7,0 0,4 T15,4" className="wave-line-dark" />
-                  <path d="M-13,-2 Q-6.5,-5 0,-2 T13,-2" className="wave-line-dark" />
+              <g transform="translate(150, 55)" textAnchor="middle">
+                {/* DI */}
+                <text x="-32" y="10" className="brand-dior-dark" textAnchor="end">DI</text>
+                
+                {/* Custom O with waves */}
+                <g transform="translate(4, -14)">
+                  {/* Serif O shape (thick on sides, thin on top/bottom) */}
+                  <path d="M 0,-24 A 24,24 0 1,0 0,24 A 24,24 0 1,0 0,-24 M 0,-21 A 16,21 0 1,1 0,21 A 16,21 0 1,1 0,-21" fill="#111111" />
+                  
+                  {/* 3 Wave lines inside the O */}
+                  <path d="M -13,3 Q -6.5,-1 0,3 T 13,3" stroke="#111111" strokeWidth="1.8" fill="none" strokeLinecap="round" />
+                  <path d="M -11,8 Q -5.5,4 0,8 T 11,8" stroke="#111111" strokeWidth="1.8" fill="none" strokeLinecap="round" />
+                  <path d="M -8,13 Q -4,9 0,13 T 8,13" stroke="#111111" strokeWidth="1.8" fill="none" strokeLinecap="round" />
                 </g>
-                <text x="48" y="5" className="brand-dior-dark" textAnchor="middle">R</text>
-                <text x="0" y="38" className="brand-sub-dark" textAnchor="middle">BEACH CLUB</text>
-                <line x1="-105" y1="34" x2="-62" y2="34" stroke="#666666" strokeWidth="0.8" />
-                <line x1="62" y1="34" x2="105" y2="34" stroke="#666666" strokeWidth="0.8" />
+                
+                {/* R */}
+                <text x="40" y="10" className="brand-dior-dark" textAnchor="start">R</text>
+                
+                {/* BEACH CLUB Subtitle with lines */}
+                <text x="3" y="44" className="brand-sub-dark" textAnchor="middle">BEACH CLUB</text>
+                <line x1="-105" y1="39" x2="-58" y2="39" stroke="#111111" strokeWidth="1.2" />
+                <line x1="64" y1="39" x2="111" y2="39" stroke="#111111" strokeWidth="1.2" />
               </g>
             </svg>
           </div>
+
           <p className={styles.bizDesc}>
             {language === 'tr' ? "Dior Beach Club'ın eşsiz ortamında, lüks ve konforun buluştuğu dijital gastronomi deneyimi." : "Welcome to the digital gastronomy experience where luxury and comfort meet in the unique atmosphere of Dior Beach Club."}
           </p>
@@ -1269,6 +1277,50 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
         <p style={{ fontFamily: 'var(--font-body)', fontSize: '0.65rem', color: 'var(--text-secondary)', opacity: '0.6', margin: '12px 0 0 0' }}>
           &copy; 2026 Dior Beach Club. All Rights Reserved.
         </p>
+
+        {/* Altun Medya Extension Link */}
+        <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'center', width: '100%' }}>
+          <a 
+            href="https://altunmedya.com" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '6px',
+              backgroundColor: '#0a0a0a',
+              color: '#d1d1d1',
+              padding: '6px 14px',
+              borderRadius: '20px',
+              fontSize: '0.72rem',
+              letterSpacing: '0.08em',
+              textDecoration: 'none',
+              border: '1px solid rgba(255, 255, 255, 0.05)',
+              transition: 'all 0.25s ease'
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.backgroundColor = '#121212';
+              e.currentTarget.style.color = '#ffffff';
+              e.currentTarget.style.borderColor = 'rgba(184, 148, 99, 0.4)';
+              e.currentTarget.style.transform = 'translateY(-1px)';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.backgroundColor = '#0a0a0a';
+              e.currentTarget.style.color = '#d1d1d1';
+              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.05)';
+              e.currentTarget.style.transform = 'translateY(0)';
+            }}
+          >
+            {/* Sparkle star icon */}
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 12 2 Q 12 12 2 12 Q 12 12 12 22 Q 12 12 22 12 Q 12 12 12 2" />
+            </svg>
+            <span style={{ fontFamily: "'Montserrat', sans-serif" }}>
+              altun<span style={{ fontWeight: 700 }}>medya</span>
+            </span>
+          </a>
+        </div>
 
         {/* Scroll to Top button */}
         <button className={styles.scrollToTopBtn} onClick={scrollToTop} aria-label="Yukarı Git">
