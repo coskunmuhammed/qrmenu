@@ -31,7 +31,7 @@ async function main() {
         description_en: 'Welcome to the digital gastronomy experience where luxury and comfort meet in the unique atmosphere of Dior Beach Club.',
         description_ru: 'Самый престижный ночной клуб в Стамбуле. Уникальные коктейли, живые выступления ди-джеев и VIP-обслуживание.',
         description_de: 'Der renommierteste Nachtclub in Istanbul. Einzigartige Cocktails, Live-DJ-Auftritte und VIP-Service.',
-        description_ar: 'نادي الرقص الأكثر شهرة in إسطنبول. الكوكتيلات الفريدة، عروض الدي جي الحية، وخدمة كبار الشخصيات.',
+        description_ar: 'نادي الرقص الأكثر شهرة في إسطنبول. الكoكتيلات الفريدة، عروض الدي جي الحية، وخدمة كبار الشخصيات.',
         whatsappNumber: '905322098964', // Number from the menu image
         instagramUsername: 'diorbeachclup_', // Instagram from the menu image
         googleMapsUrl: 'https://maps.google.com',
@@ -440,36 +440,115 @@ async function main() {
     for (const prodData of catData.products) {
       let imgUrl = (prodData as any).imageUrl || null;
       if (!imgUrl) {
-        // Automatically map based on category
+        const pName = prodData.name_tr;
         const catName = catData.name_tr;
-        if (catName === 'Başlangıçlar ve Kızartmalar') imgUrl = '/images/products/starters.png';
-        else if (catName === 'Tost Çeşitleri') imgUrl = '/images/products/toast.png';
-        else if (catName === 'Gözleme') imgUrl = '/images/products/gozleme.png';
-        else if (catName === 'Wraplar') imgUrl = '/images/products/wrap.png';
-        else if (catName === 'Salatalar') imgUrl = '/images/products/salad.png';
-        else if (catName === 'Meyveler & Atıştırmalıklar') imgUrl = '/images/products/fruit-platter.png';
-        else if (catName === 'Burgerler') imgUrl = '/images/products/smoked-ribs-burger.png';
-        else if (catName === 'Pide - Lahmacun') imgUrl = '/images/products/pide-lahmacun.png';
-        else if (catName === 'Pizzalar') imgUrl = '/images/products/margherita-pizza.png';
-        else if (catName === 'Makarnalar') imgUrl = '/images/products/fettuccine-alfredo.png';
-        else if (catName === 'Şişeler') imgUrl = '/images/products/alcohol-bottle.png';
-        else if (catName === 'Soft İçecekler') imgUrl = '/images/products/soft-drink.png';
-        else if (catName === 'Premium Şişeler') imgUrl = '/images/products/alcohol-bottle.png';
-        else if (catName === 'Shotlar') imgUrl = '/images/products/shot.png';
+
+        // --- 1. Başlangıçlar ve Kızartmalar ---
+        if (catName === 'Başlangıçlar ve Kızartmalar') {
+          if (pName === 'Patates Tabağı') imgUrl = 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=600&q=70&fit=crop';
+          else if (pName === 'Soğan Halkası') imgUrl = 'https://images.unsplash.com/photo-1639024471283-2bc7b3c6a267?w=600&q=70&fit=crop';
+          else if (pName === 'Dior Mix') imgUrl = '/images/products/starters.png'; // fallback starters
+          else imgUrl = null;
+        }
+        // --- 2. Tost Çeşitleri ---
+        else if (catName === 'Tost Çeşitleri') {
+          if (pName === 'Karışık Tost') imgUrl = '/images/products/toast.png';
+          else imgUrl = null;
+        }
+        // --- 3. Gözleme ---
+        else if (catName === 'Gözleme') {
+          if (pName === 'Kaşarlı Gözleme') imgUrl = '/images/products/gozleme.png';
+          else imgUrl = null;
+        }
+        // --- 4. Wraplar ---
+        else if (catName === 'Wraplar') {
+          if (pName === 'Izgara Tavuk Sezar Wrap') imgUrl = '/images/products/wrap.png';
+          else if (pName === 'Dana Lokum Wrap') imgUrl = 'https://images.unsplash.com/photo-1626700051175-6518c4793f4f?w=600&q=70&fit=crop';
+          else if (pName === 'Tavuk Wrap') imgUrl = 'https://images.unsplash.com/photo-1509722747041-616f39b57569?w=600&q=70&fit=crop';
+          else imgUrl = null;
+        }
+        // --- 5. Salatalar ---
+        else if (catName === 'Salatalar') {
+          if (pName === 'Izgara Tavuk Salata') imgUrl = '/images/products/salad.png';
+          else if (pName === 'Sezar Salata') imgUrl = 'https://images.unsplash.com/photo-1550304943-4f24f54ddde9?w=600&q=70&fit=crop';
+          else if (pName === 'Roka Salata') imgUrl = 'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=600&q=70&fit=crop';
+          else if (pName === 'Thai Bonfile Salata') imgUrl = 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&q=70&fit=crop';
+        }
+        // --- 6. Meyveler & Atıştırmalıklar ---
+        else if (catName === 'Meyveler & Atıştırmalıklar') {
+          if (pName === 'Meyve Tabağı') imgUrl = '/images/products/fruit-platter.png';
+          else imgUrl = null;
+        }
+        // --- 7. Burgerler ---
+        else if (catName === 'Burgerler') {
+          if (pName === 'Füme Kaburga Burger') imgUrl = '/images/products/smoked-ribs-burger.png';
+          else if (pName === 'Chicken Burger') imgUrl = 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&q=70&fit=crop';
+          else if (pName === 'Chesse Burger') imgUrl = 'https://images.unsplash.com/photo-1550547660-d9450f859349?w=600&q=70&fit=crop';
+          else imgUrl = 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=600&q=70&fit=crop';
+        }
+        // --- 8. Pide - Lahmacun ---
+        else if (catName === 'Pide - Lahmacun') {
+          if (pName === 'Çıtır Lahmacun') imgUrl = '/images/products/pide-lahmacun.png';
+          else if (pName === 'Kaşarlı Pide') imgUrl = 'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=600&q=70&fit=crop';
+          else imgUrl = null;
+        }
+        // --- 9. Pizzalar ---
+        else if (catName === 'Pizzalar') {
+          if (pName === 'Margherita Pizza') imgUrl = '/images/products/margherita-pizza.png';
+          else if (pName === 'Karışık Pizza') imgUrl = 'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600&q=70&fit=crop';
+          else imgUrl = 'https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?w=600&q=70&fit=crop';
+        }
+        // --- 10. Makarnalar ---
+        else if (catName === 'Makarnalar') {
+          if (pName === 'Fettuccine Alfredo') imgUrl = '/images/products/fettuccine-alfredo.png';
+          else if (pName === 'Barbie Fettuccine') imgUrl = 'https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=600&q=70&fit=crop';
+          else if (pName === 'Etli Penne Arabiata') imgUrl = 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600&q=70&fit=crop';
+          else imgUrl = 'https://images.unsplash.com/photo-1587740908075-9e245a707a68?w=600&q=70&fit=crop';
+        }
+        // --- 11. Şişeler & Premium Şişeler ---
+        else if (catName === 'Şişeler' || catName === 'Premium Şişeler') {
+          if (pName.includes('Belvedere')) imgUrl = '/images/products/alcohol-bottle.png';
+          else if (pName.includes('Jameson')) imgUrl = 'https://images.unsplash.com/photo-1527061011665-3652c757a4d4?w=600&q=70&fit=crop';
+          else if (pName.includes('Chivas')) imgUrl = 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=600&q=70&fit=crop';
+          else imgUrl = null;
+        }
+        // --- 12. Soft İçecekler ---
+        else if (catName === 'Soft İçecekler') {
+          if (pName === 'Cola' || pName === 'Cola-Zero') imgUrl = '/images/products/soft-drink.png';
+          else if (pName === 'Su Şişe') imgUrl = 'https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=600&q=70&fit=crop';
+          else if (pName === 'Soda') imgUrl = 'https://images.unsplash.com/photo-1527960656306-b3a956b7340b?w=600&q=70&fit=crop';
+          else if (pName === 'Sprite') imgUrl = 'https://images.unsplash.com/photo-1625772290748-160b240b9047?w=600&q=70&fit=crop';
+          else if (pName === 'Fanta') imgUrl = 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=600&q=70&fit=crop';
+          else if (pName === 'Limonata') imgUrl = 'https://images.unsplash.com/photo-1556881286-fc6915169721?w=600&q=70&fit=crop';
+          else if (pName === 'Press Portakal') imgUrl = 'https://images.unsplash.com/photo-1613478223719-2ab802602423?w=600&q=70&fit=crop';
+          else imgUrl = null;
+        }
+        // --- 13. Shotlar ---
+        else if (catName === 'Shotlar') {
+          if (pName === 'Tekila') imgUrl = '/images/products/shot.png';
+          else imgUrl = null;
+        }
+        // --- 14. Kokteyller ---
         else if (catName === 'Kokteyller') {
-          // alternate between purple-rain and gold-rush
-          imgUrl = prodData.name_tr.length % 2 === 0 ? '/images/products/purple-rain.jpg' : '/images/products/gold-rush.jpg';
+          if (pName === 'Negroni') imgUrl = 'https://images.unsplash.com/photo-1551538827-9c02e49933a4?w=600&q=70&fit=crop';
+          else if (pName === 'Mojito') imgUrl = 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=600&q=70&fit=crop';
+          else if (pName === 'Strawberry Mojito') imgUrl = 'https://images.unsplash.com/photo-1497534446932-c925b458314e?w=600&q=70&fit=crop';
+          else if (pName === 'Apreol Spritz') imgUrl = 'https://images.unsplash.com/photo-1560512823-829485b8bf24?w=600&q=70&fit=crop';
+          else if (pName === 'Margarita') imgUrl = 'https://images.unsplash.com/photo-1556855810-ac404aa91e85?w=600&q=70&fit=crop';
+          else if (pName === 'Pinacolada') imgUrl = 'https://images.unsplash.com/photo-1570598912134-01a7448843c3?w=600&q=70&fit=crop';
+          else if (pName.includes('Espresso Martini')) imgUrl = 'https://images.unsplash.com/photo-1541658016709-82535e94bc69?w=600&q=70&fit=crop';
+          else imgUrl = '/images/products/purple-rain.jpg';
         }
-        else if (catName === 'Sıcak Bar') imgUrl = '/images/products/lounge.jpg';
-        else if (catName === 'Frozen') imgUrl = '/images/products/purple-rain.jpg';
-        else if (catName === 'Biralar') imgUrl = '/images/products/soft-drink.png';
-        else if (catName === 'Milkshake') imgUrl = '/images/products/purple-rain.jpg';
-        else if (catName === 'Şarap Şişe') imgUrl = '/images/products/champagne.jpg';
+        // --- 15. Kadehler ---
         else if (catName === 'Kadehler') {
-          imgUrl = prodData.name_tr.includes('Şarap') || prodData.name_tr.includes('Blush') ? '/images/products/champagne.jpg' : '/images/products/whiskey.jpg';
+          if (pName.includes('Şarap') || pName.includes('Blush')) imgUrl = '/images/products/champagne.jpg';
+          else if (pName.includes('Chivas') || pName.includes('Jager')) imgUrl = 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=600&q=70&fit=crop';
+          else imgUrl = null;
         }
-        else if (catName === 'Dior Special') imgUrl = '/images/products/dior-special.png';
-        else if (catName === 'Ice İçecekler') imgUrl = '/images/products/whiskey.jpg';
+        // --- 16. Diğerleri ---
+        else {
+          imgUrl = null;
+        }
       }
 
       await prisma.product.create({
