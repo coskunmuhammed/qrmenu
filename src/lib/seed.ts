@@ -29,9 +29,9 @@ async function main() {
         name: 'Dior Beach Club',
         description_tr: 'Dior Beach Club\'ın eşsiz ortamında, lüks ve konforun buluştuğu dijital gastronomi deneyimine hoş geldiniz.',
         description_en: 'Welcome to the digital gastronomy experience where luxury and comfort meet in the unique atmosphere of Dior Beach Club.',
-        description_ru: 'Самый престижный ночной klub в Стамбуле. Уникальные коктейли, живые выступления ди-джеев и VIP-обслуживание.',
+        description_ru: 'Самый престижный ночной клуб в Стамбуле. Уникальные коктейли, живые выступления ди-джеев и VIP-обслуживание.',
         description_de: 'Der renommierteste Nachtclub in Istanbul. Einzigartige Cocktails, Live-DJ-Auftritte und VIP-Service.',
-        description_ar: 'نادي الرقص الأكثر شهرة في إسطنبول. الكوكتيلات الفريدة، عروض الدي جي الحية، وخدمة كبار الشخصيات.',
+        description_ar: 'نادي الرقص الأكثر شهرة in إسطنبول. الكوكتيلات الفريدة، عروض الدي جي الحية، وخدمة كبار الشخصيات.',
         whatsappNumber: '905322098964', // Number from the menu image
         instagramUsername: 'diorbeachclup_', // Instagram from the menu image
         googleMapsUrl: 'https://maps.google.com',
@@ -158,7 +158,7 @@ async function main() {
       name_en: 'Fruits & Snacks',
       order: 6,
       products: [
-        { name_tr: 'Meyve Tabağı', name_en: 'Fruit Platter', price: 600, description_tr: 'Mevsimine göre karpuz, kavun, incir, çilek, üzüm and ananas.' },
+        { name_tr: 'Meyve Tabağı', name_en: 'Fruit Platter', price: 600, description_tr: 'Mevsimine göre karpuz, kavun, incir, çilek, üzüm ve ananas.' },
         { name_tr: 'Dior Meyve Tabağı', name_en: 'Dior Special Fruit Platter', price: 800, description_tr: 'Özel sunumlu lüks karışık meyve tabağı.' },
         { name_tr: 'Çerez', name_en: 'Mixed Nuts', price: 400, description_tr: 'Karışık taze kuruyemiş tabağı.' }
       ]
@@ -171,7 +171,7 @@ async function main() {
         { name_tr: 'Chicken Burger', name_en: 'Chicken Burger', price: 800, description_tr: 'Tavuk pane, göbek marul, turşu, domates, karamelize soğan, şefin özel sosu ve patates kızartması ile.' },
         { name_tr: 'Chesse Burger', name_en: 'Cheeseburger', price: 800, description_tr: 'Özel köfte, erimiş cheddar peyniri, salatalık turşusu, domates, karamelize soğan, şefin özel sosu ve patates kızartması ile.' },
         { name_tr: 'Füme Kaburga Burger', name_en: 'Smoked Ribs Burger', price: 1000, description_tr: 'Özel köfte, cheddar peyniri, karamelize soğan, şefin özel sosu, füme dana kaburga dilimleri ve patates kızartması ile.', imageUrl: '/images/products/smoked-ribs-burger.png' },
-        { name_tr: 'Mushroom Burger', name_en: 'Mushroom Burger', price: 800, description_tr: 'Özel köfte, cheddar peyniri, turşu, domates, karamelize soğan, şefin özel sosu, sote mantar and patates kızartması ile.' },
+        { name_tr: 'Mushroom Burger', name_en: 'Mushroom Burger', price: 800, description_tr: 'Özel köfte, cheddar peyniri, turşu, domates, karamelize soğan, şefin özel sosu, sote mantar ve patates kızartması ile.' },
         { name_tr: 'Klasik Burger', name_en: 'Classic Burger', price: 800, description_tr: 'Özel köfte, salatalık turşusu, domates, karamelize soğan, şefin özel sosu ve patates kızartması ile.' }
       ]
     },
@@ -438,6 +438,40 @@ async function main() {
     console.log(`Created Category: ${catData.name_tr}`);
 
     for (const prodData of catData.products) {
+      let imgUrl = (prodData as any).imageUrl || null;
+      if (!imgUrl) {
+        // Automatically map based on category
+        const catName = catData.name_tr;
+        if (catName === 'Başlangıçlar ve Kızartmalar') imgUrl = '/images/products/starters.png';
+        else if (catName === 'Tost Çeşitleri') imgUrl = '/images/products/toast.png';
+        else if (catName === 'Gözleme') imgUrl = '/images/products/gozleme.png';
+        else if (catName === 'Wraplar') imgUrl = '/images/products/wrap.png';
+        else if (catName === 'Salatalar') imgUrl = '/images/products/salad.png';
+        else if (catName === 'Meyveler & Atıştırmalıklar') imgUrl = '/images/products/fruit-platter.png';
+        else if (catName === 'Burgerler') imgUrl = '/images/products/smoked-ribs-burger.png';
+        else if (catName === 'Pide - Lahmacun') imgUrl = '/images/products/pide-lahmacun.png';
+        else if (catName === 'Pizzalar') imgUrl = '/images/products/margherita-pizza.png';
+        else if (catName === 'Makarnalar') imgUrl = '/images/products/fettuccine-alfredo.png';
+        else if (catName === 'Şişeler') imgUrl = '/images/products/alcohol-bottle.png';
+        else if (catName === 'Soft İçecekler') imgUrl = '/images/products/soft-drink.png';
+        else if (catName === 'Premium Şişeler') imgUrl = '/images/products/alcohol-bottle.png';
+        else if (catName === 'Shotlar') imgUrl = '/images/products/shot.png';
+        else if (catName === 'Kokteyller') {
+          // alternate between purple-rain and gold-rush
+          imgUrl = prodData.name_tr.length % 2 === 0 ? '/images/products/purple-rain.jpg' : '/images/products/gold-rush.jpg';
+        }
+        else if (catName === 'Sıcak Bar') imgUrl = '/images/products/lounge.jpg';
+        else if (catName === 'Frozen') imgUrl = '/images/products/purple-rain.jpg';
+        else if (catName === 'Biralar') imgUrl = '/images/products/soft-drink.png';
+        else if (catName === 'Milkshake') imgUrl = '/images/products/purple-rain.jpg';
+        else if (catName === 'Şarap Şişe') imgUrl = '/images/products/champagne.jpg';
+        else if (catName === 'Kadehler') {
+          imgUrl = prodData.name_tr.includes('Şarap') || prodData.name_tr.includes('Blush') ? '/images/products/champagne.jpg' : '/images/products/whiskey.jpg';
+        }
+        else if (catName === 'Dior Special') imgUrl = '/images/products/dior-special.png';
+        else if (catName === 'Ice İçecekler') imgUrl = '/images/products/whiskey.jpg';
+      }
+
       await prisma.product.create({
         data: {
           categoryId: category.id,
@@ -450,7 +484,7 @@ async function main() {
           isNew: false,
           isRecommended: false,
           isAvailable: true,
-          imageUrl: (prodData as any).imageUrl || null,
+          imageUrl: imgUrl,
         },
       });
       console.log(`Created Product: ${prodData.name_tr}`);
