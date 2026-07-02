@@ -2,6 +2,16 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export function middleware(request: NextRequest) {
+  // 0. Redirect HTTP to HTTPS in production
+  if (
+    process.env.NODE_ENV === 'production' &&
+    request.headers.get('x-forwarded-proto') === 'http'
+  ) {
+    const secureUrl = new URL(request.url);
+    secureUrl.protocol = 'https:';
+    return NextResponse.redirect(secureUrl.toString(), 308);
+  }
+
   const response = NextResponse.next();
 
   // 1. Content Security Policy (CSP)

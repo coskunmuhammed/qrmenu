@@ -107,7 +107,7 @@ export async function getSession(): Promise<UserSession | null> {
       cookieStore.set(ACCESS_COOKIE, newAccessToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict',
+        sameSite: 'lax',
         maxAge: 15 * 60, // 15 minutes
         path: '/',
       });
@@ -129,7 +129,7 @@ export async function setSession(sessionData: UserSession): Promise<string> {
   cookieStore.set(ACCESS_COOKIE, accessToken, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
-    sameSite: 'strict',
+    sameSite: 'lax',
     maxAge: 15 * 60, // 15 minutes
     path: '/',
   });
@@ -139,7 +139,7 @@ export async function setSession(sessionData: UserSession): Promise<string> {
   cookieStore.set(REFRESH_COOKIE, refreshToken, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
-    sameSite: 'strict',
+    sameSite: 'lax',
     maxAge: 7 * 24 * 60 * 60, // 7 days
     path: '/',
   });
@@ -149,7 +149,7 @@ export async function setSession(sessionData: UserSession): Promise<string> {
   cookieStore.set(CSRF_COOKIE, csrfToken, {
     httpOnly: false, // Must be readable by client script
     secure: process.env.NODE_ENV === 'production',
-    sameSite: 'strict',
+    sameSite: 'lax',
     maxAge: 24 * 60 * 60,
     path: '/',
   });
