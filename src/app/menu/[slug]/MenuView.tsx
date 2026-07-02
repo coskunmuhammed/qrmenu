@@ -1279,7 +1279,7 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
         </p>
 
         {/* Altun Medya Extension Link */}
-        <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'center', width: '100%' }}>
+        <div style={{ marginTop: '16px', display: 'flex', justifyContent: 'center', width: '100%' }}>
           <a 
             href="https://altunmedya.com" 
             target="_blank" 
@@ -1288,32 +1288,28 @@ export default function MenuView({ business, tableNo }: MenuViewProps) {
               display: 'inline-flex',
               alignItems: 'center',
               justifyContent: 'center',
-              gap: '6px',
-              backgroundColor: '#0a0a0a',
-              color: '#d1d1d1',
-              padding: '6px 14px',
-              borderRadius: '20px',
-              fontSize: '0.72rem',
+              gap: '5px',
+              backgroundColor: 'transparent',
+              color: 'var(--text-secondary)',
+              opacity: 0.65,
+              fontSize: '0.75rem',
               letterSpacing: '0.08em',
               textDecoration: 'none',
-              border: '1px solid rgba(255, 255, 255, 0.05)',
               transition: 'all 0.25s ease'
             }}
             onMouseOver={(e) => {
-              e.currentTarget.style.backgroundColor = '#121212';
-              e.currentTarget.style.color = '#ffffff';
-              e.currentTarget.style.borderColor = 'rgba(184, 148, 99, 0.4)';
+              e.currentTarget.style.color = 'var(--gold-primary)';
+              e.currentTarget.style.opacity = '1';
               e.currentTarget.style.transform = 'translateY(-1px)';
             }}
             onMouseOut={(e) => {
-              e.currentTarget.style.backgroundColor = '#0a0a0a';
-              e.currentTarget.style.color = '#d1d1d1';
-              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.05)';
+              e.currentTarget.style.color = 'var(--text-secondary)';
+              e.currentTarget.style.opacity = '0.65';
               e.currentTarget.style.transform = 'translateY(0)';
             }}
           >
             {/* Sparkle star icon */}
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
               <path d="M 12 2 Q 12 12 2 12 Q 12 12 12 22 Q 12 12 22 12 Q 12 12 12 2" />
             </svg>
             <span style={{ fontFamily: "'Montserrat', sans-serif" }}>
