@@ -5,6 +5,9 @@ import { LanguageProvider } from "@/components/LanguageContext";
 export const metadata: Metadata = {
   title: "Dior Beach Club - Premium QR Menu",
   description: "Experience the ultimate luxury dining and cocktail selection at Dior Beach Club. View our premium bottle services, signature cocktails, and live events.",
+  icons: {
+    icon: "/icon.svg",
+  },
 };
 
 export const viewport: Viewport = {

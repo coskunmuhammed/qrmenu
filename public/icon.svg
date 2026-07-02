@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <style>
+    .gold-stroke {
+      stroke: #D4AF37; /* Luxury Champagne Gold */
+      stroke-linecap: round;
+      fill: none;
+    }
+  </style>
+  <circle cx="16" cy="16" r="11" class="gold-stroke" stroke-width="2.5" />
+  <path d="M 9 18 Q 12.5 15.5 16 18 T 23 18" class="gold-stroke" stroke-width="1.2" />
+  <path d="M 10 14 Q 13 11.5 16 14 T 22 14" class="gold-stroke" stroke-width="1.2" />
+</svg>
